@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
-import avatar from '../assets/avatar.svg';
-import bg from '../assets/bg.svg';
-import wave from '../assets/wave.png';
+import avatar from '../../assets/avatar.svg';
+import bg from '../../assets/bg.svg';
+import wave from '../../assets/wave.png';
 
 function Login() {
   const [usernameFocused, setUsernameFocused] = useState(false);
@@ -19,9 +19,14 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userType = localStorage.getItem('userType');
-    console.log('Form submitted:', { username, password, userType });
-    navigate('/dashboard');
+    // Simulate login validation (replace with actual backend call)
+    if (username === 'scad' && password === 'admin') {
+      // Store user type or token in localStorage (for simplicity)
+      localStorage.setItem('userType', 'scad');
+      navigate('/scad-office'); // Redirect to ScadOfficePage after successful login
+    } else {
+      alert('Invalid username or password');
+    }
   };
 
   return (
@@ -67,9 +72,9 @@ function Login() {
                 />
               </div>
             </div>
-            <a href="#" className="forgot-password">
+            <button className="forgot-password" onClick={() => {/* Add forgot password logic */}}>
               Forgot Password?
-            </a>
+            </button>
             <button onClick={handleSubmit} className="btn">
               Login
             </button>
