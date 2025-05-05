@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Card from '../components/Card';
-import CardHeader from '../components/CardHeader';
-import CardTitle from '../components/CardTitle';
-import CardContent from '../components/CardContent';
-import Button from '../components/Button';
-import Calendar from '../components/Calendar';
-import Popover from '../components/Popover';
-import PopoverTrigger from '../components/PopoverTrigger';
-import PopoverContent from '../components/PopoverContent';
-import CheckIcon from '../components/icons/Check';
-import CalendarIcon from '../components/icons/Calendar';
+import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Calendar } from '../components/ui/calendar';
+import { Popover, PopoverTrigger, PopoverContent } from '../components/ui/popover';
+import { CheckIcon } from '../components/icons/check';
+import { CalendarIcon } from '../components/icons/calendar';
 import './InternshipCycleManagement.css';
 
 function InternshipCycleManagement() {

@@ -1,37 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import Table from '../components/Table';
-import TableHeader from '../components/TableHeader';
-import TableBody from '../components/TableBody';
-import TableRow from '../components/TableRow';
-import TableCell from '../components/TableCell';
-import Input from '../components/Input';
-import Select from '../components/Select';
-import SelectContent from '../components/SelectContent';
-import SelectItem from '../components/SelectItem';
-import SelectTrigger from '../components/SelectTrigger';
-import SelectValue from '../components/SelectValue';
-import Button from '../components/Button';
-import Badge from '../components/Badge';
-import Card from '../components/Card';
-import CardHeader from '../components/CardHeader';
-import CardTitle from '../components/CardTitle';
-import CardContent from '../components/CardContent';
-import Dialog from '../components/Dialog';
-import DialogContent from '../components/DialogContent';
-import DialogHeader from '../components/DialogHeader';
-import DialogTitle from '../components/DialogTitle';
-import DialogDescription from '../components/DialogDescription';
-import DialogFooter from '../components/DialogFooter';
-import DialogClose from '../components/DialogClose';
-import EyeIcon from '../components/icons/Eye';
-import SearchIcon from '../components/icons/Search';
-import FilterIcon from '../components/icons/Filter';
-import DownloadIcon from '../components/icons/Download';
-import BriefcaseIcon from '../components/icons/Briefcase';
-import DollarSignIcon from '../components/icons/DollarSign';
-import ClockIcon from '../components/icons/Clock';
-import CheckCircleIcon from '../components/icons/CheckCircle';
-import XCircleIcon from '../components/icons/XCircle';
+import React, { useState } from 'react';
+import { Table, TableHeader, TableBody, TableRow, TableCell } from '../components/ui/table';
+import { Input } from '../components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import { Button } from '../components/ui/button';
+import { Badge } from '../components/ui/badge';
+import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '../components/ui/dialog';
+import { EyeIcon } from '../components/icons/eye';
+import { SearchIcon } from '../components/icons/search';
+import { FilterIcon } from '../components/icons/filter';
+import { DownloadIcon } from '../components/icons/download';
+
+import { CheckCircleIcon } from '../components/icons/checkcircle';
+import { XCircleIcon } from '../components/icons/xcircle';
 import { mockInternships } from '../../mock-data';
 import './InternshipListings.css';
 
@@ -89,7 +70,7 @@ function InternshipListings() {
           <div className="filter-group">
             <div className="filter-item">
               <FilterIcon className="filter-icon" />
-              <Select value={industryFilter} onChange={(e) => setIndustryFilter(e.target.value)}>
+              <Select value={industryFilter} onValueChange={setIndustryFilter}>
                 <SelectTrigger>
                   <SelectValue placeholder="Industry" />
                 </SelectTrigger>
@@ -104,7 +85,7 @@ function InternshipListings() {
             </div>
             <div className="filter-item">
               <FilterIcon className="filter-icon" />
-              <Select value={durationFilter} onChange={(e) => setDurationFilter(e.target.value)}>
+              <Select value={durationFilter} onValueChange={setDurationFilter}>
                 <SelectTrigger>
                   <SelectValue placeholder="Duration" />
                 </SelectTrigger>
@@ -119,7 +100,7 @@ function InternshipListings() {
             </div>
             <div className="filter-item">
               <FilterIcon className="filter-icon" />
-              <Select value={paidFilter} onChange={(e) => setPaidFilter(e.target.value)}>
+              <Select value={paidFilter} onValueChange={setPaidFilter}>
                 <SelectTrigger>
                   <SelectValue placeholder="Payment" />
                 </SelectTrigger>
@@ -176,7 +157,7 @@ function InternshipListings() {
             )}
           </TableBody>
         </Table>
-        <Dialog open={isDetailsModalOpen} onClose={() => setIsDetailsModalOpen(false)}>
+        <Dialog open={isDetailsModalOpen} onOpenChange={setIsDetailsModalOpen}>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>{selectedInternship?.jobTitle}</DialogTitle>
@@ -201,7 +182,7 @@ function InternshipListings() {
               <Button onClick={() => handleDownload(selectedInternship)}>
                 <DownloadIcon className="action-icon" /> Download Details
               </Button>
-              <DialogClose>
+              <DialogClose asChild>
                 <Button>Close</Button>
               </DialogClose>
             </DialogFooter>

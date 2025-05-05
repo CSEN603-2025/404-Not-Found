@@ -1,38 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import Table from '../components/Table';
-import TableHeader from '../components/TableHeader';
-import TableBody from '../components/TableBody';
-import TableRow from '../components/TableRow';
-import TableCell from '../components/TableCell';
-import Select from '../components/Select';
-import SelectContent from '../components/SelectContent';
-import SelectItem from '../components/SelectItem';
-import SelectTrigger from '../components/SelectTrigger';
-import SelectValue from '../components/SelectValue';
-import Button from '../components/Button';
-import Badge from '../components/Badge';
-import Card from '../components/Card';
-import CardHeader from '../components/CardHeader';
-import CardTitle from '../components/CardTitle';
-import CardContent from '../components/CardContent';
-import Dialog from '../components/Dialog';
-import DialogContent from '../components/DialogContent';
-import DialogHeader from '../components/DialogHeader';
-import DialogTitle from '../components/DialogTitle';
-import DialogDescription from '../components/DialogDescription';
-import DialogFooter from '../components/DialogFooter';
-import DialogClose from '../components/DialogClose';
-import EyeIcon from '../components/icons/Eye';
-import FilterIcon from '../components/icons/Filter';
-import DownloadIcon from '../components/icons/Download';
-import FileTextIcon from '../components/icons/FileText';
-import UserIcon from '../components/icons/User';
-import BriefcaseIcon from '../components/icons/Briefcase';
-import CalendarIcon from '../components/icons/Calendar';
-import FlagIcon from '../components/icons/Flag';
-import CheckIcon from '../components/icons/Check';
-import XIcon from '../components/icons/X';
-import AlertTriangleIcon from '../components/icons/AlertTriangle';
+import React, { useState } from 'react';
+import { Table, TableHeader, TableBody, TableRow, TableCell } from '../components/ui/table';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import { Button } from '../components/ui/button';
+import { Badge } from '../components/ui/badge';
+import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '../components/ui/dialog';
+import { EyeIcon } from '../components/icons/eye';
+import { FilterIcon } from '../components/icons/filter';
+import { DownloadIcon } from '../components/icons/download';
+import { FileTextIcon } from '../components/icons/filetext';
+import { UserIcon } from '../components/icons/user';
+import { BriefcaseIcon } from '../components/icons/briefcase';
+import { CalendarIcon } from '../components/icons/calendar';
+import { FlagIcon } from '../components/icons/flag';
+import { CheckIcon } from '../components/icons/check';
+import { XIcon } from '../components/icons/x';
+import { AlertTriangleIcon } from '../components/icons/alerttriangle';
 import { mockReports } from '../../mock-data';
 import './ReportManagement.css';
 
@@ -90,7 +73,7 @@ function ReportManagement() {
         <div className="filter-row">
           <div className="filter-item">
             <FilterIcon className="filter-icon" />
-            <Select value={majorFilter} onChange={(e) => setMajorFilter(e.target.value)}>
+            <Select value={majorFilter} onValueChange={setMajorFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="Filter by major" />
               </SelectTrigger>
@@ -105,7 +88,7 @@ function ReportManagement() {
           </div>
           <div className="filter-item">
             <FilterIcon className="filter-icon" />
-            <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
@@ -158,7 +141,7 @@ function ReportManagement() {
             )}
           </TableBody>
         </Table>
-        <Dialog open={isDetailsModalOpen} onClose={() => setIsDetailsModalOpen(false)}>
+        <Dialog open={isDetailsModalOpen} onOpenChange={setIsDetailsModalOpen}>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>{selectedReport?.reportType} Details</DialogTitle>
@@ -183,7 +166,7 @@ function ReportManagement() {
               </div>
             )}
             <DialogFooter>
-              <DialogClose>
+              <DialogClose asChild>
                 <Button>Close</Button>
               </DialogClose>
             </DialogFooter>

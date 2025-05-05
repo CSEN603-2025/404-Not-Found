@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Tabs from '../components/Tabs';
-import TabContent from '../components/TabContent';
-import TabList from '../components/TabList';
-import TabTrigger from '../components/TabTrigger';
+import { Tabs, TabList, TabTrigger, TabContent } from '../components/ui/tabs';
 import CompanyApplications from './CompanyApplications';
 import InternshipListings from './InternshipListings';
 import StudentManagement from './StudentManagement';
 import ReportManagement from './ReportManagement';
 import InternshipCycleManagement from './InternshipCycleManagement';
-import BuildingIcon from '../components/icons/Building';
-import BriefcaseIcon from '../components/icons/Briefcase';
-import UsersIcon from '../components/icons/Users';
-import FileTextIcon from '../components/icons/FileText';
-import CalendarClockIcon from '../components/icons/CalendarClock';
+import { BuildingIcon } from '../components/icons/building';
+import { BriefcaseIcon } from '../components/icons/briefcase';
+import { UsersIcon } from '../components/icons/users';
+import { FileTextIcon } from '../components/icons/filetext';
+import { CalendarClockIcon } from '../components/icons/calendarclock';
 import './ScadOfficePage.css';
 
 function ScadOfficePage() {
