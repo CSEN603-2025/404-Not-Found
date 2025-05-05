@@ -1,0 +1,32 @@
+.card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+  }
+  
+  .card-header {
+    text-align: center;
+  }
+  
+  .card-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  .card-description {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .card-content {
+    padding: 16px 0;
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 24px;
+  }

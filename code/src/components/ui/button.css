@@ -1,0 +1,30 @@
+.custom-button {
+    display: flex;
+    align-items: center;
+    padding: 16px 32px;
+    background-color: #38d39f;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .custom-button:hover {
+    background-color: #32be8f;
+    color: #ffffff;
+    transform: scale(1.05);
+  }
+  
+  .custom-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #38d39f, 0 0 0 4px rgba(255, 255, 255, 0.5);
+  }
+  
+  .custom-button svg {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+  }
