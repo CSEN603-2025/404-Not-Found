@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
-import avatar from '../../assets/avatar.svg';
-import bg from '../../assets/bg.svg';
-import wave from '../../assets/wave.png';
+import avatar from '../assets/avatar.svg';
+import bg from '../assets/bg.svg';
+import wave from '../assets/wave.png';
 
 function Login() {
   const [usernameFocused, setUsernameFocused] = useState(false);

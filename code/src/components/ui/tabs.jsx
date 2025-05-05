@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-export const Tabs = ({ defaultValue, children, className, ...props }) => {
+export const Tabs = ({ defaultValue, children }) => {
   const [activeTab, setActiveTab] = useState(defaultValue);
+
   return (
-    <div className={className} {...props}>
+    <div>
       {React.Children.map(children, (child) =>
         React.cloneElement(child, { activeTab, setActiveTab })
       )}
@@ -11,9 +12,9 @@ export const Tabs = ({ defaultValue, children, className, ...props }) => {
   );
 };
 
-export const TabList = ({ children, activeTab, setActiveTab, className, ...props }) => {
+export const TabList = ({ children, activeTab, setActiveTab }) => {
   return (
-    <div className={`flex border-b ${className}`} {...props}>
+    <div className="tab-list">
       {React.Children.map(children, (child) =>
         React.cloneElement(child, { activeTab, setActiveTab })
       )}
@@ -21,23 +22,17 @@ export const TabList = ({ children, activeTab, setActiveTab, className, ...props
   );
 };
 
-export const TabTrigger = ({ value, children, activeTab, setActiveTab, className, ...props }) => {
+export const TabTrigger = ({ value, children, activeTab, setActiveTab }) => {
   return (
     <button
-      className={`px-4 py-2 ${activeTab === value ? 'border-b-2 border-green-500' : ''} ${className}`}
+      className={`tab-trigger ${activeTab === value ? 'active' : ''}`}
       onClick={() => setActiveTab(value)}
-      {...props}
     >
       {children}
     </button>
   );
 };
 
-export const TabContent = ({ value, children, activeTab, className, ...props }) => {
-  if (activeTab !== value) return null;
-  return (
-    <div className={className} {...props}>
-      {children}
-    </div>
-  );
+export const TabContent = ({ value, children, activeTab }) => {
+  return activeTab === value ? <div className="tab-content">{children}</div> : null;
 };

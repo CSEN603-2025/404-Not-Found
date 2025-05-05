@@ -3,9 +3,9 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
 import { Button } from '../components/ui/button';
 import { Calendar } from '../components/ui/calendar';
 import { Popover, PopoverTrigger, PopoverContent } from '../components/ui/popover';
-import { CheckIcon } from '../components/icons/check';
-import { CalendarIcon } from '../components/icons/calendar';
-import './InternshipCycleManagement.css';
+import { CheckIcon } from '../components/ui/check';
+
+import '../styles/InternshipCycleManagement.css';
 
 function InternshipCycleManagement() {
   const [cycle, setCycle] = useState({ startDate: null, endDate: null });
@@ -56,7 +56,7 @@ function InternshipCycleManagement() {
             <Popover>
               <PopoverTrigger>
                 <Button>
-                  <CalendarIcon className="calendar-icon" />
+                  <Calendar className="calendar-icon" />
                   {cycle.startDate ? cycle.startDate.toLocaleDateString() : 'Pick a date'}
                 </Button>
               </PopoverTrigger>
@@ -74,7 +74,7 @@ function InternshipCycleManagement() {
             <Popover>
               <PopoverTrigger>
                 <Button>
-                  <CalendarIcon className="calendar-icon" />
+                  <Calendar className="calendar-icon" />
                   {cycle.endDate ? cycle.endDate.toLocaleDateString() : 'Pick a date'}
                 </Button>
               </PopoverTrigger>

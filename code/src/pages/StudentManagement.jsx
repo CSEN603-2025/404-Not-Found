@@ -5,11 +5,11 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '../components/ui/dialog';
-import { UserIcon } from '../components/icons/user';
-import { FilterIcon } from '../components/icons/filter';
-import { DownloadIcon } from '../components/icons/download';
-import { mockStudents } from '../../mock-data';
-import './StudentManagement.css';
+import { UserIcon } from '../components/ui/user';
+import { FilterIcon } from '../components/ui/filter';
+import { DownloadIcon } from '../components/ui/download';
+import { mockStudents } from '../data/mock-data';
+import '../styles/StudentManagement.css';
 
 function StudentManagement() {
   const [students] = useState(mockStudents);

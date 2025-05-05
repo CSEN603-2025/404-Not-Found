@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const CheckCircleIcon = ({ className, ...props }) => {
+export const CheckIcon = ({ className, ...props }) => {
   return (
     <svg
       className={`w-4 h-4 ${className}`}
@@ -10,8 +10,7 @@ export const CheckCircleIcon = ({ className, ...props }) => {
       strokeWidth="2"
       {...props}
     >
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-      <polyline points="22 4 12 14.01 9 11.01" />
+      <polyline points="20 6 9 17 4 12" />
     </svg>
   );
 };

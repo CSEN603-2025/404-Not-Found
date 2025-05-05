@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
-import { Table } from '../components/ui/table';
-import { TableHeader } from '../components/ui/tableheader';
-import { TableBody } from '../components/ui/tablebody';
-import { TableRow } from '../components/ui/tablerow';
-import { TableCell } from '../components/ui/tablecell';
+import { Table, TableHeader, TableBody, TableRow, TableCell } from '../components/ui/table';
 import { Input } from '../components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '../components/ui/dialog';
-import { EyeIcon } from '../components/icons/eyeicon';
+import { EyeIcon } from '../components/ui/eyeicon';
 import { CheckIcon } from '../components/ui/checkicon';
 import { XIcon } from '../components/ui/xicon';
-import { SearchIcon } from '../components/icons/searchicon';
-import { FilterIcon } from '../components/icons/filtericon';
-import { mockCompanyApplications } from '../../mock-data';
-import './CompanyApplications.css';
+import { SearchIcon } from '../components/ui/searchicon';
+import { FilterIcon } from '../components/ui/filtericon';
+import { mockCompanies, mockApplications } from '../data/mock-data';
+import '../styles/CompanyApplications.css';
 
 function CompanyApplications() {
-  const [applications, setApplications] = useState(mockCompanyApplications);
+  const [applications, setApplications] = useState(mockApplications);
   const [searchTerm, setSearchTerm] = useState('');
   const [industryFilter, setIndustryFilter] = useState('all');
   const [selectedApplication, setSelectedApplication] = useState(null);
@@ -27,10 +23,13 @@ function CompanyApplications() {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [actionToConfirm, setActionToConfirm] = useState(null);
 
-  const industries = [...new Set(mockCompanyApplications.map(app => app.industry)), 'all'];
+  const industries = [...new Set(mockCompanies.map(app => app.industry)), 'all'];
 
   const filteredApplications = applications.filter(app => {
-    const matchesSearch = app.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch =
+      !searchTerm ||
+      (app.name &&
+        app.name.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesIndustry = industryFilter === 'all' || app.industry === industryFilter;
     return matchesSearch && matchesIndustry;
   });
@@ -81,7 +80,7 @@ function CompanyApplications() {
               type="search"
               placeholder="Search by company name..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setSearchTerm(e.target.value || '')}
             />
           </div>
           <div className="filter-container">
@@ -114,12 +113,12 @@ function CompanyApplications() {
             {filteredApplications.length > 0 ? (
               filteredApplications.map((app) => (
                 <TableRow key={app.id}>
-                  <TableCell>{app.name}</TableCell>
-                  <TableCell>{app.industry}</TableCell>
+                  <TableCell>{app.name || 'N/A'}</TableCell>
+                  <TableCell>{app.industry || 'N/A'}</TableCell>
                   <TableCell>
-                    <Badge variant={getStatusBadgeVariant(app.status)}>{app.status}</Badge>
+                    <Badge variant={getStatusBadgeVariant(app.status)}>{app.status || 'Unknown'}</Badge>
                   </TableCell>
-                  <TableCell>{app.appliedDate}</TableCell>
+                  <TableCell>{app.appliedDate || 'N/A'}</TableCell>
                   <TableCell>
                     <div className="action-buttons">
                       <Button onClick={() => handleViewDetails(app)}>
@@ -154,13 +153,13 @@ function CompanyApplications() {
             </DialogHeader>
             {selectedApplication && (
               <div className="details-grid">
-                <div><span className="label">Name:</span> {selectedApplication.name}</div>
-                <div><span className="label">Industry:</span> {selectedApplication.industry}</div>
-                <div><span className="label">Status:</span> <Badge variant={getStatusBadgeVariant(selectedApplication.status)}>{selectedApplication.status}</Badge></div>
-                <div><span className="label">Applied:</span> {selectedApplication.appliedDate}</div>
-                <div><span className="label">Email:</span> {selectedApplication.contactEmail}</div>
-                <div><span className="label">Website:</span> <a href={selectedApplication.website} target="_blank" rel="noopener noreferrer">{selectedApplication.website}</a></div>
-                <div><span className="label">Description:</span> <p>{selectedApplication.description}</p></div>
+                <div><span className="label">Name:</span> {selectedApplication.name || 'N/A'}</div>
+                <div><span className="label">Industry:</span> {selectedApplication.industry || 'N/A'}</div>
+                <div><span className="label">Status:</span> <Badge variant={getStatusBadgeVariant(selectedApplication.status)}>{selectedApplication.status || 'Unknown'}</Badge></div>
+                <div><span className="label">Applied:</span> {selectedApplication.appliedDate || 'N/A'}</div>
+                <div><span className="label">Email:</span> {selectedApplication.contactEmail || 'N/A'}</div>
+                <div><span className="label">Website:</span> <a href={selectedApplication.website || '#'} target="_blank" rel="noopener noreferrer">{selectedApplication.website || 'N/A'}</a></div>
+                <div><span className="label">Description:</span> <p>{selectedApplication.description || 'No description available'}</p></div>
               </div>
             )}
             <DialogFooter>
@@ -175,7 +174,7 @@ function CompanyApplications() {
             <DialogHeader>
               <DialogTitle>Confirm Action</DialogTitle>
               <DialogDescription>
-                Are you sure you want to {actionToConfirm} the application for "{selectedApplication?.name}"?
+                Are you sure you want to {actionToConfirm} the application for "{selectedApplication?.name || 'Unknown'}"?
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
@@ -183,7 +182,7 @@ function CompanyApplications() {
                 <Button>Cancel</Button>
               </DialogClose>
               <Button onClick={performAction} className={actionToConfirm === 'reject' ? 'reject-button' : 'accept-button'}>
-                Confirm {actionToConfirm?.charAt(0).toUpperCase() + actionToConfirm?.slice(1)}
+                Confirm {actionToConfirm?.charAt(0).toUpperCase() + actionToConfirm?.slice(1) || ''}
               </Button>
             </DialogFooter>
           </DialogContent>

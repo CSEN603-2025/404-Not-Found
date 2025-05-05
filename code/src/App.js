@@ -12,6 +12,7 @@ function App() {
       <Route path="/" element={<SelectType />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register-company" element={<RegisterCompany />} />
+      <Route path="/scad-office" element={<ScadOfficePage />} />
     </Routes>
   );
 }

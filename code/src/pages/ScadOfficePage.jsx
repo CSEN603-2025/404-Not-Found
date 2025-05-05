@@ -5,12 +5,12 @@ import InternshipListings from './InternshipListings';
 import StudentManagement from './StudentManagement';
 import ReportManagement from './ReportManagement';
 import InternshipCycleManagement from './InternshipCycleManagement';
-import { BuildingIcon } from '../components/icons/building';
-import { BriefcaseIcon } from '../components/icons/briefcase';
-import { UsersIcon } from '../components/icons/users';
-import { FileTextIcon } from '../components/icons/filetext';
-import { CalendarClockIcon } from '../components/icons/calendarclock';
-import './ScadOfficePage.css';
+import { BuildingIcon } from '../components/ui/buildingicon';
+import { BriefcaseIcon } from '../components/ui/briefcaseicon';
+import { UsersIcon } from '../components/ui/usersicon';
+import { FileTextIcon } from '../components/ui/filetexticon';
+import { CalendarClockIcon } from '../components/ui/calendarclockicon';
+import '../styles/ScadOfficePage.css';
 
 function ScadOfficePage() {
   const [isClient, setIsClient] = useState(false);
