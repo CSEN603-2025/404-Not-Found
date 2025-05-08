@@ -5,11 +5,12 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '../components/ui/dialog';
-import { UserIcon } from '../components/ui/user';
-import { FilterIcon } from '../components/ui/filter';
+import { EyeIcon } from '../components/ui/eyeicon';
+import { FilterIcon } from '../components/ui/filtericon';
 import { DownloadIcon } from '../components/ui/download';
 import { mockStudents } from '../data/mock-data';
 import '../styles/StudentManagement.css';
+
 
 function StudentManagement() {
   const [students] = useState(mockStudents);
@@ -29,7 +30,7 @@ function StudentManagement() {
   };
 
   const handleDownloadCV = (student) => {
-    if (!student.cvUrl) {
+    if (!student?.cvUrl) {
       alert('No CV available for this student.');
       return;
     }
@@ -49,7 +50,7 @@ function StudentManagement() {
   };
 
   return (
-    <Card>
+    <Card className="student-management-container">
       <CardHeader>
         <CardTitle>Student Management</CardTitle>
       </CardHeader>
@@ -71,53 +72,53 @@ function StudentManagement() {
             </Select>
           </div>
         </div>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>GUC ID</TableCell>
-              <TableCell>Major</TableCell>
-              <TableCell>Internship Status</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filteredStudents.length > 0 ? (
-              filteredStudents.map((student) => (
-                <TableRow key={student.id}>
-                  <TableCell>{student.name}</TableCell>
-                  <TableCell>{student.gucId}</TableCell>
-                  <TableCell>{student.major}</TableCell>
-                  <TableCell>
-                    <Badge variant={getStatusBadgeVariant(student.internshipStatus)}>{student.internshipStatus}</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Button onClick={() => handleViewProfile(student)}>
-                      <UserIcon className="action-icon" /> View Profile
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
+        <div className="table-container">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan="5">No students found matching the criteria.</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Major</TableCell>
+                <TableCell>Internship Status</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {filteredStudents.length > 0 ? (
+                filteredStudents.map((student) => (
+                  <TableRow key={student.id}>
+                    <TableCell>{student.name}</TableCell>
+                    <TableCell>{student.major}</TableCell>
+                    <TableCell>
+                      <Badge variant={getStatusBadgeVariant(student.internshipStatus)}>{student.internshipStatus}</Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Button className="icon-button" onClick={() => handleViewProfile(student)}>
+                        <EyeIcon className="action-icon" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan="4">No students found matching the criteria.</TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
         <Dialog open={isProfileModalOpen} onOpenChange={setIsProfileModalOpen}>
-          <DialogContent>
+          <DialogContent className="small-modal">
             <DialogHeader>
               <DialogTitle>Student Profile</DialogTitle>
-              <DialogDescription>Details for {selectedStudent?.name}.</DialogDescription>
+              <DialogDescription>Details for {selectedStudent?.name || 'Unknown'}.</DialogDescription>
             </DialogHeader>
             {selectedStudent && (
               <div className="details-grid">
-                <div><span className="label">Name:</span> {selectedStudent.name}</div>
-                <div><span className="label">GUC ID:</span> {selectedStudent.gucId}</div>
-                <div><span className="label">Major:</span> {selectedStudent.major}</div>
-                <div><span className="label">Status:</span> <Badge variant={getStatusBadgeVariant(selectedStudent.internshipStatus)}>{selectedStudent.internshipStatus}</Badge></div>
-                <div><span className="label">Email:</span> {selectedStudent.email}</div>
+                <div><span className="label">Name:</span> {selectedStudent.name || 'N/A'}</div>
+                <div><span className="label">GUC ID:</span> {selectedStudent.gucId || 'N/A'}</div>
+                <div><span className="label">Major:</span> {selectedStudent.major || 'N/A'}</div>
+                <div><span className="label">Status:</span> <Badge variant={getStatusBadgeVariant(selectedStudent.internshipStatus)}>{selectedStudent.internshipStatus || 'N/A'}</Badge></div>
+                <div><span className="label">Email:</span> {selectedStudent.email || 'N/A'}</div>
                 {selectedStudent.cvUrl && (
                   <div><span className="label">CV:</span> <Button onClick={() => handleDownloadCV(selectedStudent)}>Download CV <DownloadIcon className="action-icon" /></Button></div>
                 )}

@@ -1,17 +1,24 @@
 import React from 'react';
 
-export const Dialog = ({ open, onOpenChange, children, ...props }) => {
+export const Dialog = ({ open, onOpenChange, children, className, ...props }) => {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" {...props}>
-      {children}
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 ${className}`}
+      onClick={() => onOpenChange(false)}
+      {...props}
+    >
+      <div onClick={(e) => e.stopPropagation()}>{children}</div>
     </div>
   );
 };
 
 export const DialogContent = ({ children, className, ...props }) => {
   return (
-    <div className={`bg-white rounded-lg p-6 max-w-lg w-full ${className}`} {...props}>
+    <div
+      className={`bg-card rounded-lg p-6 max-w-lg w-full border border-border shadow-lg ${className}`}
+      {...props}
+    >
       {children}
     </div>
   );
@@ -27,7 +34,7 @@ export const DialogHeader = ({ children, className, ...props }) => {
 
 export const DialogTitle = ({ children, className, ...props }) => {
   return (
-    <h2 className={`text-lg font-semibold ${className}`} {...props}>
+    <h2 className={`text-lg font-semibold text-foreground ${className}`} {...props}>
       {children}
     </h2>
   );
@@ -35,7 +42,7 @@ export const DialogTitle = ({ children, className, ...props }) => {
 
 export const DialogDescription = ({ children, className, ...props }) => {
   return (
-    <p className={`text-sm text-gray-500 ${className}`} {...props}>
+    <p className={`text-sm text-muted-foreground ${className}`} {...props}>
       {children}
     </p>
   );
