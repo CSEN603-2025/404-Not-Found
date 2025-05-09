@@ -3,6 +3,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 24px;
+    
   }
   
   .card-header {
@@ -23,6 +24,7 @@
   
   .card-content {
     padding: 16px 0;
+    @apply max-h-[300px] overflow-y-auto border border-border rounded-md;
   }
   
   .card-footer {

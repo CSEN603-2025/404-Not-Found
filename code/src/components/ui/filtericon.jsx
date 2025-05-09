@@ -1,9 +1,9 @@
 import React from 'react';
 
-export const FilterIcon = ({ className, ...props }) => {
+export const FilterIcon = ({ className = '', ...props }) => {
   return (
     <svg
-      className={`w-4 h-4 ${className}`}
+      className={`w-4 h-4 ${className}`} // Allow external styling via className
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"

@@ -18,6 +18,8 @@
   
   .tab-list {
     display: flex;
+    justify-content: center; /* Center the tabs horizontally */
+    align-items: center; /* Center the tabs vertically (if needed) */
     border-bottom: 1px solid #e0e0e0;
     margin-bottom: 1rem;
   }
