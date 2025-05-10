@@ -1,25 +1,12 @@
-import { CheckCircle, PartyPopper } from "lucide-react";
-import { Button } from '../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import React from 'react';
 
-export function RegistrationSuccess({ companyName, onRegisterAnother }) {
+export function RegistrationSuccess({ companyName, onRegisterAnother, onNavigateToForm }) {
   return (
-    <Card className="registration-success">
-      <CardHeader>
-        <div className="success-icon-container">
-          <CheckCircle className="success-icon" />
-        </div>
-        <CardTitle>Registration Successful!</CardTitle>
-        <CardDescription>
-          <PartyPopper className="description-icon" />
-          Congratulations! <span className="company-name">{companyName}</span> has been successfully registered on the SC AD System (simulation).
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Button onClick={onRegisterAnother}>
-          Register Another Company
-        </Button>
-      </CardContent>
-    </Card>
+    <div className="registration-success">
+      <h1>Registration Successful!</h1>
+      <p>Congratulations, {companyName}, your registration is complete.</p>
+      <button onClick={onRegisterAnother}>Register Another Company</button>
+      <button onClick={onNavigateToForm}>Go Back to Form</button> {/* Example button */}
+    </div>
   );
 }

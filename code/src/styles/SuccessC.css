@@ -1,0 +1,26 @@
+.success-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.success-box {
+  text-align: center;
+  padding: 20px 40px;
+  border: 1px solid #4caf50;
+  border-radius: 8px;
+  background-color: #e8f5e9;
+  color: #4caf50;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.success-box h1 {
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.success-box p {
+  font-size: 16px;
+}

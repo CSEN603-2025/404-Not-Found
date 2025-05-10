@@ -19,10 +19,19 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // SCAD Office Login
     if (username === 'scad' && password === 'admin') {
       localStorage.setItem('userType', 'scad');
       navigate('/scad-office');
-    } else {
+    } 
+    // Company Login
+    else if (username === 'company' && password === '12345') {
+      localStorage.setItem('userType', 'company');
+      navigate('/company-dashboard'); // Redirect to the company dashboard
+    } 
+    // Invalid Credentials
+    else {
       alert('Invalid username or password');
     }
   };
