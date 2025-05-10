@@ -33,18 +33,36 @@ Card {
     border-radius: 4px;
     padding: 0.5rem;
   }
+  .filter-container {
+    margin-bottom: 0.5rem; /* Add spacing between the filter and the column header */
+    width: 150px; /* Make the filter dropdown smaller */
+  }
+
+  .filter-container select {
+    font-size: 0.875rem; /* Adjust font size for a compact look */
+  }
   Table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: auto; /* Allow the table to resize dynamically based on content */
+    overflow: hidden; /* Prevent content from overflowing */
   }
   TableHeader {
     background: #f5f5f5;
+    font-weight: bold;
+    text-align: left; /* Ensure consistent height for all table headers */
   }
   TableRow {
     border-bottom: 1px solid #e0e0e0;
   }
   TableCell {
     padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowing content */
+    text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+    vertical-align: middle; /* Align content vertically */
+    height: 4rem; /* Set a fixed height for all headers */
   }
   Button {
     padding: 0.5rem 1rem;
@@ -92,3 +110,109 @@ Card {
   .details-grid .label {
     font-weight: bold;
   }
+  .pop-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it appears above other elements */
+  }
+  .pop {
+    width: 400px;
+    background: #fff;
+    border-radius: 6px;
+    position: relative;
+    text-align: center;
+    padding: 20px 30px;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .close-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .close-button:hover {
+    background: #0056b3;
+  }
+
+  .report-management-container {
+    width: 100%;
+    overflow: auto;
+  }
+
+  .report-management-container .icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px; /* Smaller size */
+    height: 50px; /* Smaller size */
+    padding: 4px; /* Adjust padding for a compact look */
+    background: #fff; /* White background */
+    border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
+    border-radius: 50%; /* Fully rounded shape */
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease; /* Smooth hover effect */
+  }
+
+  .report-management-container .icon-button:hover {
+    background: #13eb46; /* Green hover effect */
+    border-color: #f7fffd; /* Optional border color change on hover */
+  }
+
+  .report-management-container .icon-button .action-icon {
+    width: 16px; /* Smaller icon size */
+    height: 16px; /* Smaller icon size */
+    color: #6b7280; /* Default muted color for the icon */
+  }
+
+  .report-management-container .icon-button:hover .action-icon {
+    color: #fff; /* Change icon color to white on hover */
+  }
+
+  /* Style for headers with filters */
+  .header-with-filter {
+    display: flex;
+    flex-direction: column; /* Stack filter and header text vertically */
+    align-items: flex-start; /* Align content to the left */
+    gap: 0.25rem; /* Add spacing between filter and header text */
+    height: 100%; /* Ensure it fills the header cell */
+    justify-content: center; /* Center content vertically */
+  }
+
+  /* Style for filter dropdowns */
+  .header-with-filter select,
+  .header-with-filter .select-trigger {
+    font-size: 0.875rem; /* Smaller font size for compact look */
+    padding: 0.25rem 0.5rem; /* Adjust padding for compact dropdown */
+    width: 100%; /* Ensure dropdown fits within the header */
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+  }
+
+  /* Filters container */
+  .filters-container {
+    display: flex;
+    justify-content: space-between; /* Push filters to the left and right */
+    margin-bottom: 1rem; /* Add spacing below the filters */
+  }
+
+  /* Left filter container */
+  .filter-container-left {
+    width: 150px; /* Set a fixed width for the dropdown */
+  }
+
+  /* Right filter container */
+  .filter-container-right {
+    width: 150px; /* Set a fixed width for the dropdown */
+  }
+

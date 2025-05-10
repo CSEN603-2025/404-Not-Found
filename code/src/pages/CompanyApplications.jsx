@@ -5,10 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '../components/ui/dialog';
 import { EyeIcon } from '../components/ui/eyeicon';
-import { CheckIcon } from '../components/ui/checkicon';
-import { XIcon } from '../components/ui/xicon';
 import { SearchIcon } from '../components/ui/searchicon';
 import { FilterIcon } from '../components/ui/filtericon';
 import { mockCompanies, mockApplications } from '../data/mock-data';
@@ -18,10 +15,8 @@ function CompanyApplications() {
   const [applications, setApplications] = useState(mockApplications);
   const [searchTerm, setSearchTerm] = useState('');
   const [industryFilter, setIndustryFilter] = useState('all');
-  const [selectedApplication, setSelectedApplication] = useState(null);
-  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [actionToConfirm, setActionToConfirm] = useState(null);
+  const [selectedApplication, setSelectedApplication] = useState(null); // State for the selected application
+  const [isDetailsPopupOpen, setIsDetailsPopupOpen] = useState(false); // State for the popup
 
   const industries = [...new Set(mockCompanies.map(app => app.industry)), 'all'];
 
@@ -35,27 +30,13 @@ function CompanyApplications() {
   });
 
   const handleViewDetails = (application) => {
-    setSelectedApplication(application);
-    setIsDetailsModalOpen(true);
+    setSelectedApplication(application); // Set the selected application
+    setIsDetailsPopupOpen(true); // Open the popup
   };
 
-  const handleConfirmAction = (action, application) => {
-    setSelectedApplication(application);
-    setActionToConfirm(action);
-    setIsConfirmModalOpen(true);
-  };
-
-  const performAction = () => {
-    if (!selectedApplication || !actionToConfirm) return;
-
-    const newStatus = actionToConfirm === 'accept' ? 'Accepted' : 'Rejected';
-    setApplications(prev =>
-      prev.map(app => app.id === selectedApplication.id ? { ...app, status: newStatus } : app)
-    );
-    alert(`Application ${newStatus} for ${selectedApplication.name}`);
-    setIsConfirmModalOpen(false);
-    setSelectedApplication(null);
-    setActionToConfirm(null);
+  const handleCloseDetailsPopup = () => {
+    setSelectedApplication(null); // Clear the selected application
+    setIsDetailsPopupOpen(false); // Close the popup
   };
 
   const getStatusBadgeVariant = (status) => {
@@ -74,6 +55,9 @@ function CompanyApplications() {
       </CardHeader>
       <CardContent>
         <div className="filter-row">
+          <div className="filter-icon-container">
+            <FilterIcon className="filter-icon" />
+          </div>
           <div className="search-container">
             <SearchIcon className="search-icon" />
             <Input
@@ -84,13 +68,12 @@ function CompanyApplications() {
             />
           </div>
           <div className="filter-container">
-            <FilterIcon className="filter-icon" />
             <Select value={industryFilter} onValueChange={setIndustryFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="Filter by industry" />
               </SelectTrigger>
               <SelectContent>
-                {industries.map(industry => (
+                {industries.map((industry) => (
                   <SelectItem key={industry} value={industry}>
                     {industry === 'all' ? 'All Industries' : industry}
                   </SelectItem>
@@ -116,24 +99,27 @@ function CompanyApplications() {
                   <TableCell>{app.name || 'N/A'}</TableCell>
                   <TableCell>{app.industry || 'N/A'}</TableCell>
                   <TableCell>
-                    <Badge variant={getStatusBadgeVariant(app.status)}>{app.status || 'Unknown'}</Badge>
+                    <span
+                      className={`status-badge ${
+                        app.status === 'Accepted'
+                          ? 'status-accepted'
+                          : app.status === 'Rejected'
+                          ? 'status-rejected'
+                          : 'status-pending'
+                      }`}
+                    >
+                      {app.status || 'Unknown'}
+                    </span>
                   </TableCell>
                   <TableCell>{app.appliedDate || 'N/A'}</TableCell>
                   <TableCell>
-                    <div className="action-buttons">
-                      <Button onClick={() => handleViewDetails(app)}>
-                        <EyeIcon className="action-icon" /> View Details
+                    <div className="actions-container">
+                      <Button
+                        className="icon-button"
+                        onClick={() => handleViewDetails(app)}
+                      >
+                        <EyeIcon className="action-icon" />
                       </Button>
-                      {app.status === 'Pending' && (
-                        <>
-                          <Button onClick={() => handleConfirmAction('accept', app)} className="accept-button">
-                            <CheckIcon className="action-icon" /> Accept
-                          </Button>
-                          <Button onClick={() => handleConfirmAction('reject', app)} className="reject-button">
-                            <XIcon className="action-icon" /> Reject
-                          </Button>
-                        </>
-                      )}
                     </div>
                   </TableCell>
                 </TableRow>
@@ -145,48 +131,23 @@ function CompanyApplications() {
             )}
           </TableBody>
         </Table>
-        <Dialog open={isDetailsModalOpen} onOpenChange={setIsDetailsModalOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Application Details</DialogTitle>
-              <DialogDescription>Detailed information about the company application.</DialogDescription>
-            </DialogHeader>
-            {selectedApplication && (
-              <div className="details-grid">
-                <div><span className="label">Name:</span> {selectedApplication.name || 'N/A'}</div>
-                <div><span className="label">Industry:</span> {selectedApplication.industry || 'N/A'}</div>
-                <div><span className="label">Status:</span> <Badge variant={getStatusBadgeVariant(selectedApplication.status)}>{selectedApplication.status || 'Unknown'}</Badge></div>
-                <div><span className="label">Applied:</span> {selectedApplication.appliedDate || 'N/A'}</div>
-                <div><span className="label">Email:</span> {selectedApplication.contactEmail || 'N/A'}</div>
-                <div><span className="label">Website:</span> <a href={selectedApplication.website || '#'} target="_blank" rel="noopener noreferrer">{selectedApplication.website || 'N/A'}</a></div>
-                <div><span className="label">Description:</span> <p>{selectedApplication.description || 'No description available'}</p></div>
-              </div>
-            )}
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button>Close</Button>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-        <Dialog open={isConfirmModalOpen} onOpenChange={setIsConfirmModalOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Confirm Action</DialogTitle>
-              <DialogDescription>
-                Are you sure you want to {actionToConfirm} the application for "{selectedApplication?.name || 'Unknown'}"?
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button>Cancel</Button>
-              </DialogClose>
-              <Button onClick={performAction} className={actionToConfirm === 'reject' ? 'reject-button' : 'accept-button'}>
-                Confirm {actionToConfirm?.charAt(0).toUpperCase() + actionToConfirm?.slice(1) || ''}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+
+        {/* Details Popup */}
+        {isDetailsPopupOpen && selectedApplication && (
+          <div className="pop-overlay">
+            <div className="pop">
+              <h2>Application Details</h2>
+              <p><strong>Company Name:</strong> {selectedApplication.name || 'N/A'}</p>
+              <p><strong>Industry:</strong> {selectedApplication.industry || 'N/A'}</p>
+              <p><strong>Status:</strong> {selectedApplication.status || 'Unknown'}</p>
+              <p><strong>Applied Date:</strong> {selectedApplication.appliedDate || 'N/A'}</p>
+              <p><strong>Email:</strong> {selectedApplication.contactEmail || 'N/A'}</p>
+              <p><strong>Website:</strong> <a href={selectedApplication.website || '#'} target="_blank" rel="noopener noreferrer">{selectedApplication.website || 'N/A'}</a></p>
+              <p><strong>Description:</strong> {selectedApplication.description || 'No description available'}</p>
+              <button className="close-button" onClick={handleCloseDetailsPopup}>Close</button>
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

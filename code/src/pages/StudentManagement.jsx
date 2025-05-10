@@ -5,11 +5,13 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
 import { EyeIcon } from '../components/ui/eyeicon';
-import { FilterIcon } from '../components/ui/filtericon';
-import { DownloadIcon } from '../components/ui/download';
+import { CalendarClockIcon } from '../components/ui/calendarclock'; // Import the calendar icon
+import { CheckIcon } from '../components/ui/checkicon'; // Import the Check icon
+import { XIcon } from '../components/ui/xicon'; // Import the X icon
 import { mockStudents } from '../data/mock-data';
 import ScrollableComponent from '../components/ui/scroll';
 import StudentProfilePopup from '../components/ui/StudentProfilePopup'; // Import the new component
+import { FilterIcon } from '../components/ui/filtericon';
 import '../styles/StudentManagement.css';
 
 function getStatusBadgeVariant(status) {
@@ -28,7 +30,11 @@ function getStatusBadgeVariant(status) {
 function StudentManagement() {
   const [students] = useState(mockStudents);
   const [statusFilter, setStatusFilter] = useState('all');
-  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [selectedStudentForProfile, setSelectedStudentForProfile] = useState(null); // Separate state for "View Profile"
+  const [selectedStudentForAppointment, setSelectedStudentForAppointment] = useState(null); // Separate state for "Request Appointment"
+  const [appointmentPopup, setAppointmentPopup] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [appointmentRequests, setAppointmentRequests] = useState([]); // State for appointment requests
 
   const internshipStatuses = [...new Set(students.map((s) => s.internshipStatus)), 'all'];
 
@@ -37,12 +43,57 @@ function StudentManagement() {
   });
 
   const handleViewProfile = (student) => {
-    setSelectedStudent(student); // Set the selected student
+    console.log('View Profile clicked for:', student); // Debugging
+    setSelectedStudentForProfile(student); // Set the selected student for the profile popup
   };
 
-  const handleClosePopup = () => {
-    setSelectedStudent(null); // Clear the selected student to close the pop-up
+  const handleCloseProfilePopup = () => {
+    console.log('Closing Profile Popup'); // Debugging
+    setSelectedStudentForProfile(null); // Clear the selected student for the profile popup
   };
+
+  const handleRequestAppointment = (student) => {
+    console.log('Request Appointment clicked for:', student); // Debugging
+    setSelectedStudentForAppointment(student); // Set the selected student for the appointment popup
+    setAppointmentPopup(true); // Show the appointment popup
+  };
+
+  const handleCloseAppointmentPopup = () => {
+    console.log('Closing Appointment Popup'); // Debugging
+    setAppointmentPopup(false); // Close the appointment popup
+    setSelectedStudentForAppointment(null); // Clear the selected student for the appointment popup
+    setSelectedDate(null); // Clear the selected date
+  };
+
+  const handleDateSelection = (date) => {
+    console.log('Date selected:', date); // Debugging
+    setSelectedDate(date); // Set the selected date
+    alert(`Appointment requested for ${selectedStudentForAppointment.name} on ${date}`); // Confirm the appointment
+    setAppointmentRequests((prev) => [
+      ...prev,
+      { ...selectedStudentForAppointment, date }, // Add the student to the appointment requests list
+    ]);
+    handleCloseAppointmentPopup(); // Close the popup and clear the state
+  };
+
+  const handleAcceptAppointment = (student) => {
+    alert(`Appointment accepted for ${student.name} on ${student.date}`);
+    setAppointmentRequests((prev) => prev.filter((s) => s.id !== student.id)); // Remove the student from the requests list
+  };
+
+  const handleRejectAppointment = (student) => {
+    alert(`Appointment rejected for ${student.name}`);
+    setAppointmentRequests((prev) => prev.filter((s) => s.id !== student.id)); // Remove the student from the requests list
+  };
+
+  // Generate random dates for the appointment selection
+  const randomDates = [
+    '2025-07-20',
+    '2025-07-21',
+    '2025-07-22',
+    '2025-07-23',
+    '2025-07-24',
+  ];
 
   return (
     <ScrollableComponent height="600px">
@@ -70,7 +121,7 @@ function StudentManagement() {
             </div>
           </div>
 
-          {/* Table Container */}
+          {/* Main Table Container */}
           <div className="table-container">
             <Table>
               <TableHeader>
@@ -101,9 +152,20 @@ function StudentManagement() {
                         </span>
                       </TableCell>
                       <TableCell>
-                        <Button className="icon-button" onClick={() => handleViewProfile(student)}>
-                          <EyeIcon className="action-icon" />
-                        </Button>
+                        <div className="actions-container">
+                          <Button
+                            className="icon-button"
+                            onClick={() => handleViewProfile(student)}
+                          >
+                            <EyeIcon className="action-icon" />
+                          </Button>
+                          <Button
+                            className="icon-button"
+                            onClick={() => handleRequestAppointment(student)}
+                          >
+                            <CalendarClockIcon className="action-icon" />
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))
@@ -115,11 +177,89 @@ function StudentManagement() {
               </TableBody>
             </Table>
           </div>
+        </CardContent>
+      </Card>
 
-          {/* Student Profile Popup */}
-          {selectedStudent && (
-            <StudentProfilePopup student={selectedStudent} onClose={handleClosePopup} />
-          )}
+      {/* Student Profile Popup */}
+      {selectedStudentForProfile && (
+        <StudentProfilePopup
+          student={selectedStudentForProfile}
+          onClose={handleCloseProfilePopup}
+        />
+      )}
+
+      {/* Appointment Popup */}
+      {appointmentPopup && (
+        <div className="pop-overlay">
+          <div className="pop">
+            <h2>Request an Appointment</h2>
+            <p>Select a date for your appointment with {selectedStudentForAppointment.name}:</p>
+            <ul>
+              {randomDates.map((date) => (
+                <li key={date}>
+                  <button
+                    className="date-button"
+                    onClick={() => handleDateSelection(date)}
+                  >
+                    {date}
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <button className="close-button" onClick={handleCloseAppointmentPopup}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Independent Appointment Requests Table */}
+      <Card className="appointment-requests-container">
+        <CardHeader>
+          <CardTitle>Appointment Requests</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Major</TableCell>
+                <TableCell>Requested Date</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {appointmentRequests.length > 0 ? (
+                appointmentRequests.map((student) => (
+                  <TableRow key={student.id}>
+                    <TableCell>{student.name}</TableCell>
+                    <TableCell>{student.major}</TableCell>
+                    <TableCell>{student.date}</TableCell>
+                    <TableCell>
+                      <div className="actions-container">
+                        <Button
+                          className="small-button accept-button"
+                          onClick={() => handleAcceptAppointment(student)}
+                        >
+                          <CheckIcon className="action-icon" />
+                        </Button>
+                        <Button
+                          className="small-button reject-button"
+                          onClick={() => handleRejectAppointment(student)}
+                        >
+                          <XIcon className="action-icon" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan="4">No appointment requests.</TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </CardContent>
       </Card>
     </ScrollableComponent>

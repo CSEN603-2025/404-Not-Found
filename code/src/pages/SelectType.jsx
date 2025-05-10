@@ -10,8 +10,11 @@ export default function SelectType() {
     localStorage.setItem('userType', type);
     if (type === 'company') {
       navigate('/login');
+    } else if (type === 'student') {
+      navigate('/login'); // Redirect to login for students
+    } else if (type === 'scad') {
+      navigate('/login'); // Redirect to login for SCAD
     }
-
   };
 
   return (

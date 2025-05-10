@@ -24,7 +24,7 @@
   
   .card-content {
     padding: 16px 0;
-    @apply max-h-[300px] overflow-y-auto border border-border rounded-md;
+    
   }
   
   .card-footer {

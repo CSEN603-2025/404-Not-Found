@@ -18,41 +18,63 @@ Card {
     padding: 1rem;
   }
   
+  /* Filter row container */
   .filter-row {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 1rem; /* Space between elements */
     margin-bottom: 1rem;
   }
   
+  /* Filter icon container */
+  .filter-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Filter icon */
+  .filter-icon {
+    width: 1.5rem; /* Adjust size as needed */
+    height: 1.5rem;
+    color: #6b7280; /* Muted color */
+  }
+  
+  /* Search container */
   .search-container {
     position: relative;
     display: flex;
     align-items: center;
+    flex-grow: 1; /* Allow it to take up available space */
   }
   
+  /* Search icon */
   .search-icon {
     position: absolute;
     left: 0.5rem;
     width: 1rem;
     height: 1rem;
+    color: #6b7280; /* Muted color */
   }
   
+  /* Search input */
+  .search-container Input[type="search"] {
+    padding-left: 2rem; /* Add space for the search icon */
+    width: 250px; /* Take full width of the container */
+    height: 2.5rem; /* Adjust height for better appearance */
+    border: 1px solid #e0e0e0; /* Border for better visibility */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 1rem; /* Adjust font size */
+    color: #333; /* Text color */
+    background-color: #fff; /* Background color */
+    box-sizing: border-box; /* Include padding and border in width/height */
+  }
+  
+  /* Filter container */
   .filter-container {
     position: relative;
     display: flex;
     align-items: center;
-  }
-  
-  .filter-icon {
-    position: absolute;
-    left: 0.5rem;
-    width: 1rem;
-    height: 1rem;
-  }
-  
-  Input[type="search"] {
-    padding-left: 2rem;
-    width: 200px;
   }
   
   SelectTrigger {
@@ -93,13 +115,45 @@ Card {
   }
   
   .accept-button {
-    background-color: #4caf50;
-    color: white;
+    background-color: #28a745; /* Green background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 8px; /* Adjust padding for compact size */
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the icon */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 36px; /* Fixed width for square button */
+    height: 36px; /* Fixed height for square button */
+    border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
+    border-radius: 50%; /* Fully rounded shape */
+  }
+  
+  .accept-button:hover {
+    background-color: #218838; /* Darker green on hover */
   }
   
   .reject-button {
-    background-color: #ef4444;
-    color: white;
+    background-color: #c82333;
+    color: #fff; /* White text */
+    border: none;
+    padding: 8px; /* Adjust padding for compact size */
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the icon */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 36px; /* Fixed width for square button */
+    height: 36px; /* Fixed height for square button */
+    border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
+    border-radius: 50%; /* Fully rounded shape */
+  }
+  
+  .reject-button:hover {
+    background-color: #c82333; /* Darker red on hover */
   }
   
   Badge[variant="default"] {
@@ -123,8 +177,38 @@ Card {
   }
   
   .action-icon {
-    width: 1rem;
-    height: 1rem;
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Icon button for "View Details" */
+  .icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; /* Fixed width for square button */
+    height: 36px; /* Fixed height for square button */
+    padding: 4px; /* Adjust padding for a compact look */
+    background: #fff; /* White background */
+    border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
+    border-radius: 50%; /* Fully rounded shape */
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease; /* Smooth hover effect */
+  }
+  
+  .icon-button:hover {
+    background: #13eb46; /* Green hover effect */
+    border-color: #f7fffd; /* Optional border color change on hover */
+  }
+  
+  .icon-button .action-icon {
+    width: 16px; /* Smaller icon size */
+    height: 16px; /* Smaller icon size */
+    color: #6b7280; /* Default muted color for the icon */
+  }
+  
+  .icon-button:hover .action-icon {
+    color: #fff; /* Change icon color to white on hover */
   }
   
   .details-grid {
@@ -138,4 +222,93 @@ Card {
   
   .details-grid a {
     color: #4caf50;
+  }
+  
+  /* Popup overlay */
+  .pop-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it appears above other elements */
+  }
+  
+  /* Popup container */
+  .pop {
+    width: 400px;
+    background: #fff;
+    border-radius: 6px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  /* Popup title */
+  .pop h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  /* Close button */
+  .close-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .close-button:hover {
+    background: #0056b3;
+  }
+  
+  /* Base styles for the status badge */
+  .status-badge {
+    display: inline-block;
+    padding: 4px 12px; /* Adjust padding for a pill-like shape */
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 9999px; /* Fully rounded shape */
+    text-align: center;
+    min-width: 80px; /* Ensure consistent size */
+    color: #fff; /* Default white text for all statuses */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+  }
+  
+  /* Green for "Accepted" */
+  .status-accepted {
+    background-color: #28a745; /* Green background */
+  }
+  
+  .status-accepted:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+  
+  /* Red for "Rejected" */
+  .status-rejected {
+    background-color: #dc3545; /* Red background */
+  }
+  
+  .status-rejected:hover {
+    background-color: #c82333; /* Darker red on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+  
+  /* Grey for "Pending" */
+  .status-pending {
+    background-color: #6c757d; /* Grey background */
+  }
+  
+  .status-pending:hover {
+    background-color: #5a6268; /* Darker grey on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
   }

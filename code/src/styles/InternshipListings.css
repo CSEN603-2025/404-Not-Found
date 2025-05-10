@@ -17,6 +17,7 @@ Card {
   .search-container {
     position: relative;
     flex-grow: 1;
+    margin-bottom: 1rem; /* Add spacing below the search bar */
   }
   SearchIcon {
     position: absolute;
@@ -96,4 +97,87 @@ Card {
   }
   .details-grid .label {
     font-weight: bold;
+  }
+
+  /* Main table container */
+  .main-table-container {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #e0e0e0; /* Optional border for better visibility */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #fff; /* White background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for better appearance */
+  }
+
+  /* Table header */
+  .table-header {
+    text-align: center; /* Center the text */
+    margin-bottom: 1rem; /* Add spacing below the heading */
+  }
+
+  .table-header h2 {
+    font-size: 1.5rem; /* Adjust font size */
+    font-weight: bold; /* Make the text bold */
+    color: #333; /* Text color */
+  }
+
+  /* Icon button for "View Details" */
+  .icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px; /* Adjust size */
+    height: 50px; /* Adjust size */
+    padding: 4px; /* Adjust padding for a compact look */
+    background: #fff; /* White background */
+    border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
+    border-radius: 50%; /* Fully rounded shape */
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease; /* Smooth hover effect */
+  }
+
+  .icon-button:hover {
+    background: #13eb46; /* Green hover effect */
+    border-color: #f7fffd; /* Optional border color change on hover */
+  }
+
+  .icon-button .action-icon {
+    width: 16px; /* Smaller icon size */
+    height: 16px; /* Smaller icon size */
+    color: #6b7280; /* Default muted color for the icon */
+  }
+
+  .icon-button:hover .action-icon {
+    color: #fff; /* Change icon color to white on hover */
+  }
+
+  /* Filter and search row */
+  .filter-search-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Space between the filter icon and the search container */
+    margin-bottom: 1rem; /* Add spacing below the row */
+  }
+
+
+
+  /* Filter icon */
+  .filter-icon {
+    width: 1.5rem; /* Adjust size as needed */
+    height: 1.5rem;
+    color: #6b7280; /* Muted color */
+  }
+
+  /* Search container */
+  .search-container {
+    position: relative;
+    width: 300px; /* Set a fixed width */
+    margin-bottom: 1rem; /* Add spacing below the search bar */
+  }
+
+  .search-container Input[type="search"] {
+    padding-left: 2rem; /* Add space for the search icon */
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
   }
