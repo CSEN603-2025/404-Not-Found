@@ -16,12 +16,8 @@ import '../styles/ReportManagement.css';
 
 function ReportManagement() {
   const [reports] = useState(mockReports); // Use mockReports as the data source
-  const [majorFilter, setMajorFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedReport, setSelectedReport] = useState(null);
-
-  // Extract unique majors for filtering
-  const majors = [...new Set(reports.map(r => r.major)), 'all'];
 
   // Define valid statuses explicitly
   const validStatuses = ['Pending', 'Flagged', 'Rejected', 'Accepted', 'all'];
@@ -29,9 +25,8 @@ function ReportManagement() {
 
   // Filter reports based on selected filters
   const filteredReports = reports.filter(report => {
-    const matchesMajor = majorFilter === 'all' || report.major === majorFilter;
     const matchesStatus = statusFilter === 'all' || report.status === statusFilter;
-    return matchesMajor && matchesStatus;
+    return matchesStatus;
   });
 
   // Handle viewing details of a report
@@ -74,20 +69,6 @@ function ReportManagement() {
       <CardContent>
         {/* Filters */}
         <div className="filters-container">
-          <div className="filter-container-left">
-            <Select value={majorFilter} onValueChange={setMajorFilter}>
-              <SelectTrigger>
-                <SelectValue>{majorFilter === 'all' ? 'Filter by Major' : majorFilter}</SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {majors.map(major => (
-                  <SelectItem key={major} value={major}>
-                    {major === 'all' ? 'All Majors' : major}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
           <div className="filter-container-right">
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger>
@@ -110,9 +91,8 @@ function ReportManagement() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableCell>Student Name</TableCell>
-                  <TableCell>Report Type</TableCell>
-                  <TableCell>Major</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Title</TableCell> {/* Changed "Report Type" to "Title" */}
                   <TableCell>Submission Date</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Actions</TableCell>
@@ -122,8 +102,7 @@ function ReportManagement() {
                 {filteredReports.map((report) => (
                   <TableRow key={report.id}>
                     <TableCell>{report.studentName}</TableCell>
-                    <TableCell>{report.reportType}</TableCell>
-                    <TableCell>{report.major}</TableCell>
+                    <TableCell>{report.reportType}</TableCell> {/* Changed column name */}
                     <TableCell>{report.submissionDate}</TableCell>
                     <TableCell>
                       <Badge variant={getStatusBadgeVariant(report.status)}>
@@ -147,9 +126,12 @@ function ReportManagement() {
           </ScrollableComponent>
         </div>
 
-        {/* Popup */}
+     {/* Popup */}
         {selectedReport && (
-          <ReportDetailsPopup report={selectedReport} onClose={handleClosePopup} />
+          <ReportDetailsPopup
+            report={selectedReport} // Pass the selected report data
+            onClose={handleClosePopup} // Close the popup when the button is clicked
+          />
         )}
       </CardContent>
     </Card>

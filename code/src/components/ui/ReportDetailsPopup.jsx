@@ -1,33 +1,28 @@
 import React from 'react';
+import { Button } from './button';
+import './ReportDetailsPopup.css'; // Import the CSS for styling
 
-const ReportDetailsPopup = ({ report, onClose }) => {
-  if (!report) return null;
-
+function ReportDetailsPopup({ report, onClose }) {
   return (
-    <div className="pop-overlay">
-      <div className="pop">
-        <h2>{report.reportType} Details</h2>
-        <p><strong>Student:</strong> {report.studentName} (ID: {report.studentId}, Major: {report.major})</p>
-        <p><strong>Company:</strong> {report.companyName}</p>
-        <p><strong>Internship:</strong> {report.internshipTitle}</p>
-        <p><strong>Submitted:</strong> {report.submissionDate}</p>
-        <p><strong>Status:</strong> {report.status}</p>
-        {report.reportType === 'Evaluation Report' && (
-          <>
-            <p><strong>Supervisor:</strong> {report.supervisorName || 'N/A'}</p>
-            <p><strong>Internship Dates:</strong> {report.internshipStartDate || 'N/A'} to {report.internshipEndDate || 'N/A'}</p>
-          </>
-        )}
-        <p>
-          <strong>Report File:</strong>{' '}
-          <button onClick={() => window.open(report.reportUrl, '_blank')}>
-            Download {report.reportType}
-          </button>
-        </p>
-        <button className="close-button" onClick={onClose}>Close</button>
+    <div className="popup-overlay">
+      <div className="popup-content">
+        <h2>Report Details</h2>
+        <ul>
+          <li><strong>Title:</strong> {report.title}</li>
+          <li><strong>Student Name:</strong> {report.student}</li>
+          <li><strong>Student ID:</strong> {report.studentId}</li>
+          <li><strong>Major:</strong> {report.major}</li>
+          <li><strong>Company:</strong> {report.company}</li>
+          <li><strong>Supervisor:</strong> {report.Supervisor}</li>
+          <li><strong>Start Date:</strong> {report.StartDate}</li>
+          <li><strong>End Date:</strong> {report.EndDate}</li>
+          <li><strong>Submission Date:</strong> {report.submissionDate}</li>
+          <li><strong>Status:</strong> {report.status}</li>
+        </ul>
+        <Button onClick={onClose} className="close-button">Close</Button>
       </div>
     </div>
   );
-};
+}
 
 export default ReportDetailsPopup;

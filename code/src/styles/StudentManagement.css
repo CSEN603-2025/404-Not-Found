@@ -272,39 +272,38 @@ html, body {
   border-radius: 9999px; /* Fully rounded shape */
   text-align: center;
   min-width: 80px; /* Ensure consistent size */
-  color: #000; /* Default black text for all statuses */
+  color: #fff; /* Default white text for all statuses */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
 }
-
-
 
 /* Green for "Completed" */
 .status-completed {
-  background-color: #13eb46; /* Green background */
-  border: 1px solid #c3e6cb;
+  background-color: #28a745; /* Green background */
 }
 
 .status-completed:hover {
-  background: #0dd5a3;
+  background-color: #218838; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
 /* Red for "No Offer" */
 .status-no-offer {
-  background-color: #fc4554; /* Red background */
-  border: 1px solid #f5c6cb;
+  background-color: #dc3545; /* Red background */
 }
 
 .status-no-offer:hover {
-  background: #be0000;
+  background-color: #c82333; /* Darker red on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
-/* Gradient white/grey for other statuses */
+/* Grey for other statuses */
 .status-other {
-  background: linear-gradient(90deg, #f8f9fa, #e9ecef); /* Gradient background */
-  border: 1px solid #dee2e6;
+  background-color: #6c757d; /* Grey background */
 }
 
 .status-other:hover {
-  background: #bdd1cc;
+  background-color: #5a6268; /* Darker grey on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
 /* Actions container to align buttons */
@@ -378,4 +377,15 @@ html, body {
 .action-icon {
   width: 16px;
   height: 16px;
+}
+
+/* Appointment status */
+.appointment-status {
+  color: #28a745; /* Green for requested appointments */
+  font-weight: bold;
+}
+
+.no-appointment-status {
+  color: #6c757d; /* Grey for no requests */
+  font-style: italic;
 }

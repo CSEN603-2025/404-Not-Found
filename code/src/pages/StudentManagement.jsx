@@ -8,7 +8,7 @@ import { EyeIcon } from '../components/ui/eyeicon';
 import { CalendarClockIcon } from '../components/ui/calendarclock'; // Import the calendar icon
 import { CheckIcon } from '../components/ui/checkicon'; // Import the Check icon
 import { XIcon } from '../components/ui/xicon'; // Import the X icon
-import { mockStudents } from '../data/mock-data';
+import { mockStudents, mockAppointmentRequests } from '../data/mock-data'; // Import the mock appointment requests
 import ScrollableComponent from '../components/ui/scroll';
 import StudentProfilePopup from '../components/ui/StudentProfilePopup'; // Import the new component
 import { FilterIcon } from '../components/ui/filtericon';
@@ -17,24 +17,22 @@ import '../styles/StudentManagement.css';
 function getStatusBadgeVariant(status) {
   switch (status) {
     case 'Completed':
-      return 'success';
-    case 'In Progress':
-      return 'warning';
-    case 'Not Started':
-      return 'default';
+      return 'status-completed';
+    case 'No Offer':
+      return 'status-no-offer';
     default:
-      return 'neutral';
+      return 'status-other';
   }
 }
 
 function StudentManagement() {
-  const [students] = useState(mockStudents);
+  const [students, setStudents] = useState(mockStudents); // Updated to allow modification of students
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedStudentForProfile, setSelectedStudentForProfile] = useState(null); // Separate state for "View Profile"
   const [selectedStudentForAppointment, setSelectedStudentForAppointment] = useState(null); // Separate state for "Request Appointment"
   const [appointmentPopup, setAppointmentPopup] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [appointmentRequests, setAppointmentRequests] = useState([]); // State for appointment requests
+  const [appointmentRequests, setAppointmentRequests] = useState(mockAppointmentRequests); // Initialize with dummy data
 
   const internshipStatuses = [...new Set(students.map((s) => s.internshipStatus)), 'all'];
 
@@ -69,10 +67,16 @@ function StudentManagement() {
     console.log('Date selected:', date); // Debugging
     setSelectedDate(date); // Set the selected date
     alert(`Appointment requested for ${selectedStudentForAppointment.name} on ${date}`); // Confirm the appointment
-    setAppointmentRequests((prev) => [
-      ...prev,
-      { ...selectedStudentForAppointment, date }, // Add the student to the appointment requests list
-    ]);
+
+    // Update the student's appointment status
+    setStudents((prevStudents) =>
+      prevStudents.map((student) =>
+        student.id === selectedStudentForAppointment.id
+          ? { ...student, appointmentDate: date } // Add the appointment date to the student
+          : student
+      )
+    );
+
     handleCloseAppointmentPopup(); // Close the popup and clear the state
   };
 
@@ -129,6 +133,7 @@ function StudentManagement() {
                   <TableCell>Name</TableCell>
                   <TableCell>Major</TableCell>
                   <TableCell>Internship Status</TableCell>
+                  <TableCell>Appointments</TableCell> {/* New column for appointments */}
                   <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHeader>
@@ -139,17 +144,18 @@ function StudentManagement() {
                       <TableCell>{student.name}</TableCell>
                       <TableCell>{student.major}</TableCell>
                       <TableCell>
-                        <span
-                          className={`status-badge ${
-                            student.internshipStatus === 'Completed'
-                              ? 'status-completed'
-                              : student.internshipStatus === 'No Offer'
-                              ? 'status-no-offer'
-                              : 'status-other'
-                          }`}
-                        >
-                          {student.internshipStatus}
+                        <span className={`status-badge ${getStatusBadgeVariant(student.internshipStatus)}`}>
+                          {student.internshipStatus || 'Unknown'}
                         </span>
+                      </TableCell>
+                      <TableCell>
+                        {student.appointmentDate ? (
+                          <span className="appointment-status">
+                            {student.appointmentDate}
+                          </span>
+                        ) : (
+                          <span className="no-appointment-status">No request made</span>
+                        )}
                       </TableCell>
                       <TableCell>
                         <div className="actions-container">
@@ -171,7 +177,7 @@ function StudentManagement() {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan="4">No students found matching the criteria.</TableCell>
+                    <TableCell colSpan="5">No students found matching the criteria.</TableCell>
                   </TableRow>
                 )}
               </TableBody>
