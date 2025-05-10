@@ -222,3 +222,20 @@
       justify-content: center;
     }
   }
+  .register-link {
+    margin-top: 0.5rem;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .underline-link {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .underline-link:hover {
+    color: #0056b3;
+  }
+  

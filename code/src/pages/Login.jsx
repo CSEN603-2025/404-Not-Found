@@ -19,11 +19,9 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simulate login validation (replace with actual backend call)
     if (username === 'scad' && password === 'admin') {
-      // Store user type or token in localStorage (for simplicity)
       localStorage.setItem('userType', 'scad');
-      navigate('/scad-office'); // Redirect to ScadOfficePage after successful login
+      navigate('/scad-office');
     } else {
       alert('Invalid username or password');
     }
@@ -40,6 +38,7 @@ function Login() {
           <div className="form-wrapper">
             <img src={avatar} alt="Avatar" className="avatar" />
             <h2 className="title">Welcome</h2>
+
             <div className={`input-div one ${usernameFocused ? 'focus' : ''}`}>
               <div className="i">
                 <i className="fas fa-user"></i>
@@ -56,6 +55,7 @@ function Login() {
                 />
               </div>
             </div>
+
             <div className={`input-div pass ${passwordFocused ? 'focus' : ''}`}>
               <div className="i">
                 <i className="fas fa-lock"></i>
@@ -72,12 +72,30 @@ function Login() {
                 />
               </div>
             </div>
-            <button className="forgot-password" onClick={() => {/* Add forgot password logic */}}>
+
+            <button
+              className="forgot-password"
+              onClick={() => {
+                // TODO: add forgot password logic here
+              }}
+            >
               Forgot Password?
             </button>
+
             <button onClick={handleSubmit} className="btn">
               Login
             </button>
+
+            {/* Register link below */}
+            <p className="register-link">
+              Don’t have an account?{' '}
+              <span
+                className="underline-link"
+                onClick={() => navigate('/register-company')}
+              >
+                Register here
+              </span>
+            </p>
           </div>
         </div>
       </div>

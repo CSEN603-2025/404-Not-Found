@@ -1,151 +1,162 @@
 body {
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .register-company-container {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    background-color: #f3f4f6;
-  }
-  
-  .register-company-content {
-    width: 100%;
-    max-width: 896px;
-    margin: 0 auto;
-  }
-  
-  /* CompanyRegistrationForm */
-  .company-registration-form {
-    max-width: 640px;
-    margin: 0 auto;
-  }
-  
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-  
-  .form-icon {
-    width: 16px;
-    height: 16px;
-  }
-  
-  .form-submit {
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 16px;
-  }
-  
-  /* ReviewRegistration */
-  .review-registration {
-    max-width: 640px;
-    margin: 0 auto;
-  }
-  
-  .review-content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .review-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  
-  .review-icon {
-    width: 20px;
-    height: 20px;
-    color: #666;
-  }
-  
-  .review-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #666;
-  }
-  
-  .review-value {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
-  }
-  
-  .review-logo-container {
-    width: 96px;
-    height: 96px;
-    margin-top: 8px;
-    border-radius: 4px;
-    border: 1px solid #d9d9d9;
-    background-color: #f9f9f9;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .review-logo {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-  
-  .review-placeholder {
-    font-size: 14px;
-    color: #999;
-    font-style: italic;
-    margin-top: 4px;
-  }
-  
-  .edit-button {
-    background-color: #fff;
-    border: 1px solid #d9d9d9;
-    color: #333;
-  }
-  
-  .edit-button:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .button-icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-  }
-  
-  /* RegistrationSuccess */
-  .registration-success {
-    max-width: 384px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  
-  .success-icon-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 12px;
-    border-radius: 50%;
-    background-color: rgba(56, 211, 159, 0.1);
-  }
-  
-  .success-icon {
-    width: 48px;
-    height: 48px;
-    color: #38d39f;
-  }
-  
-  .description-icon {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin-right: 4px;
-  }
-  
-  .company-name {
-    font-weight: 600;
-  }
+  font-family: 'Arial', sans-serif;
+  scroll-behavior: smooth;
+}
+
+.register-company-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: #f3f4f6;
+}
+
+.register-company-content {
+  width: 100%;
+  max-width: 896px;
+  margin: 0 auto;
+}
+
+/* CompanyRegistrationForm */
+.company-registration-form {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.card-content {
+  max-height: 60vh; /* Adjust as needed (e.g., 500px) */
+  overflow-y: auto;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-fields {
+  max-height: 60vh; /* Matches card-content, adjust as needed */
+  overflow-y: auto;
+}
+
+.form-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.form-submit {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 16px;
+}
+
+/* ReviewRegistration */
+.review-registration {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.review-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.review-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review-icon {
+  width: 20px;
+  height: 20px;
+  color: #666;
+}
+
+.review-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+}
+
+.review-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.review-logo-container {
+  width: 96px;
+  height: 96px;
+  margin-top: 8px;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  background-color: #f9f9f9;
+  overflow: hidden;
+  position: relative;
+}
+
+.review-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.review-placeholder {
+  font-size: 14px;
+  color: #999;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.edit-button {
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  color: #333;
+}
+
+.edit-button:hover {
+  background-color: #f0f0f0;
+}
+
+.button-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+/* RegistrationSuccess */
+.registration-success {
+  max-width: 384px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.success-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  border-radius: 50%;
+  background-color: rgba(56, 211, 159, 0.1);
+}
+
+.success-icon {
+  width: 48px;
+  height: 48px;
+  color: #38d39f;
+}
+
+.description-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+.company-name {
+  font-weight: 600;
+}

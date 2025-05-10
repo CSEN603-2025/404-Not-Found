@@ -9,10 +9,9 @@ export default function SelectType() {
   const handleSelect = (type) => {
     localStorage.setItem('userType', type);
     if (type === 'company') {
-      navigate('/register-company');
-    } else {
       navigate('/login');
     }
+
   };
 
   return (
