@@ -113,8 +113,8 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px; /* Smaller size */
-  height: 50px; /* Smaller size */
+  width: 40px; /* Smaller size */
+  height: 40px; /* Smaller size */
   padding: 4px; /* Adjust padding for a compact look */
   background: #fff; /* White background */
   border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
@@ -129,8 +129,8 @@ html, body {
 }
 
 .student-management-container .icon-button .action-icon {
-  width: 16px; /* Smaller icon size */
-  height: 16px; /* Smaller icon size */
+  width: 14px; /* Smaller icon size */
+  height: 14px; /* Smaller icon size */
   color: #6b7280; /* Default muted color for the icon */
 }
 
@@ -263,6 +263,14 @@ html, body {
   background: #0056b3;
 }
 
+/* General Button Styles */
+button {
+  border-radius: 50%; /* Fully rounded shape */
+  padding: 0.4rem 0.8rem; /* Smaller padding for compact size */
+  font-size: 0.9rem; /* Slightly smaller font size */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover and transition effects */
+}
+
 /* Base styles for the status badge */
 .status-badge {
   display: inline-block;
@@ -334,17 +342,10 @@ html, body {
   background-color: #28a745; /* Green background */
   color: #fff; /* White text */
   border: none;
-  padding: 8px; /* Adjust padding for compact size */
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Center the icon */
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 36px; /* Fixed width for square button */
-  height: 36px; /* Fixed height for square button */
-  border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
+  padding: 0.4rem 0.8rem; /* Smaller padding */
   border-radius: 50%; /* Fully rounded shape */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
 }
 
 .accept-button:hover {
@@ -356,27 +357,14 @@ html, body {
   background-color: #c82333;
   color: #fff; /* White text */
   border: none;
-  padding: 8px; /* Adjust padding for compact size */
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Center the icon */
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 36px; /* Fixed width for square button */
-  height: 36px; /* Fixed height for square button */
-  border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
+  padding: 0.4rem 0.8rem; /* Smaller padding */
   border-radius: 50%; /* Fully rounded shape */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
 }
 
 .reject-button:hover {
-  background-color: #c82333; /* Darker red on hover */
-}
-
-/* Icon inside buttons */
-.action-icon {
-  width: 16px;
-  height: 16px;
+  background-color: #a71d2a; /* Darker red on hover */
 }
 
 /* Appointment status */
@@ -388,4 +376,100 @@ html, body {
 .no-appointment-status {
   color: #6c757d; /* Grey for no requests */
   font-style: italic;
+}
+
+/* Call Popup Overlay */
+.call-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Call Popup Container */
+.call-popup {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 600px; /* Increased width for a larger popup */
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Call Screen Placeholder */
+.call-screen {
+  background: #f0f0f0;
+  height: 300px; /* Increased height for a larger screen */
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1.2rem; /* Larger font size for placeholder text */
+  color: #555;
+}
+
+/* Call Controls */
+.call-controls {
+  display: flex;
+  justify-content: space-between; /* Space between left and right controls */
+  align-items: center;
+  margin-top: 1rem;
+}
+
+/* Left Controls (Mute and Camera) */
+.left-controls {
+  display: flex;
+  gap: 1rem; /* Space between buttons */
+}
+
+/* Right Controls (Share Screen) */
+.right-controls {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Call Control Buttons */
+.call-control-button {
+  background: #ffffff;
+  color: #6b7280; /* Muted text color */
+  border: 1px solid #ddd; /* Light border */
+  padding: 0.4rem 0.8rem; /* Smaller padding */
+  border-radius: 30; /* Fully rounded shape */
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+}
+
+.call-control-button:hover {
+  background: #0056b3; /* Blue hover effect */
+  color: #fff; /* White text on hover */
+}
+
+/* End Call Button Container */
+.end-call-container {
+  display: flex;
+  justify-content: center; /* Center the button horizontally */
+  margin-top: 1.5rem; /* Add spacing above the button */
+}
+
+/* End Call Button */
+.end-call-button {
+  background: #dc3545; /* Red background */
+  color: #000000;
+  border: none;
+  padding: 0.6rem 1.2rem; /* Adjust padding for a larger button */
+  border-radius: 20%; /* Fully rounded shape */
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+}
+
+.end-call-button:hover {
+  background: #c82333; /* Darker red on hover */
 }

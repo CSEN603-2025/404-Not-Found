@@ -10,19 +10,53 @@ import { BriefcaseIcon } from '../components/ui/briefcaseicon';
 import { UsersIcon } from '../components/ui/usersicon';
 import { FileTextIcon } from '../components/ui/filetexticon';
 import { CalendarClockIcon } from '../components/ui/calendarclockicon';
+import BellIcon from '../components/ui/BellIcon'; // Import a bell icon for notifications
 import '../styles/ScadOfficePage.css';
 
 function ScadOfficePage() {
   const [isClient, setIsClient] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false); // State to toggle the notification popup
+  const [notifications, setNotifications] = useState([]); // State to store notifications
 
   useEffect(() => {
     setIsClient(true);
+
+    // Example: Add dummy notifications
+    setNotifications([
+      'John Doe has accepted your appointment request.',
+      'Jane Smith has rejected your appointment request.',
+      'Ahmed Ali has accepted your appointment request.',
+    ]);
   }, []);
 
   if (!isClient) return null;
 
   return (
     <div className="scad-office-container">
+      {/* Notifications Button */}
+      <div className="notifications-button-container">
+        <button
+          className="notifications-button"
+          onClick={() => setShowNotifications(!showNotifications)}
+        >
+          <BellIcon className="notifications-icon" />
+        </button>
+        {showNotifications && (
+          <div className="notifications-popup">
+            <h3>Notifications</h3>
+            <ul>
+              {notifications.length > 0 ? (
+                notifications.map((notification, index) => (
+                  <li key={index}>{notification}</li>
+                ))
+              ) : (
+                <li>No notifications available.</li>
+              )}
+            </ul>
+          </div>
+        )}
+      </div>
+
       <h1 className="scad-office-title">SCAD Office Central</h1>
       <p className="scad-office-description">
         Manage company applications, internships, students, and reports for the GUC Internship Program.
