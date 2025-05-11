@@ -20,7 +20,7 @@ function ReportManagement() {
   const [selectedReport, setSelectedReport] = useState(null);
 
   // Define valid statuses explicitly
-  const validStatuses = ['Pending', 'Flagged', 'Rejected', 'Accepted', 'all'];
+  const validStatuses = ['Submitted', 'Reviewed', 'Pending', 'All'];
   const statuses = validStatuses;
 
   // Filter reports based on selected filters
@@ -92,7 +92,7 @@ function ReportManagement() {
               <TableHeader>
                 <TableRow>
                   <TableCell>Name</TableCell>
-                  <TableCell>Title</TableCell> {/* Changed "Report Type" to "Title" */}
+                  <TableCell>Title</TableCell> 
                   <TableCell>Submission Date</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Actions</TableCell>
@@ -101,8 +101,8 @@ function ReportManagement() {
               <TableBody>
                 {filteredReports.map((report) => (
                   <TableRow key={report.id}>
-                    <TableCell>{report.studentName}</TableCell>
-                    <TableCell>{report.reportType}</TableCell> {/* Changed column name */}
+                    <TableCell>{report.student}</TableCell>
+                    <TableCell>{report.title}</TableCell> {/* Changed column name */}
                     <TableCell>{report.submissionDate}</TableCell>
                     <TableCell>
                       <Badge variant={getStatusBadgeVariant(report.status)}>
