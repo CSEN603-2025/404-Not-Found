@@ -3,15 +3,24 @@ import { Table, TableHeader, TableBody, TableRow, TableCell } from '../component
 import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
 import { EyeIcon } from '../components/ui/eyeicon';
-import { FilterIcon } from '../components/ui/filtericon'; // Import the FilterIcon component
-import { mockInternships } from '../data/mock-data';
+import { FilterIcon } from '../components/ui/filtericon';
+import { mockInternships } from '../data/mock-data-comp'; // Import the mock data
 import '../styles/InternshipListings.css';
 
 function InternshipListings() {
   const [internships, setInternships] = useState(mockInternships);
   const [searchTerm, setSearchTerm] = useState('');
+<<<<<<< HEAD
   const [selectedInternship, setSelectedInternship] = useState(null); // State for the selected internship
   const [isPopupOpen, setIsPopupOpen] = useState(false); // State to toggle the popup
+=======
+  const [selectedInternship, setSelectedInternship] = useState(null);
+  const [industryFilter, setIndustryFilter] = useState('');
+  const [durationFilter, setDurationFilter] = useState('');
+  const [paidFilter, setPaidFilter] = useState('');
+  const [paidChecked, setPaidChecked] = useState(false);
+  const [unpaidChecked, setUnpaidChecked] = useState(false);
+>>>>>>> 62ddc0c5a91633744a6dbaac089c0e4afaf40885
 
   const filteredInternships = internships.filter((internship) => {
     const matchesSearch =
@@ -20,7 +29,12 @@ function InternshipListings() {
         internship.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (internship.company &&
         internship.company.toLowerCase().includes(searchTerm.toLowerCase()));
-    return matchesSearch;
+
+    const matchesIndustry = !industryFilter || internship.industry === industryFilter;
+    const matchesDuration = !durationFilter || internship.duration === durationFilter;
+    const matchesPaid = !paidChecked || internship.paid === 'Paid';
+
+    return matchesSearch && matchesIndustry && matchesDuration && matchesPaid;
   });
 
   const handleViewDetails = (internship) => {
@@ -31,6 +45,17 @@ function InternshipListings() {
   const handleClosePopup = () => {
     setSelectedInternship(null); // Clear the selected internship
     setIsPopupOpen(false); // Close the popup
+  };
+
+  const handleSelect = (internship) => {
+    setSelectedInternship(internship.id === selectedInternship?.id ? null : internship);
+  };
+
+  const handleConfirmSelection = () => {
+    if (selectedInternship) {
+      console.log('Selected internship:', selectedInternship);
+      // Add your logic here to proceed with the selected internship
+    }
   };
 
   return (
@@ -52,9 +77,39 @@ function InternshipListings() {
             />
           </div>
         </div>
+        <div className="filter-controls" style={{ display: 'flex', gap: '1rem', margin: '1rem 0' }}>
+          <select value={industryFilter} onChange={e => setIndustryFilter(e.target.value)}>
+            <option value="">All Industries</option>
+            {[...new Set(internships.map(i => i.industry))].map(ind => (
+              <option key={ind} value={ind}>{ind}</option>
+            ))}
+          </select>
+          <select value={durationFilter} onChange={e => setDurationFilter(e.target.value)}>
+            <option value="">All Durations</option>
+            {[...new Set(internships.map(i => i.duration))].map(dur => (
+              <option key={dur} value={dur}>{dur}</option>
+            ))}
+          </select>
+          <label className="checkbox-container" style={{ display: 'flex', alignItems: 'center' }}>
+            <input
+              type="checkbox"
+              checked={paidChecked}
+              onChange={() => setPaidChecked((prev) => !prev)}
+            />
+            <svg viewBox="0 0 64 64" height="2em" width="2em">
+              <path
+                d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                pathLength="575.0541381835938"
+                className="checkbox-path"
+              ></path>
+            </svg>
+            <span style={{ marginLeft: 8 }}>Paid Only</span>
+          </label>
+        </div>
         <Table>
           <TableHeader>
             <TableRow>
+              <TableCell>Select</TableCell>
               <TableCell>Title</TableCell>
               <TableCell>Company</TableCell>
               <TableCell>Location</TableCell>
@@ -66,7 +121,26 @@ function InternshipListings() {
           <TableBody>
             {filteredInternships.length > 0 ? (
               filteredInternships.map((internship) => (
-                <TableRow key={internship.id}>
+                <TableRow 
+                  key={internship.id}
+                  className={selectedInternship?.id === internship.id ? 'selected-row' : ''}
+                >
+                  <TableCell>
+                    <label className="checkbox-container">
+                      <input
+                        type="checkbox"
+                        checked={selectedInternship?.id === internship.id}
+                        onChange={() => handleSelect(internship)}
+                      />
+                      <svg viewBox="0 0 64 64" height="2em" width="2em">
+                        <path
+                          d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                          pathLength="575.0541381835938"
+                          className="checkbox-path"
+                        ></path>
+                      </svg>
+                    </label>
+                  </TableCell>
                   <TableCell>{internship.title || 'N/A'}</TableCell>
                   <TableCell>{internship.company || 'N/A'}</TableCell>
                   <TableCell>{internship.location || 'N/A'}</TableCell>
@@ -84,11 +158,21 @@ function InternshipListings() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan="6">No internships found.</TableCell>
+                <TableCell colSpan="7">No internships found.</TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
+
+        <div className="selection-controls">
+          <Button
+            className={`confirm-button ${!selectedInternship ? 'disabled' : ''}`}
+            onClick={handleConfirmSelection}
+            disabled={!selectedInternship}
+          >
+            Confirm Selection
+          </Button>
+        </div>
       </div>
 
       {/* Popup for Internship Details */}

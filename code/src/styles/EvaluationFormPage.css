@@ -1,0 +1,47 @@
+.evaluation-form-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.evaluation-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.evaluation-form input,
+.evaluation-form select,
+.evaluation-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.submit-button {
+  background-color:
+   #4caf50;
+  color: white;
+  margin-left: 900px;
+ 
+  padding: 11px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

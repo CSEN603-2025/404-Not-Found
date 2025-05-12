@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabList, TabTrigger, TabContent } from '../components/ui/tabs';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import CompanyApplications from './CompanyApplications';
 import MyCompIntern from './MyCompIntern';
 import InternshipListings from './InternshipListings';
@@ -7,15 +8,20 @@ import StudentManagement from './StudentManagement';
 import ApplicaComp from './ApplicaComp';
 import ReportManagement from './ReportManagement';
 import InternshipCycleManagement from './InternshipCycleManagement';
+import DecisionTable from './DecisionTable';
+import InternshipStatusPage from './InternshipStatusPage';
+import EvaluationFormPage from './EvaluationFormPage';
+import JobPostPage from './JobPostPage';
 import { BuildingIcon } from '../components/ui/buildingicon';
 import { BriefcaseIcon } from '../components/ui/briefcaseicon';
 import { UsersIcon } from '../components/ui/usersicon';
 import { FileTextIcon } from '../components/ui/filetexticon';
 import { CalendarClockIcon } from '../components/ui/calendarclockicon';
-import '../styles/ScadOfficePage.css';
+import '../styles/CompanyDash.css';
 
 function ScadOfficePage() {
   const [isClient, setIsClient] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     setIsClient(true);
@@ -29,6 +35,12 @@ function ScadOfficePage() {
       <p className="scad-office-description">
         Manage company applications, internships, students, and reports for the GUC Internship Program.
       </p>
+      <button
+        className="job-post-button"
+        onClick={() => navigate('/job-posts')} // Redirect to JobPostPage
+      >
+        Create Post
+      </button>
       <Tabs defaultValue="company-applications">
         <TabList>
           <TabTrigger value="my-internships">
@@ -40,11 +52,14 @@ function ScadOfficePage() {
           <TabTrigger value="apllications-company">
             <UsersIcon className="tab-icon" /> Applications
           </TabTrigger>
-          <TabTrigger value="report-management">
-            <FileTextIcon className="tab-icon" /> Reports
+          <TabTrigger value="decision-table">
+            <FileTextIcon className="tab-icon" /> Action
           </TabTrigger>
-          <TabTrigger value="internship-cycle">
-            <CalendarClockIcon className="tab-icon" /> Cycle
+          <TabTrigger value="internship-status">
+            <CalendarClockIcon className="tab-icon" /> Enrolling Interns
+          </TabTrigger>
+          <TabTrigger value="evaluation-report">
+            <FileTextIcon className="tab-icon" /> Evaluation
           </TabTrigger>
         </TabList>
         <TabContent value="my-internships">
@@ -56,11 +71,14 @@ function ScadOfficePage() {
         <TabContent value="apllications-company">
           <ApplicaComp />
         </TabContent>
-        <TabContent value="report-management">
-          <ReportManagement />
+        <TabContent value="decision-table">
+          <DecisionTable />
         </TabContent>
-        <TabContent value="internship-cycle">
-          <InternshipCycleManagement />
+        <TabContent value="internship-status">
+          <InternshipStatusPage />
+        </TabContent>
+        <TabContent value="evaluation-report">
+          <EvaluationFormPage />
         </TabContent>
       </Tabs>
     </div>
