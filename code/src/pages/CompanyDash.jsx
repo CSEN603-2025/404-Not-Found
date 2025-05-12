@@ -17,7 +17,7 @@ import { BriefcaseIcon } from '../components/ui/briefcaseicon';
 import { UsersIcon } from '../components/ui/usersicon';
 import { FileTextIcon } from '../components/ui/filetexticon';
 import { CalendarClockIcon } from '../components/ui/calendarclockicon';
-import '../styles/ScadOfficePage.css';
+import '../styles/CompanyDash.css';
 
 function ScadOfficePage() {
   const [isClient, setIsClient] = useState(false);

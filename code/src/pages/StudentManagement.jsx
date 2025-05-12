@@ -8,10 +8,13 @@ import { EyeIcon } from '../components/ui/eyeicon';
 import { CalendarClockIcon } from '../components/ui/calendarclock'; // Import the calendar icon
 import { CheckIcon } from '../components/ui/checkicon'; // Import the Check icon
 import { XIcon } from '../components/ui/xicon'; // Import the X icon
+import  PhoneIcon from '../components/ui/phoneicon'; // Import the phone icon
 import { mockStudents, mockAppointmentRequests } from '../data/mock-data'; // Import the mock appointment requests
 import ScrollableComponent from '../components/ui/scroll';
 import StudentProfilePopup from '../components/ui/StudentProfilePopup'; // Import the new component
 import { FilterIcon } from '../components/ui/filtericon';
+import  MuteIcon from '../components/ui/muteicon'; // Import the mute icon
+import CameraIcon from '../components/ui/cameraicon';
 import '../styles/StudentManagement.css';
 
 function getStatusBadgeVariant(status) {
@@ -33,6 +36,8 @@ function StudentManagement() {
   const [appointmentPopup, setAppointmentPopup] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [appointmentRequests, setAppointmentRequests] = useState(mockAppointmentRequests); // Initialize with dummy data
+  const [callPopup, setCallPopup] = useState(false); // State to toggle the call popup
+  const [selectedStudentForCall, setSelectedStudentForCall] = useState(null); // State for the student being called
 
   const internshipStatuses = [...new Set(students.map((s) => s.internshipStatus)), 'all'];
 
@@ -88,6 +93,16 @@ function StudentManagement() {
   const handleRejectAppointment = (student) => {
     alert(`Appointment rejected for ${student.name}`);
     setAppointmentRequests((prev) => prev.filter((s) => s.id !== student.id)); // Remove the student from the requests list
+  };
+
+  const handleCallStudent = (student) => {
+    setSelectedStudentForCall(student); // Set the student being called
+    setCallPopup(true); // Show the call popup
+  };
+
+  const handleCloseCallPopup = () => {
+    setCallPopup(false); // Close the call popup
+    setSelectedStudentForCall(null); // Clear the selected student
   };
 
   // Generate random dates for the appointment selection
@@ -171,6 +186,12 @@ function StudentManagement() {
                           >
                             <CalendarClockIcon className="action-icon" />
                           </Button>
+                          <Button
+                            className="icon-button"
+                            onClick={() => handleCallStudent(student)}
+                          >
+                            <PhoneIcon className="action-icon" />
+                          </Button>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -215,6 +236,41 @@ function StudentManagement() {
             <button className="close-button" onClick={handleCloseAppointmentPopup}>
               Close
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Call Popup */}
+      {callPopup && selectedStudentForCall && (
+        <div className="call-popup-overlay">
+          <div className="call-popup">
+            <h2>Calling {selectedStudentForCall.name}</h2>
+            <div className="call-screen">
+              
+            </div>
+            <div className="call-controls">
+              <div className="left-controls">
+                <Button className="call-control-button">
+                  <MuteIcon className="action-icon" />
+                </Button>
+                <Button className="call-control-button">
+                  <CameraIcon className="action-icon" />
+                </Button>
+              </div>
+              <div className="right-controls">
+                <Button className="call-control-button">
+                  Share Screen
+                </Button>
+              </div>
+            </div>
+            <div className="end-call-container">
+              <Button
+                className="call-control-button end-call-button"
+                onClick={handleCloseCallPopup} // Close the popup when the button is clicked
+              >
+                <PhoneIcon className="action-icon" />
+              </Button>
+            </div>
           </div>
         </div>
       )}
