@@ -6,15 +6,12 @@ import RegisterCompany from './pages/RegisterCompany';
 import ScadOfficePage from './pages/ScadOfficePage';
 import SuccessC from './pages/SuccessC';
 import CompanyDash from './pages/CompanyDash';
-<<<<<<< HEAD
 import Student from './pages/student';
-=======
 import InternshipStatusPage from './pages/InternshipStatusPage';
 import DecisionTable from './pages/DecisionTable';
 import EvaluationListPage from './pages/EvaluationListPage';
 import EvaluationFormPage from './pages/EvaluationFormPage';
 import JobPostPage from './pages/JobPostPage';
->>>>>>> be12d93945a432258ae900956d7e57f97c8a3b68
 import './App.css';
 
 function App() {
@@ -24,20 +21,15 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register-company" element={<RegisterCompany />} />
       <Route path="/scad-office" element={<ScadOfficePage />} />
-       <Route path="/success" element={<SuccessC />} />
+      <Route path="/success" element={<SuccessC />} />
       <Route path="/company-dashboard" element={<CompanyDash />} />
-<<<<<<< HEAD
-      <Route path = "/student" element={<Student />} />
-
-      
-=======
+      <Route path="/student" element={<Student />} />
       <Route path="/decision-table" element={<DecisionTable />} />
       <Route path="/internship-status" element={<InternshipStatusPage />} />
-       <Route path="/evaluation-list" element={<EvaluationListPage />} />
-        <Route path="/evaluation-form" element={<EvaluationFormPage />} />
-        <Route path="/evaluation-form/:id" element={<EvaluationFormPage />} />
-      <Route path="/job-posts" element={<JobPostPage />} />      
->>>>>>> be12d93945a432258ae900956d7e57f97c8a3b68
+      <Route path="/evaluation-list" element={<EvaluationListPage />} />
+      <Route path="/evaluation-form" element={<EvaluationFormPage />} />
+      <Route path="/evaluation-form/:id" element={<EvaluationFormPage />} />
+      <Route path="/job-posts" element={<JobPostPage />} />
     </Routes>
   );
 }

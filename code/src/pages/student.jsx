@@ -4,13 +4,23 @@ import { BuildingIcon } from '../components/ui/buildingicon';
 import { BriefcaseIcon } from '../components/ui/briefcaseicon';
 import { UsersIcon } from '../components/ui/usersicon';
 import { FileTextIcon } from '../components/ui/filetexticon';
+import BellIcon from '../components/ui/BellIcon'; // Import a bell icon for notifications
 import '../styles/student.css';
 
 function Student() {
   const [isClient, setIsClient] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false); // State to toggle the notification popup
   const [suggestedCompanies, setSuggestedCompanies] = useState([]); // State to store suggested companies
   const [uploadedFiles, setUploadedFiles] = useState([]); // State to store uploaded files
-  const [appliedInternships, setAppliedInternships] = useState([]);
+  const [appliedInternships, setAppliedInternships] = useState([]); // State to store applied internships
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [companyEvaluations, setCompanyEvaluations] = useState([]);
+  const [editingEvaluation, setEditingEvaluation] = useState(null);
+  const [internshipReports, setInternshipReports] = useState([]);
+  const [editingReport, setEditingReport] = useState(null);
+  const [selectedMajor, setSelectedMajor] = useState('');
+  const [selectedSemester, setSelectedSemester] = useState('');
 
   useEffect(() => {
     setIsClient(true);
@@ -66,39 +76,6 @@ function Student() {
         status: 'Accepted',
         postedDate: '2025-02-15',
       },
-      {
-        id: 4,
-        title: 'Marketing Intern',
-        company: 'Marketify',
-        location: 'Los Angeles, CA',
-        status: 'Finalized',
-        postedDate: '2025-05-01',
-      },
-      // New internships
-      {
-        id: 5,
-        title: 'Data Analyst Intern',
-        company: 'Data Insights',
-        location: 'Chicago, IL',
-        status: 'Pending',
-        postedDate: '2025-05-05',
-      },
-      {
-        id: 6,
-        title: 'Graphic Design Intern',
-        company: 'Creative Studio',
-        location: 'Austin, TX',
-        status: 'Rejected',
-        postedDate: '2025-04-25',
-      },
-      {
-        id: 7,
-        title: 'Cybersecurity Intern',
-        company: 'SecureTech',
-        location: 'Seattle, WA',
-        status: 'Accepted',
-        postedDate: '2025-03-20',
-      },
     ]);
   }, []);
 
@@ -110,13 +87,106 @@ function Student() {
   const handleProfileSubmit = (e) => {
     e.preventDefault();
     alert('Profile updated successfully!');
-    // Here you can add logic to save the profile data to a database or API
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value.toLowerCase());
+  };
+
+  const handleFilterChange = (e) => {
+    setFilterStatus(e.target.value);
+  };
+
+  const filteredInternships = appliedInternships.filter((internship) => {
+    const matchesSearch =
+      internship.title.toLowerCase().includes(searchQuery) ||
+      internship.company.toLowerCase().includes(searchQuery);
+
+    const matchesFilter =
+      filterStatus === 'all' ||
+      (filterStatus === 'current' && internship.status === 'Accepted') ||
+      (filterStatus === 'completed' && internship.status === 'Completed');
+
+    return matchesSearch && matchesFilter;
+  });
+
+  const handleDeleteEvaluation = (id) => {
+    setCompanyEvaluations((prev) => prev.filter((evaluation) => evaluation.id !== id));
+  };
+
+  const handleAddEvaluation = () => {
+    const newEvaluation = {
+      id: companyEvaluations.length + 1,
+      companyName: '',
+      recommendation: '',
+      comments: '',
+    };
+    setCompanyEvaluations((prev) => [...prev, newEvaluation]);
+    setEditingEvaluation(newEvaluation.id);
+  };
+
+  const handleEditEvaluation = (id) => {
+    setEditingEvaluation(id);
+  };
+
+  const handleSaveEvaluation = (id, updatedEvaluation) => {
+    setCompanyEvaluations((prev) =>
+      prev.map((evaluation) =>
+        evaluation.id === id ? { ...evaluation, ...updatedEvaluation } : evaluation
+      )
+    );
+    setEditingEvaluation(null);
+  };
+
+  const handleAddReport = () => {
+    const newReport = {
+      id: internshipReports.length + 1,
+      title: '',
+      introduction: '',
+      body: '',
+    };
+    setInternshipReports((prev) => [...prev, newReport]);
+    setEditingReport(newReport.id);
+  };
+
+  const handleEditReport = (id) => {
+    setEditingReport(id);
+  };
+
+  const handleSaveReport = (id, updatedReport) => {
+    setInternshipReports((prev) =>
+      prev.map((report) =>
+        report.id === id ? { ...report, ...updatedReport } : report
+      )
+    );
+    setEditingReport(null);
+  };
+
+  const handleDeleteReport = (id) => {
+    setInternshipReports((prev) => prev.filter((report) => report.id !== id));
   };
 
   if (!isClient) return null;
 
   return (
     <div className="student-container">
+      <div className="notifications-button-container">
+        <button
+          className="notifications-button"
+          onClick={() => setShowNotifications(!showNotifications)}
+        >
+          <BellIcon className="notifications-icon" />
+        </button>
+        {showNotifications && (
+          <div className="notifications-popup">
+            <h3>Notifications</h3>
+            <ul>
+              <li>No notifications available.</li>
+            </ul>
+          </div>
+        )}
+      </div>
+
       <h1 className="student-title">Student Dashboard</h1>
       <p className="student-description">
         Access your internship applications, notifications, and profile details.
@@ -126,16 +196,21 @@ function Student() {
           <TabTrigger value="profile">
             <UsersIcon className="tab-icon" /> Profile
           </TabTrigger>
-          <TabTrigger value="majors">
-            <BriefcaseIcon className="tab-icon" /> Majors
-          </TabTrigger>
           <TabTrigger value="suggested-companies">
             <BriefcaseIcon className="tab-icon" /> Suggested Companies
           </TabTrigger>
           <TabTrigger value="applied-internships">
             <FileTextIcon className="tab-icon" /> Applied Internships
           </TabTrigger>
+          <TabTrigger value="evaluate-companies">
+            <BuildingIcon className="tab-icon" /> Evaluate Companies
+          </TabTrigger>
+          <TabTrigger value="internship-reports">
+            <FileTextIcon className="tab-icon" /> Internship Reports
+          </TabTrigger>
         </TabList>
+
+        {/* Profile Tab */}
         <TabContent value="profile">
           <form className="profile-form" onSubmit={handleProfileSubmit}>
             <div className="form-group">
@@ -184,6 +259,32 @@ function Student() {
                 onChange={handleFileUpload}
               />
             </div>
+            <div className="form-group">
+              <label htmlFor="majorSelect">Select Major</label>
+              <select
+                id="majorSelect"
+                value={selectedMajor}
+                onChange={(e) => setSelectedMajor(e.target.value)}
+              >
+                <option value="">-- Select a Major --</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Business Administration">Business Administration</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="semesterInput">Enter Semester</label>
+              <input
+                type="number"
+                id="semesterInput"
+                value={selectedSemester}
+                onChange={(e) => setSelectedSemester(e.target.value)}
+                min="1"
+                max="8"
+                placeholder="Enter semester number"
+              />
+            </div>
             <div className="uploaded-files">
               <h4>Uploaded Files:</h4>
               <ul>
@@ -197,35 +298,88 @@ function Student() {
             </button>
           </form>
         </TabContent>
-        <TabContent value="majors">
-          <div className="majors-container">
-            <h3>Select Your Major and Semester</h3>
-            <form>
-              <div className="form-group">
-                <label htmlFor="major">Major</label>
-                <select id="major">
-                  <option value="">Select a Major</option>
-                  <option value="Computer Science">Computer Science</option>
-                  <option value="Business Administration">Business Administration</option>
-                  <option value="Mechanical Engineering">Mechanical Engineering</option>
-                  <option value="Psychology">Psychology</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="semester">Semester</label>
-                <input
-                  type="number"
-                  id="semester"
-                  placeholder="Enter semester number"
-                  min="1"
-                />
-              </div>
-              <button type="submit" className="profile-submit-button">
-                Submit
-              </button>
-            </form>
+
+        {/* Evaluate Companies Tab */}
+        <TabContent value="evaluate-companies">
+          <div className="evaluation-list-container">
+            <h3>Evaluate Companies</h3>
+            <button className="add-evaluation-button" onClick={handleAddEvaluation}>
+              Add New Evaluation
+            </button>
+            <ul className="evaluation-list">
+              {companyEvaluations.map((evaluation) => (
+                <li key={evaluation.id} className="evaluation-item">
+                  {editingEvaluation === evaluation.id ? (
+                    <div className="evaluation-edit-form">
+                      <input
+                        type="text"
+                        placeholder="Company Name"
+                        defaultValue={evaluation.companyName}
+                        onChange={(e) =>
+                          (evaluation.companyName = e.target.value)
+                        }
+                      />
+                      <input
+                        type="text"
+                        placeholder="Recommendation"
+                        defaultValue={evaluation.recommendation}
+                        onChange={(e) =>
+                          (evaluation.recommendation = e.target.value)
+                        }
+                      />
+                      <textarea
+                        placeholder="Comments"
+                        defaultValue={evaluation.comments}
+                        onChange={(e) => (evaluation.comments = e.target.value)}
+                      />
+                      <button
+                        className="save-button"
+                        onClick={() =>
+                          handleSaveEvaluation(evaluation.id, evaluation)
+                        }
+                      >
+                        Save
+                      </button>
+                      <button
+                        className="cancel-button"
+                        onClick={() => setEditingEvaluation(null)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="evaluation-display">
+                      <h4>{evaluation.companyName}</h4>
+                      <p>
+                        <strong>Recommendation:</strong>{' '}
+                        {evaluation.recommendation}
+                      </p>
+                      <p>
+                        <strong>Comments:</strong> {evaluation.comments}
+                      </p>
+                      <div className="evaluation-actions">
+                        <button
+                          className="edit-button"
+                          onClick={() => handleEditEvaluation(evaluation.id)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="delete-button"
+                          onClick={() => handleDeleteEvaluation(evaluation.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
         </TabContent>
+
+        {/* Suggested Companies Tab */}
         <TabContent value="suggested-companies">
           <div className="suggested-companies">
             <h3>Suggested Companies</h3>
@@ -241,9 +395,29 @@ function Student() {
             </div>
           </div>
         </TabContent>
+
+        {/* Applied Internships Tab */}
         <TabContent value="applied-internships">
           <div className="applied-internships-container">
             <h3>Applied Internships</h3>
+            <div className="search-filter-container">
+              <input
+                type="text"
+                placeholder="Search by title or company..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                className="search-input"
+              />
+              <select
+                value={filterStatus}
+                onChange={handleFilterChange}
+                className="filter-select"
+              >
+                <option value="all">All</option>
+                <option value="current">Current Intern</option>
+                <option value="completed">Internship Complete</option>
+              </select>
+            </div>
             <div className="internship-table">
               <div className="table-header">
                 <div className="table-row">
@@ -256,7 +430,7 @@ function Student() {
                 </div>
               </div>
               <div className="table-body">
-                {appliedInternships.map((internship) => (
+                {filteredInternships.map((internship) => (
                   <div key={internship.id} className="table-row">
                     <div className="table-cell">{internship.title}</div>
                     <div className="table-cell">{internship.company}</div>
@@ -278,6 +452,110 @@ function Student() {
                 ))}
               </div>
             </div>
+          </div>
+        </TabContent>
+
+        {/* Internship Reports Tab */}
+        <TabContent value="internship-reports">
+          <div className="reports-list-container">
+            <h3>Internship Reports</h3>
+            <button className="add-report-button" onClick={handleAddReport}>
+              Add New Report
+            </button>
+            <ul className="reports-list">
+              {internshipReports.map((report) => (
+                <li key={report.id} className="report-item">
+                  {editingReport === report.id ? (
+                    <div className="report-edit-form">
+                      <input
+                        type="text"
+                        placeholder="Title"
+                        defaultValue={report.title}
+                        onChange={(e) => (report.title = e.target.value)}
+                      />
+                      <textarea
+                        placeholder="Introduction"
+                        defaultValue={report.introduction}
+                        onChange={(e) => (report.introduction = e.target.value)}
+                      />
+                      <textarea
+                        placeholder="Body"
+                        defaultValue={report.body}
+                        onChange={(e) => (report.body = e.target.value)}
+                      />
+                      {/* Dropdown for selecting courses */}
+                      <div className="form-group">
+                        <label htmlFor={`coursesSelect-${report.id}`}>
+                          Select Courses That Helped You
+                        </label>
+                        <select
+                          id={`coursesSelect-${report.id}`}
+                          multiple
+                          value={report.selectedCourses || []}
+                          onChange={(e) =>
+                            (report.selectedCourses = Array.from(
+                              e.target.selectedOptions,
+                              (option) => option.value
+                            ))
+                          }
+                        >
+                          <option value="Data Structures">Data Structures</option>
+                          <option value="Algorithms">Algorithms</option>
+                          <option value="Database Systems">Database Systems</option>
+                          <option value="Operating Systems">Operating Systems</option>
+                          <option value="Software Engineering">
+                            Software Engineering
+                          </option>
+                          <option value="Machine Learning">Machine Learning</option>
+                        </select>
+                      </div>
+                      <div className="report-actions">
+                        <button
+                          className="save-button"
+                          onClick={() => handleSaveReport(report.id, report)}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className="cancel-button"
+                          onClick={() => setEditingReport(null)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="report-display">
+                      <h4>{report.title}</h4>
+                      <p>
+                        <strong>Introduction:</strong> {report.introduction}
+                      </p>
+                      <p>
+                        <strong>Body:</strong> {report.body}
+                      </p>
+                      <p>
+                        <strong>Courses That Helped:</strong>{' '}
+                        {report.selectedCourses?.join(', ') || 'None selected'}
+                      </p>
+                      <div className="report-actions">
+                        <button
+                          className="edit-button"
+                          onClick={() => handleEditReport(report.id)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="delete-button"
+                          onClick={() => handleDeleteReport(report.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
         </TabContent>
       </Tabs>
