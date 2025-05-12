@@ -1,0 +1,410 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  @apply overflow-y-auto !important;
+}
+
+.student-management-container {
+  @apply border border-border rounded-lg bg-card text-card-foreground p-6 min-h-screen;
+}
+
+/* Position the filter-row to the right of the table-container */
+.student-management-container .filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 16px; /* Add spacing below the filter-row */
+}
+
+/* Style the filter-container */
+.student-management-container .filter-container {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Add spacing between the filter elements inside the container */
+  padding: 5px;
+
+}
+
+/* Position the filter-icon just to the left of the filter-container */
+.student-management-container .filter-icon {
+ 
+  margin-right: -1px; /* Add spacing between the icon and the container */
+  position: static; /* Let the icon follow the flexbox layout */
+  color: #9c9da0; /* Example muted foreground */
+  flex-shrink: 0; /* Prevent the icon from shrinking */
+  top: 50%; /* Center the icon vertically */
+  transform: translateY(-50%) , translateX(-100%) ; /* Adjust for vertical centering */
+}
+
+.student-management-container .select-trigger {
+  @apply pl-3 pr-3 py-2 w-full md:w-[200px] text-sm bg-transparent border-none focus:ring-2 focus:ring-ring;
+  display: flex; /* Ensure the trigger is a flex container */
+  align-items: center; /* Align the text vertically with the icon */
+  gap: 12px; /* Add spacing between the icon and the text */
+}
+
+.student-management-container .select-value {
+  @apply text-foreground; /* Ensure the text color is applied */
+  flex-grow: 1; /* Allow the text to take up available space */
+}
+
+.student-management-container .select-content {
+  @apply w-full md:w-[200px] bg-popover border border-border rounded-md shadow-lg max-h-60 overflow-y-auto;
+
+}
+
+.student-management-container .select-item {
+  @apply px-4 py-2 text-xs whitespace-normal break-words;
+}
+
+.student-management-container .table-container {
+  @apply overflow-y-auto border border-border rounded-md;
+  display: block; /* Ensure the container behaves as a block element */
+  
+  /* Hide scrollbar for WebKit-based browsers */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.student-management-container .table-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Edge */
+}
+
+.student-management-container .table {
+  @apply w-full border-collapse table-fixed; /* Use table-fixed for consistent column widths */
+}
+
+.student-management-container .table-header {
+  @apply bg-muted sticky top-0; /* Make the header sticky for better UX */
+  z-index: 10; /* Ensure the header stays above the content */
+}
+
+.student-management-container .table-row {
+  @apply border-b border-border/50;
+}
+
+.student-management-container .student-table-row:hover {
+  @apply bg-muted/50;
+}
+
+.student-management-container .table-cell {
+  @apply p-3 align-top; /* Ensure proper padding and alignment */
+  word-wrap: break-word; /* Break long words to prevent overflow */
+  white-space: normal; /* Allow text to wrap within cells */
+  overflow: hidden; /* Prevent content from overflowing */
+  text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+}
+
+.student-management-container .student-name-cell {
+  @apply font-medium;
+}
+
+.student-management-container .avatar-name-wrapper {
+  @apply flex items-center gap-3;
+}
+
+.student-management-container .avatar-name-wrapper img {
+  @apply h-8 w-8 rounded-full object-cover;
+}
+
+.student-management-container .icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Smaller size */
+  height: 50px; /* Smaller size */
+  padding: 4px; /* Adjust padding for a compact look */
+  background: #fff; /* White background */
+  border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
+  border-radius: 50%; /* Fully rounded shape */
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease; /* Smooth hover effect */
+}
+
+.student-management-container .icon-button:hover {
+  background: #13eb46; /* Green hover effect */
+  border-color: #f7fffd; /* Optional border color change on hover */
+}
+
+.student-management-container .icon-button .action-icon {
+  width: 16px; /* Smaller icon size */
+  height: 16px; /* Smaller icon size */
+  color: #6b7280; /* Default muted color for the icon */
+}
+
+.student-management-container .icon-button:hover .action-icon {
+  color: #fff; /* Change icon color to white on hover */
+}
+
+.student-management-container .badge[variant="default"] {
+  @apply bg-primary text-primary-foreground;
+}
+
+.student-management-container .badge[variant="outline"] {
+  @apply border border-border text-foreground;
+}
+
+.student-management-container .badge[variant="secondary"] {
+  @apply bg-secondary text-secondary-foreground;
+}
+
+.student-management-container .badge[variant="destructive"] {
+  @apply bg-destructive text-destructive-foreground;
+}
+
+.student-management-container .action-icon {
+  @apply w-4 h-4;
+}
+
+.student-management-container .student-profile-modal {
+  @apply max-w-md w-full p-6 bg-card border border-border rounded-lg shadow-lg;
+}
+
+.student-management-container .student-profile-dialog-title {
+  @apply text-xl font-semibold;
+}
+
+.student-management-container .student-profile-dialog-major {
+  @apply text-muted-foreground;
+}
+
+.student-management-container .student-profile-avatar-large {
+  @apply w-12 h-12 rounded-full object-cover mb-3;
+}
+
+.student-management-container .details-grid {
+  @apply grid gap-2 text-sm py-4;
+}
+
+.student-management-container .details-grid .label {
+  @apply font-medium mr-2;
+}
+
+.student-management-container .button:not(.icon-button) {
+  @apply px-4 py-2 rounded-md border-none cursor-pointer flex items-center gap-2;
+}
+
+.student-management-container .button[variant="outline"] {
+  @apply border border-border bg-transparent text-foreground hover:bg-muted;
+}
+
+.student-management-container .button[variant="secondary"] {
+  @apply bg-secondary text-secondary-foreground hover:bg-secondary/90;
+}
+
+.controls-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.search-input {
+  flex: 1;
+  max-width: 60%;
+  padding: 6px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filter-select {
+  margin-left: 10px;
+  padding: 6px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.pop-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.pop {
+  width: 400px;
+  background: #fff;
+  border-radius: 6px;
+  position: relative;
+  text-align: center;
+  padding: 20px 30px;
+  color: #333;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pop h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.pop p {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.date-button {
+  margin: 5px;
+  padding: 10px 15px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.date-button:hover {
+  background: #0056b3;
+}
+
+.close-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background: #0056b3;
+}
+
+/* Base styles for the status badge */
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px; /* Adjust padding for a pill-like shape */
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 9999px; /* Fully rounded shape */
+  text-align: center;
+  min-width: 80px; /* Ensure consistent size */
+  color: #fff; /* Default white text for all statuses */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+}
+
+/* Green for "Completed" */
+.status-completed {
+  background-color: #28a745; /* Green background */
+}
+
+.status-completed:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Red for "No Offer" */
+.status-no-offer {
+  background-color: #dc3545; /* Red background */
+}
+
+.status-no-offer:hover {
+  background-color: #c82333; /* Darker red on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Grey for other statuses */
+.status-other {
+  background-color: #6c757d; /* Grey background */
+}
+
+.status-other:hover {
+  background-color: #5a6268; /* Darker grey on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Actions container to align buttons */
+.actions-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Add spacing between buttons */
+}
+
+/* Small button for "Request an Appointment" */
+.small-button {
+  padding: 4px 8px; /* Smaller padding for a compact look */
+  font-size: 0.20rem; /* Smaller font size */
+  background-color: #007bff; /* Blue background */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.small-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Accept button */
+.accept-button {
+  background-color: #28a745; /* Green background */
+  color: #fff; /* White text */
+  border: none;
+  padding: 8px; /* Adjust padding for compact size */
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the icon */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 36px; /* Fixed width for square button */
+  height: 36px; /* Fixed height for square button */
+  border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
+  border-radius: 50%; /* Fully rounded shape */
+}
+
+.accept-button:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+/* Reject button */
+.reject-button {
+  background-color: #c82333;
+  color: #fff; /* White text */
+  border: none;
+  padding: 8px; /* Adjust padding for compact size */
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the icon */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 36px; /* Fixed width for square button */
+  height: 36px; /* Fixed height for square button */
+  border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
+  border-radius: 50%; /* Fully rounded shape */
+}
+
+.reject-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+/* Icon inside buttons */
+.action-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Appointment status */
+.appointment-status {
+  color: #28a745; /* Green for requested appointments */
+  font-weight: bold;
+}
+
+.no-appointment-status {
+  color: #6c757d; /* Grey for no requests */
+  font-style: italic;
+}

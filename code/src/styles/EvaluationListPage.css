@@ -1,0 +1,143 @@
+.evaluation-list-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.add-evaluation-button {
+  background-color: #4caf50;
+  color: white;
+  margin-bottom: 11px;
+  padding: 9px 11px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.evaluation-list {
+  list-style: none;
+  padding: 0;
+}
+
+.evaluation-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+/* General styles for buttons in evaluation-actions */
+.evaluation-actions {
+  display: flex; /* Use flexbox to align buttons horizontally */
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 10px; /* Add spacing between the buttons */
+  padding: 10px 0; /* Add some padding for spacing */
+}
+
+/* Specific styles for the Edit button */
+.edit-button {
+  width: 170px; /* Match the width of the Delete button */
+  height: 40px; /* Match the height of the Delete button */
+  border-radius: 5px;
+  border: none;
+  transition: all 0.5s ease-in-out;
+  font-size: 18px; /* Match the font size of the Delete button */
+  font-family: Verdana, Geneva, Tahoma, sans-serif; /* Match the font */
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center text and icon */
+  background: #4caf50; /* Green color for Edit button */
+  color: #f5f5f5; /* Light text color */
+  position: relative;
+}
+
+.edit-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  box-shadow: 0 0 20px 0px #2e2e2e3a;
+}
+
+.edit-button .icon {
+  position: absolute;
+  height: 40px;
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+}
+
+.edit-button .text {
+  transform: translateX(55px);
+}
+
+.edit-button:hover .icon {
+  width: 175px;
+}
+
+.edit-button:hover .text {
+  transition: all 0.5s;
+  opacity: 0;
+}
+
+.edit-button:focus {
+  outline: none;
+}
+
+.edit-button:active .icon {
+  transform: scale(0.85);
+}
+
+/* Specific styles for the Delete button */
+.delete-button {
+  width: 170px; /* Match the width of the Edit button */
+  height: 40px; /* Match the height of the Edit button */
+  cursor: pointer;
+  font-size: 18px; /* Match the font size of the Edit button */
+  font-family: Verdana, Geneva, Tahoma, sans-serif; /* Match the font */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center text and icon */
+  background: #e62222; /* Red color for Delete button */
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.delete-button:hover {
+  background: #ff3636; /* Hover color for red */
+}
+
+.delete-button .icon {
+  position: absolute;
+  height: 40px;
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+}
+
+.delete-button .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+.delete-button:hover .icon {
+  width: 150px;
+  border-left: none;
+  transform: translateX(0);
+}
+
+.delete-button:hover .text {
+  color: transparent;
+}
+
+.delete-button:focus {
+  outline: none;
+}
+
+.delete-button:active .icon {
+  transform: scale(0.85);
+}
