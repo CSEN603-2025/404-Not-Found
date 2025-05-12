@@ -182,7 +182,6 @@ Card {
     border-radius: 4px;
   }
 
-<<<<<<< HEAD
   /* Popup Overlay */
   .pop-overlay {
     position: fixed;
@@ -221,7 +220,8 @@ Card {
     background: #007bff;
     color: #fff;
     border: none;
-=======
+  }
+
   .selected-row {
     background-color: rgba(76, 175, 80, 0.1);
   }
@@ -237,15 +237,15 @@ Card {
     background-color: #4caf50;
     color: white;
     padding: 0.5rem 1rem;
->>>>>>> 62ddc0c5a91633744a6dbaac089c0e4afaf40885
     border-radius: 4px;
     cursor: pointer;
   }
 
-<<<<<<< HEAD
   .close-button:hover {
     background: #0056b3;
-=======
+  }
+
+  
   .confirm-button.disabled {
     background-color: #cccccc;
     cursor: not-allowed;
@@ -285,5 +285,4 @@ Card {
     padding: 0.5em;
     border-radius: 4px;
     border: 1px solid #ccc;
->>>>>>> 62ddc0c5a91633744a6dbaac089c0e4afaf40885
   }
