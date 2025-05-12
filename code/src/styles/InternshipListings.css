@@ -181,3 +181,63 @@ Card {
     border: 1px solid #e0e0e0;
     border-radius: 4px;
   }
+
+  .selected-row {
+    background-color: rgba(76, 175, 80, 0.1);
+  }
+
+  .selection-controls {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+
+  .confirm-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .confirm-button.disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+
+  .checkbox-container {
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 10px;
+  }
+
+  .checkbox-container input {
+    display: none;
+  }
+
+  .checkbox-container svg {
+    overflow: visible;
+  }
+
+  .checkbox-path {
+    fill: none;
+    stroke: #4caf50;
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+    stroke-dasharray: 241 9999999;
+    stroke-dashoffset: 0;
+  }
+
+  .checkbox-container input:checked ~ svg .checkbox-path {
+    stroke-dasharray: 70.5096664428711 9999999;
+    stroke-dashoffset: -262.2723388671875;
+  }
+
+  .filter-controls select {
+    padding: 0.5em;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
