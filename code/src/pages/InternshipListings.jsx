@@ -10,6 +10,8 @@ import '../styles/InternshipListings.css';
 function InternshipListings() {
   const [internships, setInternships] = useState(mockInternships);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedInternship, setSelectedInternship] = useState(null); // State for the selected internship
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // State to toggle the popup
 
   const filteredInternships = internships.filter((internship) => {
     const matchesSearch =
@@ -22,7 +24,13 @@ function InternshipListings() {
   });
 
   const handleViewDetails = (internship) => {
-    console.log(`Viewing internship: ${internship.title}`);
+    setSelectedInternship(internship); // Set the selected internship
+    setIsPopupOpen(true); // Open the popup
+  };
+
+  const handleClosePopup = () => {
+    setSelectedInternship(null); // Clear the selected internship
+    setIsPopupOpen(false); // Close the popup
   };
 
   return (
@@ -51,7 +59,7 @@ function InternshipListings() {
               <TableCell>Company</TableCell>
               <TableCell>Location</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Posted Date</TableCell>
+              <TableCell>Duration</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHeader>
@@ -63,7 +71,7 @@ function InternshipListings() {
                   <TableCell>{internship.company || 'N/A'}</TableCell>
                   <TableCell>{internship.location || 'N/A'}</TableCell>
                   <TableCell>{internship.status || 'N/A'}</TableCell>
-                  <TableCell>{internship.postedDate || 'N/A'}</TableCell>
+                  <TableCell>{internship.Duration || 'N/A'}</TableCell>
                   <TableCell>
                     <Button
                       className="icon-button"
@@ -82,6 +90,25 @@ function InternshipListings() {
           </TableBody>
         </Table>
       </div>
+
+      {/* Popup for Internship Details */}
+      {isPopupOpen && selectedInternship && (
+        <div className="pop-overlay">
+          <div className="pop">
+            <h2>Internship Details</h2>
+            <p><strong>Type:</strong> {selectedInternship.Type || 'N/A'}</p>
+            <p><strong>Title:</strong> {selectedInternship.title || 'N/A'}</p>
+            <p><strong>Company:</strong> {selectedInternship.company || 'N/A'}</p>
+            <p><strong>Location:</strong> {selectedInternship.location || 'N/A'}</p>
+            <p><strong>Status:</strong> {selectedInternship.status || 'N/A'}</p>
+            <p><strong>ExpectedSalary:</strong> {selectedInternship.expectedSalary || 'N/A'}</p>
+            <p><strong>Skills:</strong> {selectedInternship.Skills || 'N/A'}</p>
+            <p><strong>Duration:</strong> {selectedInternship.Duration || 'N/A'}</p>
+            <p><strong>Description:</strong> {selectedInternship.description || 'No description available'}</p>
+            <button className="close-button" onClick={handleClosePopup}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

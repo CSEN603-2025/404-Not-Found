@@ -89,8 +89,8 @@
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 300px;
-    padding: 1rem;
+    width: 400px; /* Increased width */
+    padding: 1.5rem; /* Increased padding */
     z-index: 1000;
   }
   
@@ -115,3 +115,152 @@
   .notifications-popup ul li:last-child {
     margin-bottom: 0;
   }
+  
+  /* Incoming Call Section */
+  .incoming-call {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+
+  }
+  
+  /* Incoming Call Header */
+  .incoming-call-header {
+    display: flex;
+    justify-content: flex-start; /* Align text and buttons to the left */
+    align-items: center; /* Vertically align buttons with the text */
+    gap: 1rem; /* Add space between the text and buttons */
+  }
+  
+  /* Call Buttons */
+  .call-buttons {
+    display: flex;
+    gap: 0.5rem; /* Space between buttons */
+  }
+  
+  .answer-button,
+  .reject-button {
+    display: flex;
+    align-items: right;
+    justify-content: center;
+    background: #28a745; /* Default green for Answer */
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 50%; /* Fully rounded buttons */
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 40px; /* Ensure consistent size */
+    height: 40px; /* Ensure consistent size */
+  }
+  
+  .answer-button:hover {
+    background: #218838; /* Darker green on hover */
+  }
+  
+  .reject-button {
+    background: #dc3545; /* Red background */
+  }
+  
+  .reject-button:hover {
+    background: #c82333; /* Darker red on hover */
+  }
+  
+  /* Phone Icon */
+  .action-icon {
+    width: 20px; /* Consistent icon size */
+    height: 20px; /* Consistent icon size */
+  }
+  
+  /* Call Popup Overlay */
+  .call-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Call Popup Container */
+  .call-popup {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    width:500px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Call Screen Placeholder */
+  .call-screen {
+    background: #f0f0f0;
+    height: 200px;
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  /* Call Controls */
+  .call-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
+  /* Left Controls (Mute and Camera) */
+  .left-controls {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  /* Right Controls (Share Screen) */
+  .right-controls {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  /* Call Control Buttons */
+  .call-control-button {
+    background: #ffffff;
+    color: #6b7280;
+    border: 1px solid #ddd;
+    padding: 0.4rem 0.8rem;
+    border-radius: 30%;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .call-control-button:hover {
+    background: #0056b3;
+    color: #fff;
+  }
+  
+  /* End Call Button */
+  .end-call-button {
+    margin-top: 1rem;
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .end-call-button:hover {
+    background: #c82333;
+  }
+

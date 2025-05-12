@@ -114,46 +114,64 @@ Card {
     gap: 0.5rem;
   }
   
+  /* Accept Button */
   .accept-button {
-    background-color: #28a745; /* Green background */
-    color: #fff; /* White text */
-    border: none;
-    padding: 8px; /* Adjust padding for compact size */
-    border-radius: 4px;
     display: flex;
     align-items: center;
-    justify-content: center; /* Center the icon */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    justify-content: center;
     width: 36px; /* Fixed width for square button */
     height: 36px; /* Fixed height for square button */
+    padding: 4px; /* Adjust padding for a compact look */
+    background: transparent; /* White background */
     border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
     border-radius: 50%; /* Fully rounded shape */
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease; /* Smooth hover effect */
   }
   
   .accept-button:hover {
-    background-color: #218838; /* Darker green on hover */
+    background: #3eea00; /* Green hover effect */
+    border-color: #f7fffd; /* Optional border color change on hover */
   }
   
+  .accept-button .action-icon {
+    width: 16px; /* Smaller icon size */
+    height: 16px; /* Smaller icon size */
+    color: #40ff00; /* Default muted color for the icon (visible on white background) */
+  }
+  
+  .accept-button:hover .action-icon {
+    color: #fff; /* Change icon color to white on hover */
+  }
+  
+  /* Reject Button */
   .reject-button {
-    background-color: #c82333;
-    color: #fff; /* White text */
-    border: none;
-    padding: 8px; /* Adjust padding for compact size */
-    border-radius: 4px;
     display: flex;
     align-items: center;
-    justify-content: center; /* Center the icon */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    justify-content: center;
     width: 36px; /* Fixed width for square button */
     height: 36px; /* Fixed height for square button */
+    padding: 4px; /* Adjust padding for a compact look */
+    background: #770000; /* White background */
     border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
     border-radius: 50%; /* Fully rounded shape */
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease; /* Smooth hover effect */
   }
   
   .reject-button:hover {
-    background-color: #c82333; /* Darker red on hover */
+    background: #dc3545; /* Red hover effect */
+    border-color: #f7fffd; /* Optional border color change on hover */
+  }
+  
+  .reject-button .action-icon {
+    width: 16px; /* Smaller icon size */
+    height: 16px; /* Smaller icon size */
+    color: #ffffff; /* Default muted color for the icon */
+  }
+  
+  .reject-button:hover .action-icon {
+    color: #fff; /* Change icon color to white on hover */
   }
   
   Badge[variant="default"] {
