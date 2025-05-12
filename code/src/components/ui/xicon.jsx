@@ -6,7 +6,7 @@ export const XIcon = ({ className, ...props }) => {
       className={`w-4 h-4 ${className}`}
       viewBox="0 0 24 24"
       fill="white"
-      stroke="white"
+      stroke="currentColor"
       strokeWidth="2"
       {...props}
     >

@@ -48,7 +48,8 @@
 .tab-icon {
     width: 1rem;
     height: 1rem;
-}
+  }
+
 
 /* Job post button */
 .job-post-button {
@@ -65,10 +66,10 @@
 
 .job-post-button:hover {
     background-color: #45a049;
-}
-
-/* Notifications button container */
-.notifications-button-container {
+    }
+  
+  /* Notifications button container */
+  .notifications-button-container {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -132,4 +133,5 @@
 
 .notifications-popup ul li:last-child {
     margin-bottom: 0;
-}
+
+  }

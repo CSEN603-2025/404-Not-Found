@@ -9,6 +9,8 @@ import { EyeIcon } from '../components/ui/eyeicon';
 import { SearchIcon } from '../components/ui/searchicon';
 import { FilterIcon } from '../components/ui/filtericon';
 import { mockCompanies, mockApplications } from '../data/mock-data';
+import { CheckIcon } from '../components/ui/checkicon';
+import { XIcon } from '../components/ui/xicon';
 import '../styles/CompanyApplications.css';
 
 function CompanyApplications() {
@@ -37,6 +39,22 @@ function CompanyApplications() {
   const handleCloseDetailsPopup = () => {
     setSelectedApplication(null); // Clear the selected application
     setIsDetailsPopupOpen(false); // Close the popup
+  };
+
+  const handleAcceptApplication = (applicationId) => {
+    setApplications((prevApplications) =>
+      prevApplications.map((app) =>
+        app.id === applicationId ? { ...app, status: 'Accepted' } : app
+      )
+    );
+  };
+
+  const handleRejectApplication = (applicationId) => {
+    setApplications((prevApplications) =>
+      prevApplications.map((app) =>
+        app.id === applicationId ? { ...app, status: 'Rejected' } : app
+      )
+    );
   };
 
   const getStatusBadgeVariant = (status) => {
@@ -119,6 +137,18 @@ function CompanyApplications() {
                         onClick={() => handleViewDetails(app)}
                       >
                         <EyeIcon className="action-icon" />
+                      </Button>
+                      <Button
+                        className="accept-button"
+                        onClick={() => handleAcceptApplication(app.id)}
+                      >
+                        <CheckIcon className="action-icon" />
+                      </Button>
+                      <Button
+                        className="reject-button"
+                        onClick={() => handleRejectApplication(app.id)}
+                      >
+                        <XIcon className="action-icon" />
                       </Button>
                     </div>
                   </TableCell>

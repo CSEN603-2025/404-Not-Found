@@ -11,12 +11,18 @@ import { UsersIcon } from '../components/ui/usersicon';
 import { FileTextIcon } from '../components/ui/filetexticon';
 import { CalendarClockIcon } from '../components/ui/calendarclockicon';
 import BellIcon from '../components/ui/BellIcon'; // Import a bell icon for notifications
+import PhoneIcon from '../components/ui/phoneicon'; // Import a phone icon for incoming call
+import MuteIcon from '../components/ui/muteicon'; // Import a mute icon
+import CameraIcon from '../components/ui/cameraicon'; // Import a camera icon
+import {Button} from '../components/ui/button'; // Import a button component
 import '../styles/ScadOfficePage.css';
 
 function ScadOfficePage() {
   const [isClient, setIsClient] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false); // State to toggle the notification popup
   const [notifications, setNotifications] = useState([]); // State to store notifications
+  const [callPopup, setCallPopup] = useState(false); // State to toggle the call popup
+  const [callerName, setCallerName] = useState(null); // State for the caller's name
 
   useEffect(() => {
     setIsClient(true);
@@ -25,9 +31,22 @@ function ScadOfficePage() {
     setNotifications([
       'John Doe has accepted your appointment request.',
       'Jane Smith has rejected your appointment request.',
-      'Ahmed Ali has accepted your appointment request.',
+      'Ahmed is Calling You',
     ]);
   }, []);
+
+  const handleAcceptCall = (callerName) => {
+    setCallerName(callerName); // Set the caller's name
+    setCallPopup(true); // Show the call popup
+
+    // Remove the "Ahmed is Calling" notification
+    setNotifications((prev) => prev.filter((notification) => notification !== 'Ahmed is Calling You'));
+  };
+
+  const handleRejectCall = () => {
+    // Remove the "Ahmed is Calling" notification
+    setNotifications((prev) => prev.filter((notification) => notification !== 'Ahmed is Calling You'));
+  };
 
   if (!isClient) return null;
 
@@ -41,6 +60,7 @@ function ScadOfficePage() {
         >
           <BellIcon className="notifications-icon" />
         </button>
+        {/* Notifications Popup */}
         {showNotifications && (
           <div className="notifications-popup">
             <h3>Notifications</h3>
@@ -53,9 +73,70 @@ function ScadOfficePage() {
                 <li>No notifications available.</li>
               )}
             </ul>
+
+            {/* Incoming Call Section */}
+            {notifications.includes('Ahmed is Calling You') && (
+              <div className="incoming-call">
+                <div className="incoming-call-header">
+                  <h4>Ahmed is Calling You</h4>
+                  <div className="call-buttons">
+                    <button
+                      className="answer-button"
+                      onClick={() => handleAcceptCall('Ahmed')}
+                    >
+                      <PhoneIcon className="action-icon" />
+                    </button>
+                    <button
+                      className="reject-button"
+                      onClick={handleRejectCall}
+                    >
+                      <PhoneIcon className="action-icon" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
+
+      {/* Call Popup */}
+      {callPopup && callerName && (
+        <div className="call-popup-overlay">
+          <div className="call-popup">
+            <h2>Calling {callerName}</h2>
+            <div className="call-screen">
+              {/* Call screen content */}
+            </div>
+            <div className="call-controls">
+              <div className="left-controls">
+                <Button className="call-control-button">
+                  <MuteIcon className="action-icon" />
+                </Button>
+                <Button className="call-control-button">
+                  <CameraIcon className="action-icon" />
+                </Button>
+              </div>
+              <div className="right-controls">
+                <Button className="call-control-button">
+                  Share Screen
+                </Button>
+              </div>
+            </div>
+            <div className="end-call-container">
+              <Button
+                className="call-control-button end-call-button"
+                onClick={() => {
+                  setCallPopup(false); // Close the popup
+                  setCallerName(null); // Clear the caller's name
+                }}
+              >
+                <PhoneIcon className="action-icon" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <h1 className="scad-office-title">SCAD Office Central</h1>
       <p className="scad-office-description">

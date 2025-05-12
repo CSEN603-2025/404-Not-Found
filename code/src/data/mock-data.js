@@ -79,8 +79,11 @@ export const mockInternships = [
     company: 'Tech Corp',
     location: 'Remote',
     status: 'Open',
-    postedDate: '2025-04-01',
+    Duration: '2025-04-01 - 2025-05-01',
     description: 'Develop cutting-edge AI applications.',
+    Type: 'Paid',
+    expectedSalary: '3000',
+    Skills: 'programming , team work'
   },
   {
     id: 2,
@@ -88,8 +91,11 @@ export const mockInternships = [
     company: 'Health Inc',
     location: 'New York, NY',
     status: 'Closed',
-    postedDate: '2025-03-10',
+    Duration: '2025-03-10 - 2025-04-10',
     description: 'Assist in patient care systems.',
+    Type: 'Paid',
+    expectedSalary: '2000',
+    Skills: 'Machine Learning , UI/UX '
   },
   {
     id: 3,
@@ -97,8 +103,10 @@ export const mockInternships = [
     company: 'Edu Solutions',
     location: 'Boston, MA',
     status: 'Open',
-    postedDate: '2025-02-15',
+    Duration: '2025-02-15 - 2025-03-15',
     description: 'Support online course development.',
+    Type: 'unpaid',
+    Skills: 'programming , Web Development'
   },
 ];
 
@@ -195,5 +203,47 @@ export const mockAppointmentRequests = [
     name: 'Ahmed Ali',
     major: 'Mechanical Engineering',
     date: '2025-07-22',
+  },
+];
+
+export const mockEvaluationReports = [
+  {
+    id: 1,
+    title: 'Internship Progress Report',
+    student: 'John Doe',
+    studentId: '43-1001',
+    major: 'Computer Science',
+    company: 'Tech Corp',
+    StartDate: '2025-06-01',
+    EndDate: '2025-08-31',
+    Supervisor: 'Dr. Smith',
+    submissionDate: '2025-07-15',
+    status: 'Submitted',
+  },
+  {
+    id: 2,
+    title: 'Healthcare Internship Evaluation',
+    student: 'Jane Smith',
+    studentId: '43-1002',
+    major: 'Electrical Engineering',
+    company: 'Health Inc',
+    Supervisor: 'Dr. Ahmed',
+    StartDate: '2025-06-01',
+    EndDate: '2025-08-31',
+    submissionDate: '2025-06-30',
+    status: 'Reviewed',
+  },
+  {
+    id: 3,
+    title: 'Course Development Report',
+    student: 'Ahmed Ali',
+    studentId: '43-1003',
+    major: 'Mechanical Engineering',
+    company: 'Edu Solutions',
+    Supervisor: 'Dr. Fatima',
+    StartDate: '2025-06-01',
+    EndDate: '2025-08-31',
+    submissionDate: '2025-05-20',
+    status: 'Pending',
   },
 ];
