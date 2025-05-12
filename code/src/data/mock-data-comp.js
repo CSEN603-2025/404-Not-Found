@@ -72,7 +72,7 @@ export const mockCycles = [
   },
 ];
 
-export const mockInternships = [
+export const mockInternshipss = [
   {
     id: 1,
     title: 'Software Engineering Intern',

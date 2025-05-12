@@ -4,23 +4,21 @@ import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
 import { EyeIcon } from '../components/ui/eyeicon';
 import { FilterIcon } from '../components/ui/filtericon';
-import { mockInternships } from '../data/mock-data-comp'; // Import the mock data
+import { mockInternshipss } from '../data/mock-data-comp'; 
+import { mockInternships } from '../data/mock-data';// Import the mock data  
 import '../styles/InternshipListings.css';
 
 function InternshipListings() {
   const [internships, setInternships] = useState(mockInternships);
   const [searchTerm, setSearchTerm] = useState('');
-<<<<<<< HEAD
   const [selectedInternship, setSelectedInternship] = useState(null); // State for the selected internship
   const [isPopupOpen, setIsPopupOpen] = useState(false); // State to toggle the popup
-=======
-  const [selectedInternship, setSelectedInternship] = useState(null);
+  
   const [industryFilter, setIndustryFilter] = useState('');
   const [durationFilter, setDurationFilter] = useState('');
   const [paidFilter, setPaidFilter] = useState('');
   const [paidChecked, setPaidChecked] = useState(false);
   const [unpaidChecked, setUnpaidChecked] = useState(false);
->>>>>>> 62ddc0c5a91633744a6dbaac089c0e4afaf40885
 
   const filteredInternships = internships.filter((internship) => {
     const matchesSearch =
