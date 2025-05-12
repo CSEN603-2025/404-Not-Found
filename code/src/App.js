@@ -6,6 +6,7 @@ import RegisterCompany from './pages/RegisterCompany';
 import ScadOfficePage from './pages/ScadOfficePage';
 import SuccessC from './pages/SuccessC';
 import CompanyDash from './pages/CompanyDash';
+import Student from './pages/student';
 import './App.css';
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
       <Route path="/scad-office" element={<ScadOfficePage />} />
        <Route path="/success" element={<SuccessC />} />
       <Route path="/company-dashboard" element={<CompanyDash />} />
+      <Route path = "/student" element={<Student />} />
+
       
     </Routes>
   );

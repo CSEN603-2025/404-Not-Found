@@ -17,24 +17,29 @@ function Login() {
     if (!value) setter(false);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    // SCAD Office Login
-    if (username === 'scad' && password === 'admin') {
-      localStorage.setItem('userType', 'scad');
-      navigate('/scad-office');
-    } 
-    // Company Login
-    else if (username === 'company' && password === '12345') {
-      localStorage.setItem('userType', 'company');
-      navigate('/company-dashboard'); // Redirect to the company dashboard
-    } 
-    // Invalid Credentials
-    else {
-      alert('Invalid username or password');
-    }
-  };
+  // SCAD Office Login
+  if (username === 'scad' && password === 'admin') {
+    localStorage.setItem('userType', 'scad');
+    navigate('/scad-office');
+  } 
+  // Company Login
+  else if (username === 'company' && password === '12345') {
+    localStorage.setItem('userType', 'company');
+    navigate('/company-dashboard'); // Redirect to the company dashboard
+  } 
+  // Student Login
+  else if (username === 'student' && password === 'admin') {
+    localStorage.setItem('userType', 'student');
+    navigate('/student'); // Redirect to the student page
+  } 
+  // Invalid Credentials
+  else {
+    alert('Invalid username or password');
+  }
+};
 
   return (
     <div className="relative min-h-screen bg-gray-100 font-poppins overflow-hidden">
