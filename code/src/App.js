@@ -14,6 +14,7 @@ import DecisionTable from './pages/DecisionTable';
 import EvaluationListPage from './pages/EvaluationListPage';
 import EvaluationFormPage from './pages/EvaluationFormPage';
 import JobPostPage from './pages/JobPostPage';
+import FacultyDash from './pages/FacultyDash';
 
 import './App.css';
 
@@ -35,7 +36,8 @@ function App() {
        <Route path="/evaluation-list" element={<EvaluationListPage />} />
         <Route path="/evaluation-form" element={<EvaluationFormPage />} />
         <Route path="/evaluation-form/:id" element={<EvaluationFormPage />} />
-      <Route path="/job-posts" element={<JobPostPage />} />      
+      <Route path="/job-posts" element={<JobPostPage />} />   
+      <Route path="/faculty-dashboard" element={<FacultyDash />} />
 
     </Routes>
   );

@@ -222,7 +222,7 @@ export const mockEvaluationReports = [
   },
   {
     id: 2,
-    title: 'Healthcare Internship Evaluation',
+    title: 'Healthcare Internship Report',
     student: 'Jane Smith',
     studentId: '43-1002',
     major: 'Electrical Engineering',
