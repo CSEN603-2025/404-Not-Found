@@ -5,7 +5,7 @@ import { Calendar } from '../components/ui/calendar';
 import { Popover, PopoverTrigger, PopoverContent } from '../components/ui/popover';
 import { CheckIcon } from '../components/ui/check';
 
-import '../styles/InternshipCycleManagement.css';
+import '../styles/InternshipCycleManagement.css'; // Import your CSS file
 
 function InternshipCycleManagement() {
   const [startDate, setStartDate] = useState(null); // Initialize as null

@@ -11,7 +11,7 @@ import { FilterIcon } from '../components/ui/filtericon';
 import { mockCompanies, mockApplications } from '../data/mock-data';
 import { CheckIcon } from '../components/ui/checkicon';
 import { XIcon } from '../components/ui/xicon';
-import '../styles/CompanyApplications.css';
+import '../styles/CompanyApplications.css'; // Import your CSS file
 
 function CompanyApplications() {
   const [applications, setApplications] = useState(mockApplications);

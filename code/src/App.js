@@ -6,7 +6,7 @@ import RegisterCompany from './pages/RegisterCompany';
 import ScadOfficePage from './pages/ScadOfficePage';
 import SuccessC from './pages/SuccessC';
 import CompanyDash from './pages/CompanyDash';
-import Student from './pages/Student';
+import Student from './pages/Student-Pages/student';
 
 
 
