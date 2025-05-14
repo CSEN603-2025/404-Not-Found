@@ -1,0 +1,127 @@
+.ec-review-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 18px rgba(56,211,159,0.10);
+  padding: 36px 32px;
+}
+
+.ec-review-title {
+  color: #43a047;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.ec-review-desc {
+  color: #4d6a7a;
+  margin-bottom: 28px;
+}
+
+.ec-form-group {
+  margin-bottom: 22px;
+}
+
+.ec-form-label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.ec-form-input,
+.ec-form-textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background: #f6f7fa;
+  font-size: 1.08rem;
+}
+
+.ec-form-textarea {
+  min-height: 120px;
+}
+
+.ec-radio-group {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  margin-bottom: 32px;
+}
+
+.ec-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.08rem;
+  white-space: nowrap;
+}
+
+.ec-submit-row {
+  text-align: right;
+}
+
+.ec-submit-btn {
+  background: #43a047;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-weight: 600;
+  font-size: 1.13rem;
+  cursor: pointer;
+}
+
+.ec-rating-box {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 18px rgba(56,211,159,0.10);
+  padding: 24px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.ec-rating-title {
+  color: #43a047;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.ec-rating-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 32px;
+  align-items: center;
+}
+
+.ec-rating-row {
+  margin-bottom: 0;
+}
+
+.ec-rating-label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.ec-rating-options {
+  display: flex;
+  gap: 28px; /* more space between each rating */
+  margin-top: 6px;
+}
+
+.ec-rating-radio {
+  accent-color: #43a047;
+  margin: 0; /* remove right margin */
+}
+
+.ec-rating-num {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #43a047;
+  font-size: 1.08rem;
+  margin-right: 0; /* remove right margin */
+  gap: 2px;
+}

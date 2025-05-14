@@ -1,0 +1,159 @@
+.reports-list-container {
+  padding: 32px 0;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.reports-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.reports-title {
+  font-weight: 700;
+  font-size: 2.3rem;
+  margin: 0;
+}
+
+.add-report-button {
+  background: #43a047;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.add-report-button:hover {
+  background: #388e3c;
+}
+
+.reports-list {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.report-item {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 18px rgba(56,211,159,0.10);
+  padding: 28px 32px;
+  min-width: 350px;
+  max-width: 400px;
+  flex: 1 1 350px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.report-display {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.report-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.report-icon {
+  font-size: 36px;
+  color: #43a047;
+  margin-top: 2px;
+}
+
+.report-title {
+  font-weight: 700;
+  font-size: 1.35rem;
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+
+.report-updated {
+  color: #888;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.report-summary {
+  color: #4d6a7a;
+  font-size: 1.08rem;
+  margin: 18px 0 20px 0;
+}
+
+.report-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.report-action-btn {
+  background: #f6f7fa;
+  color: #222;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.report-action-btn:hover {
+  background: #e0e0e0;
+}
+
+.report-delete-btn {
+  background: #e53935;
+  color: #fff;
+}
+
+.report-delete-btn:hover {
+  background: #b71c1c;
+}
+
+/* Edit form styles */
+.report-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.report-edit-form input[type="text"] {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  font-size: 1rem;
+}
+
+.report-edit-form button {
+  background: #43a047;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.2s;
+}
+.report-edit-form button:hover {
+  background: #388e3c;
+}
