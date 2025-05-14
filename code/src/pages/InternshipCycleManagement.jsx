@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Calendar } from '../components/ui/calendar';
@@ -8,92 +8,79 @@ import { CheckIcon } from '../components/ui/check';
 import '../styles/InternshipCycleManagement.css';
 
 function InternshipCycleManagement() {
-  const [cycle, setCycle] = useState({ startDate: null, endDate: null });
+  const [startDate, setStartDate] = useState(null); // Initialize as null
+  const [endDate, setEndDate] = useState(null); // Initialize as null
+  const [confirmedDates, setConfirmedDates] = useState(null); // Initialize as null
 
-  useEffect(() => {
-    const savedStartDate = localStorage.getItem('internshipCycleStartDate');
-    const savedEndDate = localStorage.getItem('internshipCycleEndDate');
-    if (savedStartDate) setCycle(prev => ({ ...prev, startDate: new Date(savedStartDate) }));
-    if (savedEndDate) setCycle(prev => ({ ...prev, endDate: new Date(savedEndDate) }));
-  }, []);
-
-  const handleStartDateSelect = (date) => {
-    if (date && cycle.endDate && date > cycle.endDate) {
-      alert('Start date cannot be after the end date.');
+  const handleConfirmDates = () => {
+    if (!startDate || !endDate) {
+      alert('Please select both a start and end date.');
       return;
     }
-    setCycle({ ...cycle, startDate: date });
-  };
-
-  const handleEndDateSelect = (date) => {
-    if (date && cycle.startDate && date < cycle.startDate) {
-      alert('End date cannot be before the start date.');
-      return;
-    }
-    setCycle({ ...cycle, endDate: date });
-  };
-
-  const handleSetCycle = () => {
-    if (!cycle.startDate || !cycle.endDate) {
-      alert('Please select both a start and end date for the cycle.');
-      return;
-    }
-    localStorage.setItem('internshipCycleStartDate', cycle.startDate.toISOString());
-    localStorage.setItem('internshipCycleEndDate', cycle.endDate.toISOString());
-    alert(`Cycle set from ${cycle.startDate.toLocaleDateString()} to ${cycle.endDate.toLocaleDateString()}.`);
+    setConfirmedDates({ startDate, endDate });
   };
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Internship Cycle</CardTitle>
-        <div className="card-description">Set the start and end dates for the current internship cycle.</div>
+        <div className="card-description">Select the start and end dates for the internship cycle.</div>
       </CardHeader>
       <CardContent>
         <div className="date-picker-row">
+          {/* Start Date Picker */}
           <div className="date-picker">
             <label>Start Date</label>
             <Popover>
               <PopoverTrigger>
-                <Button>
-                  <Calendar className="calendar-icon" />
-                  {cycle.startDate ? cycle.startDate.toLocaleDateString() : 'Pick a date'}
+                <Button className="date-button">
+                  <span className="calendar-icon">📅</span>
+                  {startDate ? startDate.toLocaleDateString() : 'Pick a date'}
                 </Button>
               </PopoverTrigger>
               <PopoverContent>
                 <Calendar
-                  mode="single"
-                  selected={cycle.startDate}
-                  onSelect={handleStartDateSelect}
+                  selected={startDate}
+                  onSelect={(date) => setStartDate(date)} // Use onSelect as per the Calendar component API
                 />
               </PopoverContent>
             </Popover>
           </div>
+
+          {/* End Date Picker */}
           <div className="date-picker">
             <label>End Date</label>
             <Popover>
               <PopoverTrigger>
-                <Button>
-                  <Calendar className="calendar-icon" />
-                  {cycle.endDate ? cycle.endDate.toLocaleDateString() : 'Pick a date'}
+                <Button className="date-button">
+                  <span className="calendar-icon">📅</span>
+                  {endDate ? endDate.toLocaleDateString() : 'Pick a date'}
                 </Button>
               </PopoverTrigger>
               <PopoverContent>
                 <Calendar
-                  mode="single"
-                  selected={cycle.endDate}
-                  onSelect={handleEndDateSelect}
-                  disabled={(date) => cycle.startDate && date < cycle.startDate}
+                  selected={endDate}
+                  onSelect={(date) => setEndDate(date)} // Use onSelect as per the Calendar component API
                 />
               </PopoverContent>
             </Popover>
           </div>
-          <Button onClick={handleSetCycle} disabled={!cycle.startDate || !cycle.endDate}>
-            <CheckIcon className="action-icon" /> Set Cycle
+
+          {/* Confirm Button */}
+          <Button
+            className="confirm-button"
+            onClick={handleConfirmDates}
+            disabled={!startDate || !endDate}
+          >
+            <CheckIcon className="action-icon" /> Confirm
           </Button>
         </div>
-        {cycle.startDate && cycle.endDate && (
-          <div className="cycle-info">Current cycle: {cycle.startDate.toLocaleDateString()} - {cycle.endDate.toLocaleDateString()}</div>
+
+        {/* Display Confirmed Dates */}
+        {confirmedDates && (
+          <div className="confirmed-dates">
+            Selected Cycle: {confirmedDates.startDate.toLocaleDateString()} - {confirmedDates.endDate.toLocaleDateString()}
+          </div>
         )}
       </CardContent>
     </Card>

@@ -5,7 +5,7 @@ export const CheckCircleIcon = ({ className, ...props }) => {
     <svg
       className={`w-4 h-4 ${className}`}
       viewBox="0 0 24 24"
-      fill="white"
+      fill="none"
       stroke="currentColor"
       strokeWidth="2"
       {...props}

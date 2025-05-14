@@ -4,7 +4,8 @@ import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
 import { EyeIcon } from '../components/ui/eyeicon';
 import { FilterIcon } from '../components/ui/filtericon';
-import { mockInternships } from '../data/mock-data-comp'; // Import the mock data
+
+import { mockInternships } from '../data/mock-data';// Import the mock data  
 import '../styles/InternshipListings.css';
 
 function InternshipListings() {

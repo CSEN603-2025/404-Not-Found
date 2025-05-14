@@ -69,3 +69,79 @@ Card {
   PopoverContent {
     padding: 1rem;
   }
+  .date-picker-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .date-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .calendar-icon {
+    margin-right: 0.5rem;
+  }
+  .confirmed-dates {
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #4caf50;
+  }
+
+  /* Green-themed button */
+  .date-button {
+    background-color: #28a745; /* Green background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 0.5rem 1rem; /* Adjust padding for a balanced look */
+    border-radius: 4px; /* Slightly rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+    font-size: 1rem; /* Adjust font size */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Add spacing between icon and text */
+  }
+
+  /* Hover effect for green-themed button */
+  .date-button:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+
+  /* Disabled button */
+  .date-button:disabled {
+    background-color: #6c757d; /* Grey background for disabled state */
+    cursor: not-allowed; /* Show not-allowed cursor */
+    opacity: 0.65; /* Reduce opacity for disabled state */
+  }
+
+  /* Confirm button */
+  .confirm-button {
+    background-color: #28a745; /* Green background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 0.5rem 1rem; /* Adjust padding for a balanced look */
+    border-radius: 4px; /* Slightly rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+    font-size: 1rem; /* Adjust font size */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Add spacing between icon and text */
+  }
+
+  /* Hover effect for confirm button */
+  .confirm-button:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+
+  /* Disabled confirm button */
+  .confirm-button:disabled {
+    background-color: #6c757d; /* Grey background for disabled state */
+    cursor: not-allowed; /* Show not-allowed cursor */
+    opacity: 0.65; /* Reduce opacity for disabled state */
+  }

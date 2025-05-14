@@ -152,7 +152,7 @@ Card {
     width: 36px; /* Fixed width for square button */
     height: 36px; /* Fixed height for square button */
     padding: 4px; /* Adjust padding for a compact look */
-    background: #770000; /* White background */
+    background: #fff; /* White background */
     border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
     border-radius: 50%; /* Fully rounded shape */
     cursor: pointer;

@@ -72,7 +72,7 @@ export const mockCycles = [
   },
 ];
 
-export const mockInternships = [
+export const mockInternshipss = [
   {
     id: 1,
     title: 'Software Engineering Intern',
@@ -85,6 +85,7 @@ export const mockInternships = [
     paid: 'Paid',
     Salary: '2000',
     description: 'Develop cutting-edge AI applications.',
+   
   },
   {
     id: 2,

@@ -5,6 +5,7 @@ import InternshipListings from './InternshipListings';
 import StudentManagement from './StudentManagement';
 import ReportManagement from './ReportManagement';
 import InternshipCycleManagement from './InternshipCycleManagement';
+import Workshops from './Workshops'; // Import Workshops component
 import { BuildingIcon } from '../components/ui/buildingicon';
 import { BriefcaseIcon } from '../components/ui/briefcaseicon';
 import { UsersIcon } from '../components/ui/usersicon';
@@ -159,6 +160,9 @@ function ScadOfficePage() {
           <TabTrigger value="internship-cycle">
             <CalendarClockIcon className="tab-icon" /> Cycle
           </TabTrigger>
+          <TabTrigger value="workshops">
+            <BriefcaseIcon className="tab-icon" /> Workshops
+          </TabTrigger>
         </TabList>
         <TabContent value="company-applications">
           <CompanyApplications />
@@ -174,6 +178,9 @@ function ScadOfficePage() {
         </TabContent>
         <TabContent value="internship-cycle">
           <InternshipCycleManagement />
+        </TabContent>
+        <TabContent value="workshops">
+          <Workshops />
         </TabContent>
       </Tabs>
     </div>

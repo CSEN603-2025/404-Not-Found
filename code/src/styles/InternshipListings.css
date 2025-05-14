@@ -221,7 +221,6 @@ Card {
     color: #fff;
     border: none;
   }
-
   .selected-row {
     background-color: rgba(76, 175, 80, 0.1);
   }
@@ -244,8 +243,6 @@ Card {
   .close-button:hover {
     background: #0056b3;
   }
-
-  
   .confirm-button.disabled {
     background-color: #cccccc;
     cursor: not-allowed;
@@ -285,4 +282,37 @@ Card {
     padding: 0.5em;
     border-radius: 4px;
     border: 1px solid #ccc;
+  }
+
+  /* Base styles for the status badge */
+  .status-badge {
+    display: inline-block;
+    padding: 4px 12px; /* Adjust padding for a pill-like shape */
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 9999px; /* Fully rounded shape */
+    text-align: center;
+    min-width: 80px; /* Ensure consistent size */
+    color: #fff; /* Default white text for all statuses */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+  }
+
+  /* Green for "Open" */
+  .status-open {
+    background-color: #28a745; /* Green background */
+  }
+
+  .status-open:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+
+  /* Red for "Closed" */
+  .status-closed {
+    background-color: #dc3545; /* Red background */
+  }
+
+  .status-closed:hover {
+    background-color: #c82333; /* Darker red on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
   }

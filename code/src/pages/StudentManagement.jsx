@@ -23,6 +23,14 @@ function getStatusBadgeVariant(status) {
       return 'status-completed';
     case 'No Offer':
       return 'status-no-offer';
+    case 'In Progress':
+      return 'status-in-progress';
+    case 'Pending':
+      return 'status-pending';
+    case 'Rejected':
+      return 'status-rejected';
+    case 'Accepted':
+      return 'status-accepted';
     default:
       return 'status-other';
   }

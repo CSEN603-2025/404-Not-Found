@@ -132,17 +132,38 @@ Card {
     color: #333;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
+
+  .popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+
+  .submit-button,
   .close-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #007bff;
+    background-color: #ffffff; /* Default green for submit */
     color: #fff;
     border: none;
+    padding: 0.5rem 0.5rem; /* Smaller padding for a compact look */
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.875rem; /* Slightly smaller font size */
+    width: 100px; /* Ensure both buttons have the same width */
+    text-align: center;
+    margin-top: 1rem;
   }
+
+  .submit-button:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+
+  .close-button {
+    background-color: #dc3545; /* Red for close */
+  }
+
   .close-button:hover {
-    background: #0056b3;
+    background-color: #c82333; /* Darker red on hover */
   }
 
   .download-button {
@@ -169,25 +190,25 @@ Card {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px; /* Smaller size */
-    height: 50px; /* Smaller size */
-    padding: 4px; /* Adjust padding for a compact look */
-    background: #fff; /* White background */
-    border: 0.5px solid #c3e6cb; /* Optional border for better visibility */
-    border-radius: 50%; /* Fully rounded shape */
+    width: 40px; /* Adjust size */
+    height: 40px; /* Adjust size */
+    padding: 4px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 50%; /* Fully rounded */
     cursor: pointer;
-    transition: background 0.3s ease, border-color 0.3s ease; /* Smooth hover effect */
+    transition: background 0.3s ease, border-color 0.3s ease;
   }
 
   .report-management-container .icon-button:hover {
     background: #13eb46; /* Green hover effect */
-    border-color: #f7fffd; /* Optional border color change on hover */
+    border-color: #f7fffd;
   }
 
   .report-management-container .icon-button .action-icon {
-    width: 16px; /* Smaller icon size */
-    height: 16px; /* Smaller icon size */
-    color: #6b7280; /* Default muted color for the icon */
+    width: 16px;
+    height: 16px;
+    color: #6b7280; /* Default muted color */
   }
 
   .report-management-container .icon-button:hover .action-icon {
@@ -263,5 +284,68 @@ Card {
     font-size: 1.5rem; /* Adjust font size */
     font-weight: bold; /* Make the text bold */
     margin-bottom: 1rem; /* Add spacing below the header */
+  }
+
+  /* Base styles for the status badge */
+  .status-badge {
+    display: inline-block;
+    padding: 4px 12px; /* Adjust padding for a pill-like shape */
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 9999px; /* Fully rounded shape */
+    text-align: center;
+    min-width: 80px; /* Ensure consistent size */
+    color: #fff; /* Default white text for all statuses */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+  }
+
+  /* Green for "Accepted" */
+  .status-accepted {
+    background-color: #28a745; /* Green background */
+  }
+
+  .status-accepted:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+
+  /* Red for "Rejected" */
+  .status-rejected {
+    background-color: #dc3545; /* Red background */
+  }
+
+  .status-rejected:hover {
+    background-color: #c82333; /* Darker red on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+
+  /* Blue for "Flagged" */
+  .status-flagged {
+    background-color: #007bff; /* Blue background */
+  }
+
+  .status-flagged:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+
+  /* Grey for "Pending" */
+  .status-pending {
+    background-color: #6c757d; /* Grey background */
+  }
+
+  .status-pending:hover {
+    background-color: #5a6268; /* Darker grey on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+
+  /* Grey for other statuses */
+  .status-other {
+    background-color: #adb5bd; /* Light grey background */
+  }
+
+  .status-other:hover {
+    background-color: #868e96; /* Darker grey on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
   }
 
