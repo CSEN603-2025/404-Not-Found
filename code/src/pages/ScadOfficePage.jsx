@@ -15,7 +15,7 @@ import BellIcon from '../components/ui/BellIcon'; // Import a bell icon for noti
 import PhoneIcon from '../components/ui/phoneicon'; // Import a phone icon for incoming call
 import MuteIcon from '../components/ui/muteicon'; // Import a mute icon
 import CameraIcon from '../components/ui/cameraicon'; // Import a camera icon
-import {Button} from '../components/ui/button'; // Import a button component
+import { Button } from '../components/ui/button'; // Import a button component
 import '../styles/ScadOfficePage.css';
 
 function ScadOfficePage() {
@@ -52,7 +52,7 @@ function ScadOfficePage() {
   if (!isClient) return null;
 
   return (
-    <div className="scad-office-container">
+    <div className="scad-office-container full-size">
       {/* Notifications Button */}
       <div className="notifications-button-container">
         <button

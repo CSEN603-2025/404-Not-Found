@@ -20,6 +20,34 @@ export const mockSuggestedCompanies = [
     location: 'Boston, MA',
     recommendation: 'Flexible work culture',
   },
+  {
+    id: 4,
+    name: 'Innovatech Solutions',
+    industry: 'Technology',
+    location: 'Austin, TX',
+    recommendation: 'Pioneering software and hardware innovations.',
+  },
+  {
+    id: 5,
+    name: 'GreenLeaf Organics',
+    industry: 'Agriculture',
+    location: 'Portland, OR',
+    recommendation: 'Provider of fresh, organic produce and goods.',
+  },
+  {
+    id: 6,
+    name: 'Quantum Dynamics',
+    industry: 'Research',
+    location: 'Seattle, WA',
+    recommendation: 'Research and development in quantum computing.',
+  },
+  {
+    id: 7,
+    name: 'Starlight Studios',
+    industry: 'Media',
+    location: 'Los Angeles, CA',
+    recommendation: 'Creative media and entertainment production.',
+  },
 ];
 
 export const mockAppliedInternships = [

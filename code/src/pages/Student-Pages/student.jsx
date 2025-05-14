@@ -155,7 +155,7 @@ function Student() {
             <UsersIcon className="tab-icon" /> Profile
           </TabTrigger>
           <TabTrigger value="suggested-companies">
-            <BriefcaseIcon className="tab-icon" /> Suggested Companies
+            <BriefcaseIcon className="tab-icon" /> Companies
           </TabTrigger>
           <TabTrigger value="applied-internships">
             <FileTextIcon className="tab-icon" /> Applied Internships

@@ -514,3 +514,14 @@ button {
 .end-call-button:hover {
   background: #c82333; /* Darker red on hover */
 }
+
+/* Scrollable Table */
+.scrollable-table {
+  max-height: 400px; /* Set a fixed height for the table container */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Disable horizontal scrolling */
+  border: 1px solid #e0e0e0; /* Optional: Add a border around the scrollable area */
+  border-radius: 8px; /* Optional: Add rounded corners */
+  padding: 8px; /* Optional: Add padding inside the scrollable area */
+  background-color: #fff; /* Optional: Set a background color */
+}

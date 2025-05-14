@@ -150,67 +150,69 @@ function StudentManagement() {
 
           {/* Main Table Container */}
           <div className="table-container">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Major</TableCell>
-                  <TableCell>Internship Status</TableCell>
-                  <TableCell>Appointments</TableCell> {/* New column for appointments */}
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredStudents.length > 0 ? (
-                  filteredStudents.map((student) => (
-                    <TableRow key={student.id}>
-                      <TableCell>{student.name}</TableCell>
-                      <TableCell>{student.major}</TableCell>
-                      <TableCell>
-                        <span className={`status-badge ${getStatusBadgeVariant(student.internshipStatus)}`}>
-                          {student.internshipStatus || 'Unknown'}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        {student.appointmentDate ? (
-                          <span className="appointment-status">
-                            {student.appointmentDate}
-                          </span>
-                        ) : (
-                          <span className="no-appointment-status">No request made</span>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <div className="actions-container">
-                          <Button
-                            className="icon-button"
-                            onClick={() => handleViewProfile(student)}
-                          >
-                            <EyeIcon className="action-icon" />
-                          </Button>
-                          <Button
-                            className="icon-button"
-                            onClick={() => handleRequestAppointment(student)}
-                          >
-                            <CalendarClockIcon className="action-icon" />
-                          </Button>
-                          <Button
-                            className="icon-button"
-                            onClick={() => handleCallStudent(student)}
-                          >
-                            <PhoneIcon className="action-icon" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                ) : (
+            <div className="scrollable-table">
+              <Table>
+                <TableHeader>
                   <TableRow>
-                    <TableCell colSpan="5">No students found matching the criteria.</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Major</TableCell>
+                    <TableCell>Internship Status</TableCell>
+                    <TableCell>Appointments</TableCell> {/* New column for appointments */}
+                    <TableCell>Actions</TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {filteredStudents.length > 0 ? (
+                    filteredStudents.map((student) => (
+                      <TableRow key={student.id}>
+                        <TableCell>{student.name}</TableCell>
+                        <TableCell>{student.major}</TableCell>
+                        <TableCell>
+                          <span className={`status-badge ${getStatusBadgeVariant(student.internshipStatus)}`}>
+                            {student.internshipStatus || 'Unknown'}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          {student.appointmentDate ? (
+                            <span className="appointment-status">
+                              {student.appointmentDate}
+                            </span>
+                          ) : (
+                            <span className="no-appointment-status">No request made</span>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <div className="actions-container">
+                            <Button
+                              className="icon-button"
+                              onClick={() => handleViewProfile(student)}
+                            >
+                              <EyeIcon className="action-icon" />
+                            </Button>
+                            <Button
+                              className="icon-button"
+                              onClick={() => handleRequestAppointment(student)}
+                            >
+                              <CalendarClockIcon className="action-icon" />
+                            </Button>
+                            <Button
+                              className="icon-button"
+                              onClick={() => handleCallStudent(student)}
+                            >
+                              <PhoneIcon className="action-icon" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan="5">No students found matching the criteria.</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           </div>
         </CardContent>
       </Card>
