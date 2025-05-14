@@ -35,6 +35,11 @@ const handleSubmit = (e) => {
     localStorage.setItem('userType', 'student');
     navigate('/student'); // Redirect to the student page
   } 
+  // Faculty Login
+  else if (username === 'faculty' && password === 'admin') {
+    localStorage.setItem('userType', 'faculty');
+    navigate('/faculty-dashboard'); // Make sure this route exists
+  }
   // Invalid Credentials
   else {
     alert('Invalid username or password');
