@@ -4,33 +4,16 @@
     padding: 2rem;
   }
   
-  .scad-office-container.full-size {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background-color: #f9f9f9;
-  }
-  
   .scad-office-title {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 1rem;
-    text-align: center;
-    margin-top: 16px;
-    font-size: 2.5rem;
-    font-weight: bold;
   }
   
   .scad-office-description {
     font-size: 1rem;
     color: #666;
     margin-bottom: 2rem;
-    text-align: center;
-    margin-bottom: 24px;
-    font-size: 1.2rem;
-    color: #4d6a7a;
   }
   
   .tab-list {
@@ -68,46 +51,36 @@
   
   /* Notifications button container */
   .notifications-button-container {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+    text-align: right;
+    padding: 18px 24px 0 0;
   }
   
   /* Notifications button */
   .notifications-button {
-    display: flex;
-    align-items: center;
-    background: #4caf50;
-    color: #fff;
-    border: none;
-    padding: 0.5rem;
-    border-radius: 50%;
+    background: #f6f7fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px;
     cursor: pointer;
-    font-size: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .notifications-button:hover {
-    background: #45a049;
+    margin-left: 8px;
   }
   
   /* Notifications icon */
   .notifications-icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    font-size: 1.2rem;
+    color: #4d6a7a;
   }
   
   /* Notifications popup */
   .notifications-popup {
     position: absolute;
-    top: 3rem;
-    right: 0;
+    top: 60px;
+    right: 24px;
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 400px; /* Increased width */
-    padding: 1.5rem; /* Increased padding */
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     z-index: 1000;
   }
   
@@ -135,12 +108,11 @@
   
   /* Incoming Call Section */
   .incoming-call {
-    margin-top: 1rem;
+    margin-top: 16px;
     padding: 1rem;
     background: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 5px;
-
   }
   
   /* Incoming Call Header */
@@ -154,7 +126,7 @@
   /* Call Buttons */
   .call-buttons {
     display: flex;
-    gap: 0.5rem; /* Space between buttons */
+    gap: 8px; /* Space between buttons */
   }
   
   .answer-button,

@@ -84,24 +84,26 @@ Card {
     margin-right: 0.5rem;
   }
   .confirmed-dates {
-    margin-top: 1rem;
+    margin-top: 16px;
     font-size: 1rem;
+    color: #4d6a7a;
+    text-align: center;
     font-weight: bold;
-    color: #4caf50;
   }
 
   /* Green-themed button */
   .date-button {
-    background-color: #28a745; /* Green background */
-    color: #fff; /* White text */
-    border: none;
-    padding: 0.5rem 1rem; /* Adjust padding for a balanced look */
-    border-radius: 4px; /* Slightly rounded corners */
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #f6f7fa;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
-    font-size: 1rem; /* Adjust font size */
     display: flex;
     align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
     gap: 0.5rem; /* Add spacing between icon and text */
   }
 
@@ -144,4 +146,23 @@ Card {
     background-color: #6c757d; /* Grey background for disabled state */
     cursor: not-allowed; /* Show not-allowed cursor */
     opacity: 0.65; /* Reduce opacity for disabled state */
+  }
+
+  .phase-row, .overall-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .phase-label, .overall-label {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #4d6a7a;
+    flex: 1;
+  }
+
+  .suggestions-button {
+    width: 100%;
+    text-align: center;
   }

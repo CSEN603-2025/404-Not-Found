@@ -4,7 +4,6 @@ import { BriefcaseIcon } from '../../components/ui/briefcaseicon';
 import { UsersIcon } from '../../components/ui/usersicon';
 import { FileTextIcon } from '../../components/ui/filetexticon';
 import BellIcon from '../../components/ui/BellIcon';
-import { mockSuggestedCompanies, mockAppliedInternships } from '../../data/mock-data-Student';
 import '../../styles/student.css';
 
 import Profile from './Profile';
@@ -12,44 +11,38 @@ import SuggestedCompanies from './SuggestedCompanies';
 import AppliedInternships from './AppliedInternships';
 import EvaluateCompanies from './EvaluateCompanies';
 import InternshipReports from './InternshipReports';
+import Courses from './Courses';
 
 function Student() {
   const [isClient, setIsClient] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
-  const [suggestedCompanies, setSuggestedCompanies] = useState([]);
-  const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [appliedInternships, setAppliedInternships] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filterStatus, setFilterStatus] = useState('all');
-  const [companyEvaluations, setCompanyEvaluations] = useState([]);
-  const [editingEvaluation, setEditingEvaluation] = useState(null);
-  const [internshipReports, setInternshipReports] = useState([]);
-  const [editingReport, setEditingReport] = useState(null);
-  const [selectedMajor, setSelectedMajor] = useState('');
-  const [selectedSemester, setSelectedSemester] = useState('');
+  const [notifications, setNotifications] = useState([]); // State for notifications
   const [sidebarTab, setSidebarTab] = useState('profile');
 
   useEffect(() => {
     setIsClient(true);
-    setSuggestedCompanies(mockSuggestedCompanies);
-    setAppliedInternships(mockAppliedInternships);
+
+    // Simulate fetching notifications for internship cycles
+    const internshipCycleNotifications = [
+      "The new internship cycle has started! Apply now.",
+      "The next internship cycle will begin in 3 days. Prepare your applications.",
+      "Your Report is now available for review.",
+    ];
+
+    setNotifications(internshipCycleNotifications);
+
+    // Simulate receiving a notification for internship report status
+    setTimeout(() => {
+      setNotifications((prevNotifications) => [
+        ...prevNotifications,
+        "Your internship report status has been set to 'Approved'.",
+      ]);
+    }, 5000); // Simulate a delay of 5 seconds
   }, []);
 
-  // Dummy handlers to fix "not defined" errors
-  const handleAddEvaluation = () => {};
-  const handleEditEvaluation = () => {};
-  const handleDeleteEvaluation = () => {};
-  const handleSaveEvaluation = () => {};
-
-  const handleAddReport = () => {};
-  const handleEditReport = () => {};
-  const handleDeleteReport = () => {};
-  const handleSaveReport = () => {};
-
-  // Even smaller icon size for sidebar, matching your screenshot
-  const iconStyle = { fontSize: 15, minWidth: 16, height: 16 };
-
   if (!isClient) return null;
+
+  const iconStyle = { fontSize: 15, minWidth: 16, height: 16 };
 
   return (
     <div
@@ -134,7 +127,7 @@ function Student() {
                 cursor: "pointer"
               }}
             >
-              <FileTextIcon style={iconStyle} /> Applied Internships
+              <FileTextIcon style={iconStyle} /> Internships
             </button>
             <button
               onClick={() => setSidebarTab('evaluate-companies')}
@@ -175,6 +168,26 @@ function Student() {
               }}
             >
               <FileTextIcon style={iconStyle} /> Internship Reports
+            </button>
+            <button
+              onClick={() => setSidebarTab('courses')}
+              style={{
+                width: "90%",
+                margin: "0 auto 4px auto",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                background: sidebarTab === 'courses' ? "#43a047" : "transparent",
+                color: sidebarTab === 'courses' ? "#fff" : "#222",
+                border: "none",
+                borderRadius: 6,
+                padding: "7px 12px",
+                fontWeight: 500,
+                fontSize: "1rem",
+                cursor: "pointer"
+              }}
+            >
+              <FileTextIcon style={iconStyle} /> Courses
             </button>
           </div>
         </div>
@@ -234,7 +247,15 @@ function Student() {
             <div className="notifications-popup">
               <h3>Notifications</h3>
               <ul>
-                <li>No notifications available.</li>
+                {notifications.length > 0 ? (
+                  notifications.map((notification, index) => (
+                    <li key={index} style={{ marginBottom: "8px", color: "#333" }}>
+                      {notification}
+                    </li>
+                  ))
+                ) : (
+                  <li>No notifications available.</li>
+                )}
               </ul>
             </div>
           )}
@@ -244,48 +265,12 @@ function Student() {
           Access your internship applications, notifications, and profile details.
         </p>
         <div style={{ margin: "32px" }}>
-          {sidebarTab === 'profile' && (
-            <Profile
-              uploadedFiles={uploadedFiles}
-              setUploadedFiles={setUploadedFiles}
-              selectedMajor={selectedMajor}
-              setSelectedMajor={setSelectedMajor}
-              selectedSemester={selectedSemester}
-              setSelectedSemester={setSelectedSemester}
-            />
-          )}
-          {sidebarTab === 'suggested-companies' && (
-            <SuggestedCompanies suggestedCompanies={suggestedCompanies} />
-          )}
-          {sidebarTab === 'applied-internships' && (
-            <AppliedInternships
-              appliedInternships={appliedInternships}
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              filterStatus={filterStatus}
-              setFilterStatus={setFilterStatus}
-            />
-          )}
-          {sidebarTab === 'evaluate-companies' && (
-            <EvaluateCompanies
-              companyEvaluations={companyEvaluations}
-              handleAddEvaluation={handleAddEvaluation}
-              handleEditEvaluation={handleEditEvaluation}
-              handleDeleteEvaluation={handleDeleteEvaluation}
-              handleSaveEvaluation={handleSaveEvaluation}
-              editingEvaluation={editingEvaluation}
-            />
-          )}
-          {sidebarTab === 'internship-reports' && (
-            <InternshipReports
-              internshipReports={internshipReports}
-              handleAddReport={handleAddReport}
-              handleEditReport={handleEditReport}
-              handleDeleteReport={handleDeleteReport}
-              handleSaveReport={handleSaveReport}
-              editingReport={editingReport}
-            />
-          )}
+          {sidebarTab === 'profile' && <Profile />}
+          {sidebarTab === 'suggested-companies' && <SuggestedCompanies />}
+          {sidebarTab === 'applied-internships' && <AppliedInternships />}
+          {sidebarTab === 'evaluate-companies' && <EvaluateCompanies />}
+          {sidebarTab === 'internship-reports' && <InternshipReports />}
+          {sidebarTab === 'courses' && <Courses />}
         </div>
       </div>
     </div>
