@@ -259,6 +259,63 @@ function AppliedInternships({ applicationsProp }) {
     setApplyError('');
   };
 
+  const [internshipSearch, setInternshipSearch] = useState('');
+  const [internshipStatus, setInternshipStatus] = useState('all');
+  const [selectedCompleted, setSelectedCompleted] = useState(null);
+
+  // Data for "My Internships" table
+  const myInternships = [
+    {
+      id: 1,
+      company: "Innovatech Solutions",
+      title: "Software Engineer Intern",
+      startDate: "2023-06-01",
+      endDate: "2023-08-31",
+      status: "Internship Complete"
+    },
+    {
+      id: 2,
+      company: "FutureAI Corp",
+      title: "Machine Learning Intern",
+      startDate: "2024-01-15",
+      endDate: "2024-05-15",
+      status: "Internship Complete"
+    },
+    {
+      id: 3,
+      company: "Eco Sustainables",
+      title: "Data Analyst Intern",
+      startDate: "2024-06-01",
+      endDate: "",
+      status: "Current Intern"
+    },
+    {
+      id: 4,
+      company: "HealthWell Dynamics",
+      title: "Frontend Developer Intern",
+      startDate: "2024-09-01",
+      endDate: "",
+      status: "Current Intern"
+    }
+  ];
+
+  function formatDate(date) {
+    if (!date) return "Present";
+    const d = new Date(date);
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  const filteredMyInternships = myInternships.filter((intern) => {
+    const matchesSearch =
+      (intern.title || '').toLowerCase().includes(internshipSearch.toLowerCase()) ||
+      (intern.company || '').toLowerCase().includes(internshipSearch.toLowerCase());
+    const matchesStatus =
+      internshipStatus === 'all' ||
+      (internshipStatus === 'current' && intern.status === 'Current Intern') ||
+      (internshipStatus === 'complete' && intern.status === 'Internship Complete');
+    return matchesSearch && matchesStatus;
+  });
+
   return (
     <div style={{
       background: "#f7fafc",
@@ -631,7 +688,7 @@ function AppliedInternships({ applicationsProp }) {
           Showing {filteredApplications.length} application(s).
         </div>
       </div>
-      {/* Internship Overview Section */}
+      {/* My Internships Table Section */}
       <div style={{
         marginTop: 32,
         background: "#f7fafc",
@@ -646,15 +703,42 @@ function AppliedInternships({ applicationsProp }) {
           boxShadow: "0 2px 18px rgba(56,211,159,0.07)",
           padding: "32px 28px"
         }}>
-          <div>
-            <h2 style={{ margin: 0, fontWeight: 700, fontSize: "1.25rem" }}>My Internships</h2>
-            <div style={{ color: "#7b8a9a", fontSize: "1.08rem", marginBottom: 22 }}>
-              Detailed list of all your internship experiences.
-            </div>
+          <div style={{ fontWeight: 700, fontSize: "2rem", marginBottom: 4 }}>My Internships</div>
+          <div style={{ color: "#7b8a9a", fontSize: "1.13rem", marginBottom: 24 }}>
+            Search and filter your internship records.
+          </div>
+          <div style={{ display: 'flex', gap: 16, marginBottom: 20 }}>
+            <input
+              type="text"
+              placeholder="Search by job title or company name"
+              value={internshipSearch}
+              onChange={e => setInternshipSearch(e.target.value)}
+              style={{
+                flex: 1,
+                padding: '8px 12px',
+                borderRadius: 6,
+                border: '1px solid #ccc',
+                fontSize: '1rem'
+              }}
+            />
+            <select
+              value={internshipStatus}
+              onChange={e => setInternshipStatus(e.target.value)}
+              style={{
+                padding: '8px 12px',
+                borderRadius: 6,
+                border: '1px solid #ccc',
+                fontSize: '1rem'
+              }}
+            >
+              <option value="all">All</option>
+              <option value="current">Current Intern</option>
+              <option value="complete">Internship Complete</option>
+            </select>
           </div>
           <div style={{
             display: "grid",
-            gridTemplateColumns: "2fr 2fr 1.2fr 1fr",
+            gridTemplateColumns: "2fr 2fr 1.5fr 1.2fr",
             color: "#7b8a9a",
             fontWeight: 600,
             fontSize: "1.08rem",
@@ -667,72 +751,99 @@ function AppliedInternships({ applicationsProp }) {
             <div>Dates</div>
             <div>Status</div>
           </div>
-          {[
-            {
-              id: 1,
-              company: "Innovatech Solutions",
-              title: "Software Engineer Intern",
-              dates: "6/1/2023 - 8/31/2023",
-              status: "Completed"
-            },
-            {
-              id: 2,
-              company: "FutureAI Corp",
-              title: "Machine Learning Intern",
-              dates: "1/15/2024 - 5/15/2024",
-              status: "Completed"
-            },
-            {
-              id: 3,
-              company: "Eco Sustainables",
-              title: "Data Analyst Intern",
-              dates: "6/1/2024 - Present",
-              status: "Ongoing"
-            },
-            {
-              id: 4,
-              company: "HealthWell Dynamics",
-              title: "Frontend Developer Intern",
-              dates: "9/1/2024 - Present",
-              status: "Upcoming"
-            }
-          ].map((intern, idx) => {
-            const status = STATUS_STYLES[intern.status] || {};
-            let statusText = intern.status;
-            return (
-              <div key={intern.id || idx} style={{
-                display: "grid",
-                gridTemplateColumns: "2fr 2fr 1.2fr 1fr",
-                alignItems: "center",
-                borderBottom: "1px solid #f1f1f1",
-                padding: "14px 0"
-              }}>
-                <div style={{ fontWeight: 600, color: "#222" }}>{intern.company}</div>
-                <div style={{ color: "#222" }}>{intern.title}</div>
-                <div style={{ color: "#222" }}>{intern.dates}</div>
-                <div>
-                  <span style={{
-                    background: status.background,
-                    color: status.color,
-                    borderRadius: 16,
-                    padding: "6px 18px",
-                    fontWeight: 600,
-                    fontSize: "1.01rem",
-                    display: "inline-block",
-                    border: status.border || "none"
-                  }}>
-                    {statusText}
-                  </span>
+          {filteredMyInternships.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "24px 0", color: "#888" }}>No internships found.</div>
+          ) : (
+            filteredMyInternships.map((intern) => {
+              const isCompleted = intern.status === "Internship Complete";
+              return (
+                <div
+                  key={intern.id}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "2fr 2fr 1.5fr 1.2fr",
+                    alignItems: "center",
+                    borderBottom: "1px solid #f1f1f1",
+                    padding: "14px 0",
+                    cursor: isCompleted ? "pointer" : "not-allowed",
+                    opacity: isCompleted ? 1 : 0.6,
+                    background: selectedCompleted === intern.id ? "#e6f9ee" : "transparent"
+                  }}
+                  onClick={() => {
+                    if (isCompleted) setSelectedCompleted(intern.id);
+                  }}
+                  tabIndex={isCompleted ? 0 : -1}
+                  aria-disabled={!isCompleted}
+                >
+                  <div style={{ fontWeight: 600, color: "#222" }}>{intern.company}</div>
+                  <div style={{ color: "#222" }}>{intern.title}</div>
+                  <div style={{ color: "#222" }}>
+                    {formatDate(intern.startDate)} - {formatDate(intern.endDate)}
+                  </div>
+                  <div>
+                    <span style={{
+                      background: intern.status === "Current Intern" ? "#eaf1fb" : "#e6f9ee",
+                      color: intern.status === "Current Intern" ? "#3b82f6" : "#16a34a",
+                      borderRadius: 16,
+                      padding: "6px 18px",
+                      fontWeight: 600,
+                      fontSize: "1.01rem",
+                      display: "inline-block"
+                    }}>
+                      {intern.status}
+                    </span>
+                  </div>
                 </div>
+              );
+            })
+          )}
+          {/* Show details for selected completed internship */}
+          {selectedCompleted && (() => {
+            const selected = myInternships.find(i => i.id === selectedCompleted);
+            if (!selected) return null;
+            return (
+              <div style={{
+                marginTop: 24,
+                background: "#f8fff6",
+                border: "1px solid #b6e2c7",
+                borderRadius: 12,
+                padding: 24,
+                maxWidth: 700,
+                marginLeft: "auto",
+                marginRight: "auto"
+              }}>
+                <h3 style={{ marginTop: 0, color: "#16a34a" }}>Completed Internship Details</h3>
+                <div><b>Company:</b> {selected.company}</div>
+                <div><b>Job Title:</b> {selected.title}</div>
+                <div><b>Start Date:</b> {formatDate(selected.startDate)}</div>
+                <div><b>End Date:</b> {formatDate(selected.endDate)}</div>
+                <div><b>Status:</b> {selected.status}</div>
+                {/* Add more details here if available */}
+                <button
+                  style={{
+                    marginTop: 18,
+                    background: "#43a047",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 8,
+                    padding: "8px 24px",
+                    fontWeight: 600,
+                    fontSize: "1rem",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => setSelectedCompleted(null)}
+                >
+                  Close
+                </button>
               </div>
             );
-          })}
+          })()}
           <div style={{ color: "#7b8a9a", fontSize: "1.01rem", marginTop: 18 }}>
-            Showing 4 internship record(s).
+            Showing {filteredMyInternships.length} internship record(s).
           </div>
         </div>
       </div>
-      {/* End Internship Overview Section */}
+      {/* End My Internships Table Section */}
     </div>
   );
 }
