@@ -115,84 +115,61 @@ function InternshipCycleManagement() {
           {/* Start Date */}
           <div style={{ marginBottom: 22 }}>
             <label style={labelStyle}>Start Date</label>
-            <Popover open={showStartDate} onOpenChange={setShowStartDate}>
-              <PopoverTrigger asChild>
-                <button
-                  type="button"
-                  style={dateBtnStyle}
-                  onClick={() => setShowStartDate(true)}
-                >
-                  {calendarIcon}
-                  {startDate ? startDate.toLocaleDateString() : <span style={{ color: '#7b8a9a' }}>Pick a date</span>}
-                </button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <Calendar
-                  selected={startDate}
-                  onSelect={date => {
-                    setStartDate(date);
-                    setShowStartDate(false);
-                    // Reset endDate and appDeadline if they are before new startDate
-                    if (endDate && date && endDate < date) setEndDate(null);
-                    if (appDeadline && date && appDeadline < date) setAppDeadline(null);
-                  }}
-                />
-              </PopoverContent>
-            </Popover>
+            <input
+              type="date"
+              ref={ref => (window.startDateInput = ref)}
+              style={{ display: 'none' }}
+              value={startDate ? startDate.toISOString().split('T')[0] : ''}
+              onChange={e => setStartDate(e.target.value ? new Date(e.target.value) : null)}
+            />
+            <button
+              type="button"
+              style={dateBtnStyle}
+              onClick={() => window.startDateInput && window.startDateInput.click()}
+            >
+              {calendarIcon}
+              {startDate ? startDate.toLocaleDateString() : <span style={{ color: '#7b8a9a' }}>Pick a date</span>}
+            </button>
           </div>
           {/* End Date */}
           <div style={{ marginBottom: 22 }}>
             <label style={labelStyle}>End Date</label>
-            <Popover open={showEndDate} onOpenChange={setShowEndDate}>
-              <PopoverTrigger asChild>
-                <button
-                  type="button"
-                  style={dateBtnStyle}
-                  onClick={() => setShowEndDate(true)}
-                >
-                  {calendarIcon}
-                  {endDate ? endDate.toLocaleDateString() : <span style={{ color: '#7b8a9a' }}>Pick a date</span>}
-                </button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <Calendar
-                  selected={endDate}
-                  onSelect={date => {
-                    setEndDate(date);
-                    setShowEndDate(false);
-                  }}
-                  // Prevent picking end date before start date
-                  disabled={date => startDate && date < startDate}
-                />
-              </PopoverContent>
-            </Popover>
+            <input
+              type="date"
+              ref={ref => (window.endDateInput = ref)}
+              style={{ display: 'none' }}
+              value={endDate ? endDate.toISOString().split('T')[0] : ''}
+              onChange={e => setEndDate(e.target.value ? new Date(e.target.value) : null)}
+              min={startDate ? startDate.toISOString().split('T')[0] : undefined}
+            />
+            <button
+              type="button"
+              style={dateBtnStyle}
+              onClick={() => window.endDateInput && window.endDateInput.click()}
+            >
+              {calendarIcon}
+              {endDate ? endDate.toLocaleDateString() : <span style={{ color: '#7b8a9a' }}>Pick a date</span>}
+            </button>
           </div>
           {/* Application Deadline */}
           <div style={{ marginBottom: 32 }}>
             <label style={labelStyle}>Application Deadline</label>
-            <Popover open={showAppDeadline} onOpenChange={setShowAppDeadline}>
-              <PopoverTrigger asChild>
-                <button
-                  type="button"
-                  style={dateBtnStyle}
-                  onClick={() => setShowAppDeadline(true)}
-                >
-                  {calendarIcon}
-                  {appDeadline ? appDeadline.toLocaleDateString() : <span style={{ color: '#7b8a9a' }}>Set deadline</span>}
-                </button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <Calendar
-                  selected={appDeadline}
-                  onSelect={date => {
-                    setAppDeadline(date);
-                    setShowAppDeadline(false);
-                  }}
-                  // Prevent picking deadline before start date
-                  disabled={date => startDate && date < startDate}
-                />
-              </PopoverContent>
-            </Popover>
+            <input
+              type="date"
+              ref={ref => (window.appDeadlineInput = ref)}
+              style={{ display: 'none' }}
+              value={appDeadline ? appDeadline.toISOString().split('T')[0] : ''}
+              onChange={e => setAppDeadline(e.target.value ? new Date(e.target.value) : null)}
+              min={startDate ? startDate.toISOString().split('T')[0] : undefined}
+            />
+            <button
+              type="button"
+              style={dateBtnStyle}
+              onClick={() => window.appDeadlineInput && window.appDeadlineInput.click()}
+            >
+              {calendarIcon}
+              {appDeadline ? appDeadline.toLocaleDateString() : <span style={{ color: '#7b8a9a' }}>Set deadline</span>}
+            </button>
           </div>
           {/* Button */}
           <button

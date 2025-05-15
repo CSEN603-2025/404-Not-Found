@@ -7,6 +7,7 @@ import ScadOfficePage from './pages/ScadOfficePage';
 import SuccessC from './pages/SuccessC';
 import CompanyDash from './pages/CompanyDash';
 import Student from './pages/Student-Pages/student';
+import StudentDash from './pages/Student-Pages/ProDash';
 
 
 
@@ -36,7 +37,9 @@ function App() {
       <Route path="/evaluation-form/:id" element={<EvaluationFormPage />} />
       <Route path="/job-posts" element={<JobPostPage />} />
 
+
       <Route path = "/student" element={<Student />} />
+      <Route path = "/pro" element={<StudentDash />} />
 
       
       <Route path="/decision-table" element={<DecisionTable />} />

@@ -25,6 +25,10 @@ const handleSubmit = (e) => {
     localStorage.setItem('userType', 'scad');
     navigate('/scad-office');
   } 
+  if (username === 'pro' && password === 'admin') {
+    localStorage.setItem('userType', 'pro');
+    navigate('/pro'); // Redirect to the student dashboard
+  } 
   // Company Login
   else if (username === 'company' && password === '12345') {
     localStorage.setItem('userType', 'company');
