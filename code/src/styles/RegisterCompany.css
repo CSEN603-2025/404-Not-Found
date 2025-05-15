@@ -21,13 +21,14 @@ body {
 
 /* CompanyRegistrationForm */
 .company-registration-form {
-  max-width: 640px;
+  max-width: 800px;        /* Increased width for more space */
   margin: 0 auto;
 }
 
 .card-content {
-  max-height: 60vh; /* Adjust as needed (e.g., 500px) */
-  overflow-y: auto;
+  max-height: none;        /* Remove height restriction */
+  min-height: 400px;       /* Optional: ensure some height */
+  padding-bottom: 24px;    /* Add some space at the bottom */
 }
 
 .form-container {
@@ -37,19 +38,19 @@ body {
 }
 
 .form-fields {
-  max-height: 60vh; /* Matches card-content, adjust as needed */
-  overflow-y: auto;
+  max-height: none;        /* Remove scroll and height restriction */
+  overflow-y: visible;
 }
 
-.form-icon {
-  width: 16px;
-  height: 16px;
+.form-fields > * {
+  min-height: 48px;        /* Make each row/field taller for better fit */
+  font-size: 1.08rem;      /* Slightly larger font for better readability */
 }
 
-.form-submit {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 16px;
+@media (max-width: 900px) {
+  .company-registration-form {
+    max-width: 98vw;
+  }
 }
 
 /* ReviewRegistration */

@@ -8,12 +8,11 @@ import { EyeIcon } from '../components/ui/eyeicon';
 import { CalendarClockIcon } from '../components/ui/calendarclock'; // Import the calendar icon
 import { CheckIcon } from '../components/ui/checkicon'; // Import the Check icon
 import { XIcon } from '../components/ui/xicon'; // Import the X icon
-import  PhoneIcon from '../components/ui/phoneicon'; // Import the phone icon
+import PhoneIcon from '../components/ui/phoneicon'; // Import the phone icon
 import { mockStudents, mockAppointmentRequests } from '../data/mock-data'; // Import the mock appointment requests
-import ScrollableComponent from '../components/ui/scroll';
 import StudentProfilePopup from '../components/ui/StudentProfilePopup'; // Import the new component
 import { FilterIcon } from '../components/ui/filtericon';
-import  MuteIcon from '../components/ui/muteicon'; // Import the mute icon
+import MuteIcon from '../components/ui/muteicon'; // Import the mute icon
 import CameraIcon from '../components/ui/cameraicon';
 import '../styles/StudentManagement.css';
 
@@ -123,7 +122,7 @@ function StudentManagement() {
   ];
 
   return (
-    <ScrollableComponent height="600px">
+    <div style={{ padding: 0, margin: 0 }}>
       <Card className="student-management-container">
         <CardHeader>
           <CardTitle>Student Management</CardTitle>
@@ -149,70 +148,68 @@ function StudentManagement() {
           </div>
 
           {/* Main Table Container */}
-          <div className="table-container">
-            <div className="scrollable-table">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Major</TableCell>
-                    <TableCell>Internship Status</TableCell>
-                    <TableCell>Appointments</TableCell> {/* New column for appointments */}
-                    <TableCell>Actions</TableCell>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredStudents.length > 0 ? (
-                    filteredStudents.map((student) => (
-                      <TableRow key={student.id}>
-                        <TableCell>{student.name}</TableCell>
-                        <TableCell>{student.major}</TableCell>
-                        <TableCell>
-                          <span className={`status-badge ${getStatusBadgeVariant(student.internshipStatus)}`}>
-                            {student.internshipStatus || 'Unknown'}
+          <div className="table-container" style={{ maxHeight: 'none', overflow: 'visible' }}>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Major</TableCell>
+                  <TableCell>Internship Status</TableCell>
+                  <TableCell>Appointments</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredStudents.length > 0 ? (
+                  filteredStudents.map((student) => (
+                    <TableRow key={student.id}>
+                      <TableCell>{student.name}</TableCell>
+                      <TableCell>{student.major}</TableCell>
+                      <TableCell>
+                        <span className={`status-badge ${getStatusBadgeVariant(student.internshipStatus)}`}>
+                          {student.internshipStatus || 'Unknown'}
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        {student.appointmentDate ? (
+                          <span className="appointment-status">
+                            {student.appointmentDate}
                           </span>
-                        </TableCell>
-                        <TableCell>
-                          {student.appointmentDate ? (
-                            <span className="appointment-status">
-                              {student.appointmentDate}
-                            </span>
-                          ) : (
-                            <span className="no-appointment-status">No request made</span>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          <div className="actions-container">
-                            <Button
-                              className="icon-button"
-                              onClick={() => handleViewProfile(student)}
-                            >
-                              <EyeIcon className="action-icon" />
-                            </Button>
-                            <Button
-                              className="icon-button"
-                              onClick={() => handleRequestAppointment(student)}
-                            >
-                              <CalendarClockIcon className="action-icon" />
-                            </Button>
-                            <Button
-                              className="icon-button"
-                              onClick={() => handleCallStudent(student)}
-                            >
-                              <PhoneIcon className="action-icon" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan="5">No students found matching the criteria.</TableCell>
+                        ) : (
+                          <span className="no-appointment-status">No request made</span>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <div className="actions-container">
+                          <Button
+                            className="icon-button"
+                            onClick={() => handleViewProfile(student)}
+                          >
+                            <EyeIcon className="action-icon" />
+                          </Button>
+                          <Button
+                            className="icon-button"
+                            onClick={() => handleRequestAppointment(student)}
+                          >
+                            <CalendarClockIcon className="action-icon" />
+                          </Button>
+                          <Button
+                            className="icon-button"
+                            onClick={() => handleCallStudent(student)}
+                          >
+                            <PhoneIcon className="action-icon" />
+                          </Button>
+                        </div>
+                      </TableCell>
                     </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </div>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan="5">No students found matching the criteria.</TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
           </div>
         </CardContent>
       </Card>
@@ -255,9 +252,7 @@ function StudentManagement() {
         <div className="call-popup-overlay">
           <div className="call-popup">
             <h2>Calling {selectedStudentForCall.name}</h2>
-            <div className="call-screen">
-              
-            </div>
+            <div className="call-screen"></div>
             <div className="call-controls">
               <div className="left-controls">
                 <Button className="call-control-button">
@@ -276,7 +271,7 @@ function StudentManagement() {
             <div className="end-call-container">
               <Button
                 className="call-control-button end-call-button"
-                onClick={handleCloseCallPopup} // Close the popup when the button is clicked
+                onClick={handleCloseCallPopup}
               >
                 <PhoneIcon className="action-icon" />
               </Button>
@@ -334,7 +329,7 @@ function StudentManagement() {
           </Table>
         </CardContent>
       </Card>
-    </ScrollableComponent>
+    </div>
   );
 }
 
