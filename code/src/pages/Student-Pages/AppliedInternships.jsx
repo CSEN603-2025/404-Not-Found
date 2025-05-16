@@ -363,9 +363,9 @@ function AppliedInternships({ applicationsProp }) {
                 background: "none",
                 border: "none",
                 fontSize: 28,
-                color: "#888",
+                color: "red",
                 cursor: "pointer",
-                zIndex: 10
+                zIndex: 35
               }}
               aria-label="Close"
             >×</button>

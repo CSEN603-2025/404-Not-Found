@@ -51,36 +51,46 @@
   
   /* Notifications button container */
   .notifications-button-container {
-    text-align: right;
-    padding: 18px 24px 0 0;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
   }
   
   /* Notifications button */
   .notifications-button {
-    background: #f6f7fa;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 8px;
+    display: flex;
+    align-items: center;
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 50%;
     cursor: pointer;
-    margin-left: 8px;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .notifications-button:hover {
+    background: #45a049;
   }
   
   /* Notifications icon */
   .notifications-icon {
-    font-size: 1.2rem;
-    color: #4d6a7a;
+    width: 1.5rem;
+    height: 1.5rem;
   }
   
   /* Notifications popup */
   .notifications-popup {
     position: absolute;
-    top: 60px;
-    right: 24px;
+    top: 3rem;
+    right: 0;
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    padding: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px; /* Increased width */
+    padding: 1.5rem; /* Increased padding */
     z-index: 1000;
   }
   
@@ -108,11 +118,12 @@
   
   /* Incoming Call Section */
   .incoming-call {
-    margin-top: 16px;
+    margin-top: 1rem;
     padding: 1rem;
     background: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 5px;
+
   }
   
   /* Incoming Call Header */
@@ -126,7 +137,7 @@
   /* Call Buttons */
   .call-buttons {
     display: flex;
-    gap: 8px; /* Space between buttons */
+    gap: 0.5rem; /* Space between buttons */
   }
   
   .answer-button,
