@@ -3,7 +3,15 @@
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Building2, Factory, Users, Image as ImageIcon, Mail, ArrowRight } from "lucide-react";
+import {
+  Building2,
+  Factory,
+  Users,
+  Image as ImageIcon,
+  Mail,
+  ArrowRight,
+  Paperclip,
+} from "lucide-react";
 import { Button } from "../components/ui/button";
 import {
   Form,
@@ -55,10 +63,6 @@ export function CompanyRegistrationForm({ defaultValues }) {
 
   const navigate = useNavigate(); // Initialize navigate
 
-  const handleSubmit = () => {
-    navigate("/login"); // Redirect to the login page
-  };
-
   return (
     <>
       <ToastContainer />
@@ -72,10 +76,10 @@ export function CompanyRegistrationForm({ defaultValues }) {
         <CardContent className="max-h-[60vh] overflow-y-auto">
           <Form {...form}>
             <form
-              onSubmit={(e) => {
-                e.preventDefault(); // Prevent default form submission
-                handleSubmit(); // Redirect to login
-              }}
+              onSubmit={form.handleSubmit((data) => {
+                // Handle your form submission here (e.g., show review, send to server, etc.)
+                // Do NOT navigate to login here!
+              })}
               className="form-container"
             >
               <FormField
@@ -202,8 +206,38 @@ export function CompanyRegistrationForm({ defaultValues }) {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="documents"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      <Paperclip className="form-icon" />
+                      Company Documents (Optional)
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="file"
+                        multiple
+                        onChange={(e) => {
+                          // If you want to store files in state, you can do so here
+                          field.onChange(e.target.files);
+                        }}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Upload relevant company documents (PDF, DOCX, etc.).
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <div className="form-submit sticky bottom-0 bg-white pt-4">
-                <Button type="submit" className="w-full">
+                <Button
+                  type="button"
+                  className="w-full"
+                  onClick={() => navigate("/")}
+                >
                   Review Information <ArrowRight className="form-icon" />
                 </Button>
               </div>
