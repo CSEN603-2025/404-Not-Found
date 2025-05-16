@@ -9,12 +9,15 @@ const initialReports = [
     summary: "This report details my activities and learnings during my summer internship at Tech Solutions Inc.",
     introduction: "This report details my activities and learnings during my summer internship at Tech Solutions Inc.",
     body: "Throughout the internship, I was involved in various projects, including developing a new feature for the company's flagship product and participating in agile team meetings. I gained valuable experience in full-stack development and teamwork.",
-    conclusion: "Overall, the internship was a highly rewarding experience that significantly contributed to my professional growth and understanding of the tech industry."
+    conclusion: "Overall, the internship was a highly rewarding experience that significantly contributed to my professional growth and understanding of the tech industry.",
+    Status: "Flagged",
+    Comments: "The report contains insufficient details about the challenges faced during the internship."
   },
   {
     title: "Marketing Internship at Creative Co.",
     updated: "May 12th, 2025 5:23 PM",
-    summary: "A comprehensive overview of my marketing internship focusing on digital campaigns and market research."
+    summary: "A comprehensive overview of my marketing internship focusing on digital campaigns and market research.",
+    Status: "Accepted",
   },
   {
     title: "Software Engineering Internship",

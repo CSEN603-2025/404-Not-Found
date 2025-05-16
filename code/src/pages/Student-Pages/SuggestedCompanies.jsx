@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { mockSuggestedCompanies } from '../../data/mock-data-Student';
+import SaveIcon from '../../components/ui/SaveIcon'; // Import the SaveIcon component
+import '../../components/ui/SaveIcon'; // Import the provided CSS for the SaveIcon
 
 function SuggestedCompanies() {
   const [jobInterests, setJobInterests] = useState('');
@@ -137,19 +139,9 @@ function SuggestedCompanies() {
             ) : (
               <button
                 onClick={() => handleSaveCompany(company)}
-                style={{
-                  width: '100%',
-                  padding: '8px 0',
-                  background: '#1976d2',
-                  color: '#fff',
-                  fontSize: '0.9rem',
-                  fontWeight: 600,
-                  borderRadius: 8,
-                  border: 'none',
-                  cursor: 'pointer',
-                }}
+                className="bookmarkBtn" // Apply the provided CSS class
               >
-                Save
+                <SaveIcon /> {/* Use the SaveIcon component */}
               </button>
             )}
           </div>

@@ -18,6 +18,7 @@ import EvaluateCompanies from './EvaluateCompanies';
 import InternshipReports from './InternshipReports';
 import Courses from './Courses';
 import Appointment from './Appointment';
+import Workshops from './Workshops'; // Add this import at the top with the others
 
 function Student() {
   const [isClient, setIsClient] = useState(false);
@@ -257,6 +258,26 @@ function Student() {
               }}
             >
               <CalendarIcon style={{ fontSize: 16 }} /> Appointments
+            </button>
+            <button
+              onClick={() => setSidebarTab('workshops')}
+              style={{
+                width: "90%",
+                margin: "0 auto 4px auto",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                background: sidebarTab === 'workshops' ? "#43a047" : "transparent",
+                color: sidebarTab === 'workshops' ? "#fff" : "#222",
+                border: "none",
+                borderRadius: 6,
+                padding: "7px 12px",
+                fontWeight: 500,
+                fontSize: "1rem",
+                cursor: "pointer"
+              }}
+            >
+              <FileTextIcon style={iconStyle} /> Workshops
             </button>
           </div>
         </div>
@@ -1182,6 +1203,16 @@ function Student() {
           {sidebarTab === 'internship-reports' && <InternshipReports />}
           {sidebarTab === 'courses' && <Courses />}
           {sidebarTab === 'appointments' && <Appointment />}
+          {sidebarTab === 'workshops' && (
+            <Workshops
+              onRegisterWorkshop={workshop =>
+                setNotifications(prev => [
+                  ...prev,
+                  `You have registered for "${workshop.title}" workshop.`
+                ])
+              }
+            />
+          )}
         </div>
       </div>
     </div>
