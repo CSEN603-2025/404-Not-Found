@@ -117,12 +117,7 @@ export default function JobPostPage() {
 
   return (
     <div className="job-post-page">
-      <Button
-        className="return-button mb-4"
-        onClick={() => navigate("/company-dashboard")}
-      >
-        Return to Dashboard
-      </Button>
+      
       <FormProvider {...methods}>
         <Card className="job-post-form max-w-lg">
           <CardHeader>

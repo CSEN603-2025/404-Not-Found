@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const STATUS_STYLES = {
   Interviewing: { background: "#f3e8ff", color: "#a259e6" },
@@ -117,6 +117,9 @@ function AppliedInternships({ applicationsProp }) {
   const [selectedAvailable, setSelectedAvailable] = useState(null);
   const [applyError, setApplyError] = useState('');
   const [showModal, setShowModal] = useState(false);
+
+  // Add state for popup
+  const [showOverqualified, setShowOverqualified] = useState(false);
 
   // Add New Application form state
   const steps = [
@@ -262,6 +265,16 @@ function AppliedInternships({ applicationsProp }) {
   const [internshipSearch, setInternshipSearch] = useState('');
   const [internshipStatus, setInternshipStatus] = useState('all');
   const [selectedCompleted, setSelectedCompleted] = useState(null);
+  const [appealMessage, setAppealMessage] = useState('');
+
+  // State for showing the video popup
+  const [showVideo, setShowVideo] = useState(false);
+
+  // Show video after 2 seconds on mount
+  useEffect(() => {
+    const timer = setTimeout(() => setShowVideo(true), 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Data for "My Internships" table
   const myInternships = [
@@ -322,6 +335,54 @@ function AppliedInternships({ applicationsProp }) {
       minHeight: "100vh",
       padding: "40px 0"
     }}>
+      {/* Video Popup */}
+      {showVideo && (
+        <div style={{
+          position: "fixed",
+          top: 0, left: 0, width: "100vw", height: "100vh",
+          background: "rgba(0,0,0,0.45)",
+          zIndex: 3000,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}>
+          <div style={{
+            background: "#fff",
+            borderRadius: 14,
+            boxShadow: "0 4px 32px rgba(0,0,0,0.13)",
+            padding: 0,
+            position: "relative",
+            maxWidth: "90vw"
+          }}>
+            <button
+              onClick={() => setShowVideo(false)}
+              style={{
+                position: "absolute",
+                right: 12,
+                top: 12,
+                background: "none",
+                border: "none",
+                fontSize: 28,
+                color: "#888",
+                cursor: "pointer",
+                zIndex: 10
+              }}
+              aria-label="Close"
+            >×</button>
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/jWQ7eKglSv8?si=5RpyG03FponOz67Y"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              style={{ borderRadius: 14, display: "block" }}
+            ></iframe>
+          </div>
+        </div>
+      )}
       {/* Modal */}
       {showModal && (
         <div style={{
@@ -657,17 +718,25 @@ function AppliedInternships({ applicationsProp }) {
         {filteredApplications.map((app, idx) => {
           const status = STATUS_STYLES[app.status] || STATUS_STYLES.Applied;
           return (
-            <div key={app.id || idx} style={{
-              display: "grid",
-              gridTemplateColumns: "2fr 2fr 1.2fr 1fr",
-              alignItems: "center",
-              borderBottom: "1px solid #f1f1f1",
-              padding: "14px 0"
-            }}>
+            <div
+              key={app.id || idx}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "2fr 2fr 1.2fr 1fr",
+                alignItems: "center",
+                borderBottom: "1px solid #f1f1f1",
+                padding: "14px 0",
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                if (app.status === "Rejected") setShowOverqualified(true);
+              }}
+              tabIndex={0}
+            >
               <div style={{ fontWeight: 600, color: "#222" }}>{app.company}</div>
               <div style={{ color: "#222" }}>{app.title}</div>
               <div style={{ color: "#222" }}>{app.applicationDate}</div>
-              <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{
                   background: status.background,
                   color: status.color,
@@ -680,10 +749,86 @@ function AppliedInternships({ applicationsProp }) {
                 }}>
                   {app.status}
                 </span>
+                {app.status === "Rejected" && (
+                  <button
+                    style={{
+                      marginLeft: 8,
+                      background: "#43a047",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: 8,
+                      padding: "4px 18px",
+                      fontWeight: 600,
+                      fontSize: "0.98rem",
+                      cursor: "pointer",
+                      transition: "background 0.2s"
+                    }}
+                    onClick={e => {
+                      e.stopPropagation();
+                      setAppealMessage("Appeal submitted!");
+                      setTimeout(() => setAppealMessage(''), 2000);
+                    }}
+                  >
+                    Appeal
+                  </button>
+                )}
               </div>
             </div>
           );
         })}
+        {/* Overqualified Popup */}
+        {showOverqualified && (
+          <div style={{
+            position: "fixed",
+            top: 0, left: 0, width: "100vw", height: "100vh",
+            background: "rgba(0,0,0,0.18)",
+            zIndex: 2000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}>
+            <div style={{
+              background: "#fff",
+              borderRadius: 14,
+              boxShadow: "0 4px 32px rgba(0,0,0,0.13)",
+              width: 340,
+              maxWidth: "95vw",
+              padding: "32px 32px 24px 32px",
+              textAlign: "center"
+            }}>
+              <div style={{ fontWeight: 700, fontSize: "1.25rem", marginBottom: 12 }}>
+                You are Overqualified
+              </div>
+              <button
+                style={{
+                  marginTop: 18,
+                  background: "#43a047",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: 8,
+                  padding: "8px 24px",
+                  fontWeight: 600,
+                  fontSize: "1rem",
+                  cursor: "pointer"
+                }}
+                onClick={() => setShowOverqualified(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+        {appealMessage && (
+          <div style={{
+            color: "#16a34a",
+            marginTop: 12,
+            textAlign: "right",
+            fontWeight: 600,
+            fontSize: "1.05rem"
+          }}>
+            {appealMessage}
+          </div>
+        )}
         <div style={{ color: "#7b8a9a", fontSize: "1.01rem", marginTop: 18 }}>
           Showing {filteredApplications.length} application(s).
         </div>

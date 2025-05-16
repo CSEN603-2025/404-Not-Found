@@ -5,6 +5,8 @@ import StudentManagement from './StudentManagement';
 import ReportManagement from './ReportManagement';
 import InternshipCycleManagement from './InternshipCycleManagement';
 import Workshops from './Workshops';
+import Clarification from './Clarification';
+import Statistics from './Statistics';
 import { BuildingIcon } from '../components/ui/buildingicon';
 import { BriefcaseIcon } from '../components/ui/briefcaseicon';
 import { UsersIcon } from '../components/ui/usersicon';
@@ -14,7 +16,10 @@ import BellIcon from '../components/ui/BellIcon';
 import PhoneIcon from '../components/ui/phoneicon';
 import MuteIcon from '../components/ui/muteicon';
 import CameraIcon from '../components/ui/cameraicon';
+import UserQuestionIcon from '../components/ui/UserQuestionIcon';
+import ChartBarIcon from '../components/ui/ChartBarIcon';
 import { Button } from '../components/ui/button';
+
 import '../styles/ScadOfficePage.css';
 
 function ScadOfficePage() {
@@ -207,6 +212,46 @@ function ScadOfficePage() {
             >
               <BriefcaseIcon style={iconStyle} /> Workshops
             </button>
+            <button
+              onClick={() => setSidebarTab('clarification')}
+              style={{
+                width: "90%",
+                margin: "0 auto 4px auto",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                background: sidebarTab === 'clarification' ? "#43a047" : "transparent",
+                color: sidebarTab === 'clarification' ? "#fff" : "#222",
+                border: "none",
+                borderRadius: 6,
+                padding: "7px 12px",
+                fontWeight: 500,
+                fontSize: "1rem",
+                cursor: "pointer"
+              }}
+            >
+              <UserQuestionIcon style={{ ...iconStyle, color: "#000" }} /> Clarification
+            </button>
+            <button
+              onClick={() => setSidebarTab('statistics')}
+              style={{
+                width: "90%",
+                margin: "0 auto 4px auto",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                background: sidebarTab === 'statistics' ? "#43a047" : "transparent",
+                color: sidebarTab === 'statistics' ? "#fff" : "#222",
+                border: "none",
+                borderRadius: 6,
+                padding: "7px 12px",
+                fontWeight: 500,
+                fontSize: "1rem",
+                cursor: "pointer"
+              }}
+            >
+              <ChartBarIcon style={{ ...iconStyle, color: "#000" }} /> Statistics
+            </button>
           </div>
         </div>
         <div style={{ flex: 1 }} />
@@ -308,6 +353,8 @@ function ScadOfficePage() {
               case 'report-management': return 'Reports';
               case 'internship-cycle': return 'Internship Cycle';
               case 'workshops': return 'Workshops';
+              case 'clarification': return 'Clarification';
+              case 'statistics': return 'Statistics';
               default: return '';
             }
           })()}
@@ -319,6 +366,8 @@ function ScadOfficePage() {
           {sidebarTab === 'report-management' && <ReportManagement />}
           {sidebarTab === 'internship-cycle' && <InternshipCycleManagement />}
           {sidebarTab === 'workshops' && <Workshops />}
+          {sidebarTab === 'clarification' && <Clarification />}
+          {sidebarTab === 'statistics' && <Statistics />}
         </div>
       </div>
     </div>
