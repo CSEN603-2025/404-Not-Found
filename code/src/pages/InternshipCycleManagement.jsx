@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Calendar } from '../components/ui/calendar';
 import { Popover, PopoverTrigger, PopoverContent } from '../components/ui/popover';
 
@@ -12,6 +12,10 @@ function InternshipCycleManagement() {
   const [showAppDeadline, setShowAppDeadline] = useState(false);
   const [showStartDate, setShowStartDate] = useState(false);
   const [showEndDate, setShowEndDate] = useState(false);
+
+  const startDateInputRef = useRef(null);
+  const endDateInputRef = useRef(null);
+  const appDeadlineInputRef = useRef(null);
 
   const inputStyle = {
     width: '100%',
@@ -35,16 +39,16 @@ function InternshipCycleManagement() {
 
   // Date button style
   const dateBtnStyle = {
-  width: '100%',
-  padding: '16px 16px 16px 48px',
-  border: 'none',
-  background: 'transparent',
-  fontSize: '1.08rem',
-  color: '#4d6a7a',
-  textAlign: 'left',
-  position: 'relative',
-  boxShadow: 'none',
-  minHeight: 56
+    width: '100%',
+    padding: '16px 16px 16px 48px',
+    border: 'none',
+    background: 'transparent',
+    fontSize: '1.08rem',
+    color: '#4d6a7a',
+    textAlign: 'left',
+    position: 'relative',
+    boxShadow: 'none',
+    minHeight: 56
   };
 
   const calendarIcon = (
@@ -117,7 +121,7 @@ function InternshipCycleManagement() {
             <label style={labelStyle}>Start Date</label>
             <input
               type="date"
-              ref={ref => (window.startDateInput = ref)}
+              ref={startDateInputRef}
               style={{ display: 'none' }}
               value={startDate ? startDate.toISOString().split('T')[0] : ''}
               onChange={e => setStartDate(e.target.value ? new Date(e.target.value) : null)}
@@ -125,7 +129,7 @@ function InternshipCycleManagement() {
             <button
               type="button"
               style={dateBtnStyle}
-              onClick={() => window.startDateInput && window.startDateInput.click()}
+              onClick={() => startDateInputRef.current && startDateInputRef.current.showPicker ? startDateInputRef.current.showPicker() : startDateInputRef.current.click()}
             >
               {calendarIcon}
               {startDate ? startDate.toLocaleDateString() : <span style={{ color: '#7b8a9a' }}>Pick a date</span>}
@@ -136,7 +140,7 @@ function InternshipCycleManagement() {
             <label style={labelStyle}>End Date</label>
             <input
               type="date"
-              ref={ref => (window.endDateInput = ref)}
+              ref={endDateInputRef}
               style={{ display: 'none' }}
               value={endDate ? endDate.toISOString().split('T')[0] : ''}
               onChange={e => setEndDate(e.target.value ? new Date(e.target.value) : null)}
@@ -145,7 +149,7 @@ function InternshipCycleManagement() {
             <button
               type="button"
               style={dateBtnStyle}
-              onClick={() => window.endDateInput && window.endDateInput.click()}
+              onClick={() => endDateInputRef.current && endDateInputRef.current.showPicker ? endDateInputRef.current.showPicker() : endDateInputRef.current.click()}
             >
               {calendarIcon}
               {endDate ? endDate.toLocaleDateString() : <span style={{ color: '#7b8a9a' }}>Pick a date</span>}
@@ -156,7 +160,7 @@ function InternshipCycleManagement() {
             <label style={labelStyle}>Application Deadline</label>
             <input
               type="date"
-              ref={ref => (window.appDeadlineInput = ref)}
+              ref={appDeadlineInputRef}
               style={{ display: 'none' }}
               value={appDeadline ? appDeadline.toISOString().split('T')[0] : ''}
               onChange={e => setAppDeadline(e.target.value ? new Date(e.target.value) : null)}
@@ -165,7 +169,7 @@ function InternshipCycleManagement() {
             <button
               type="button"
               style={dateBtnStyle}
-              onClick={() => window.appDeadlineInput && window.appDeadlineInput.click()}
+              onClick={() => appDeadlineInputRef.current && appDeadlineInputRef.current.showPicker ? appDeadlineInputRef.current.showPicker() : appDeadlineInputRef.current.click()}
             >
               {calendarIcon}
               {appDeadline ? appDeadline.toLocaleDateString() : <span style={{ color: '#7b8a9a' }}>Set deadline</span>}

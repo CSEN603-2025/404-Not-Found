@@ -1,46 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './InternshipReports.css';
 
-const initialReports = [
-  {
-    title: "My First Internship Experience",
-    updated: "May 14th, 2025 5:23 PM",
-    created: "May 14th, 2025 8:23 PM",
-    summary: "This report details my activities and learnings during my summer internship at Tech Solutions Inc.",
-    introduction: "This report details my activities and learnings during my summer internship at Tech Solutions Inc.",
-    body: "Throughout the internship, I was involved in various projects, including developing a new feature for the company's flagship product and participating in agile team meetings. I gained valuable experience in full-stack development and teamwork.",
-    conclusion: "Overall, the internship was a highly rewarding experience that significantly contributed to my professional growth and understanding of the tech industry.",
-    Status: "Flagged",
-    Comments: "The report contains insufficient details about the challenges faced during the internship."
-  },
-  {
-    title: "Marketing Internship at Creative Co.",
-    updated: "May 12th, 2025 5:23 PM",
-    summary: "A comprehensive overview of my marketing internship focusing on digital campaigns and market research.",
-    Status: "Accepted",
-  },
-  {
-    title: "Software Engineering Internship",
-    updated: "May 10th, 2025 4:00 PM",
-    summary: "My experience as a software engineering intern, working on real-world projects and collaborating with a tech team."
-  },
-  {
-    title: "Finance Internship at FinCorp",
-    updated: "May 8th, 2025 2:15 PM",
-    summary: "Insights and skills gained during my finance internship, including data analysis and client reporting."
-  },
-  {
-    title: "Business Analyst Internship",
-    updated: "May 6th, 2025 3:00 PM",
-    summary: "Business analysis, requirements gathering, and process improvement during my internship at BizAnalytics."
-  },
-  {
-    title: "HR Internship at PeopleFirst",
-    updated: "May 4th, 2025 1:45 PM",
-    summary: "Recruitment, onboarding, and employee engagement projects during my HR internship at PeopleFirst."
-  }
-];
-
 const COURSE_LIST = [
   "COM210 - Technical Communication",
   "CS305 - Software Engineering",
@@ -51,11 +11,77 @@ const COURSE_LIST = [
 ];
 
 function InternshipReports() {
-  const [reports, setReports] = useState(initialReports);
+  const [reports, setReports] = useState([
+    {
+      title: "My First Internship Experience",
+      updated: "May 14th, 2025 5:23 PM",
+      created: "May 14th, 2025 8:23 PM",
+      summary: "This report details my activities and learnings during my summer internship at Tech Solutions Inc.",
+      introduction: "This report details my activities and learnings during my summer internship at Tech Solutions Inc.",
+      body: "Throughout the internship, I was involved in various projects, including developing a new feature for the company's flagship product and participating in agile team meetings. I gained valuable experience in full-stack development and teamwork.",
+      conclusion: "Overall, the internship was a highly rewarding experience that significantly contributed to my professional growth and understanding of the tech industry.",
+      Status: "Flagged",
+      Comments: "The report contains insufficient details about the challenges faced during the internship."
+    },
+    {
+      title: "Marketing Internship at Creative Co.",
+      updated: "May 12th, 2025 5:23 PM",
+      summary: "A comprehensive overview of my marketing internship focusing on digital campaigns and market research.",
+      Status: "Accepted"
+    },
+    {
+      title: "Software Engineering Internship",
+      updated: "May 10th, 2025 4:00 PM",
+      summary: "My experience as a software engineering intern, working on real-world projects and collaborating with a tech team.",
+      Status: "Rejected",
+      Comments: "The report lacks technical depth and specific project outcomes."
+    },
+    {
+      title: "Finance Internship at FinCorp",
+      updated: "May 8th, 2025 2:15 PM",
+      summary: "Insights and skills gained during my finance internship, including data analysis and client reporting.",
+      Status: "Accepted"
+    },
+    {
+      title: "Business Analyst Internship",
+      updated: "May 6th, 2025 3:00 PM",
+      summary: "Business analysis, requirements gathering, and process improvement during my internship at BizAnalytics.",
+      Status: "Flagged",
+      Comments: "Please elaborate on the process improvement methodologies used."
+    },
+    {
+      title: "HR Internship at PeopleFirst",
+      updated: "May 4th, 2025 1:45 PM",
+      summary: "Recruitment, onboarding, and employee engagement projects during my HR internship at PeopleFirst.",
+      Status: "Rejected",
+      Comments: "The report is missing a summary of onboarding challenges."
+    },
+    // --- Added Pending Reports ---
+    {
+      title: "UI/UX Internship at Designify",
+      updated: "May 2nd, 2025 11:00 AM",
+      summary: "Worked on user interface improvements and user research for a mobile app project.",
+      Status: "Pending"
+    },
+    {
+      title: "Data Science Internship at DataWiz",
+      updated: "Apr 30th, 2025 9:30 AM",
+      summary: "Analyzed large datasets and built predictive models for client projects.",
+      Status: "Pending"
+    },
+    {
+      title: "Operations Internship at FastLogistics",
+      updated: "Apr 28th, 2025 3:45 PM",
+      summary: "Assisted in optimizing supply chain processes and inventory management.",
+      Status: "Pending"
+    }
+  ]);
   const [viewIdx, setViewIdx] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editReport, setEditReport] = useState(reports[0]);
   const [selectedCourses, setSelectedCourses] = useState([]);
+  const [showCommentPopup, setShowCommentPopup] = useState(false);
+  const [commentText, setCommentText] = useState('');
   const printRef = useRef();
 
   // Download as PDF handler for the detailed view
@@ -397,7 +423,7 @@ function InternshipReports() {
         justifyContent: "flex-end",
         maxWidth: 1100,
         margin: "0 auto 24px auto",
-        paddingRight: "40px" // Move the button a bit to the left
+        paddingRight: "40px"
       }}>
         <button
           style={{
@@ -454,7 +480,51 @@ function InternshipReports() {
             <div style={{ color: "#4d6a7a", fontSize: "0.98rem", margin: "12px 0 14px 0" }}>
               {report.summary}
             </div>
-            <div style={{ display: "flex", gap: 8 }}>
+            {/* Status Section */}
+            <div style={{ marginBottom: 10, marginTop: 4 }}>
+              <span
+                style={{
+                  display: "inline-block",
+                  padding: "4px 14px",
+                  borderRadius: 16,
+                  fontWeight: 600,
+                  fontSize: "0.98rem",
+                  background:
+                    report.Status === "Accepted"
+                      ? "#eaf6ed"
+                      : report.Status === "Flagged"
+                      ? "#fff8e1"
+                      : report.Status === "Rejected"
+                      ? "#ffebee"
+                      : report.Status === "Pending"
+                      ? "#e3f2fd"
+                      : "#f6f7fa",
+                  color:
+                    report.Status === "Accepted"
+                      ? "#43a047"
+                      : report.Status === "Flagged"
+                      ? "#ff9800"
+                      : report.Status === "Rejected"
+                      ? "#e53935"
+                      : report.Status === "Pending"
+                      ? "#1e88e5"
+                      : "#222",
+                  border:
+                    report.Status === "Accepted"
+                      ? "1.5px solid #43a047"
+                      : report.Status === "Flagged"
+                      ? "1.5px solid #ff9800"
+                      : report.Status === "Rejected"
+                      ? "1.5px solid #e53935"
+                      : report.Status === "Pending"
+                      ? "1.5px solid #1e88e5"
+                      : "1.5px solid #e0e0e0"
+                }}
+              >
+                {report.Status}
+              </span>
+            </div>
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
               <button
                 style={{
                   background: "#f6f7fa",
@@ -467,17 +537,41 @@ function InternshipReports() {
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
-                  gap: 4
+                  gap: 4,
+                  minWidth: 0
                 }}
                 onClick={() => {
-                  if (idx === 0) {
-                    setEditReport(reports[0]);
-                  }
+                  setEditReport(reports[idx]);
                   setViewIdx(idx);
+                  setEditMode(false);
                 }}
               >
                 View
               </button>
+              {(report.Status === "Flagged" || report.Status === "Rejected") && (
+                <button
+                  style={{
+                    background: "#ffd600",
+                    color: "#222",
+                    border: "none",
+                    borderRadius: 8,
+                    padding: "7px 12px",
+                    fontWeight: 500,
+                    fontSize: "0.95rem",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                    minWidth: 0
+                  }}
+                  onClick={() => {
+                    setCommentText(report.Comments || "No comment provided.");
+                    setShowCommentPopup(true);
+                  }}
+                >
+                  View Comment
+                </button>
+              )}
               <button
                 style={{
                   background: "#e53935",
@@ -490,7 +584,8 @@ function InternshipReports() {
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
-                  gap: 4
+                  gap: 4,
+                  minWidth: 0
                 }}
                 onClick={() => {
                   if (idx === 0) {
@@ -506,6 +601,49 @@ function InternshipReports() {
           </div>
         ))}
       </div>
+      {/* Comment Popup */}
+      {showCommentPopup && (
+        <div style={{
+          position: "fixed",
+          top: 0, left: 0, width: "100vw", height: "100vh",
+          background: "rgba(0,0,0,0.18)",
+          zIndex: 2000,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}>
+          <div style={{
+            background: "#fff",
+            borderRadius: 12,
+            boxShadow: "0 4px 32px rgba(67,160,71,0.13)",
+            minWidth: 320,
+            maxWidth: "90vw",
+            padding: "28px 32px 18px 32px",
+            position: "relative"
+          }}>
+            <button
+              onClick={() => setShowCommentPopup(false)}
+              style={{
+                position: "absolute",
+                right: 18,
+                top: 18,
+                background: "none",
+                border: "none",
+                fontSize: 22,
+                color: "#888",
+                cursor: "pointer"
+              }}
+              aria-label="Close"
+            >×</button>
+            <div style={{ fontWeight: 700, fontSize: "1.18rem", marginBottom: 12, color: "#e53935" }}>
+              Reviewer Comment
+            </div>
+            <div style={{ color: "#444", fontSize: "1.08rem" }}>
+              {commentText}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

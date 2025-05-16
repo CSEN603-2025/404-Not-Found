@@ -12,16 +12,16 @@ function Workshops() {
   const [upcomingWorkshops, setUpcomingWorkshops] = useState(mockUpcomingWorkshops);
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
   const [selectedWorkshopForView, setSelectedWorkshopForView] = useState(null);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [showWorkshopModal, setShowWorkshopModal] = useState(false);
 
   const handleAddWorkshop = () => {
-    setSelectedWorkshop(null); // Clear the selected workshop
-    setIsPopupOpen(true); // Open the popup for adding a new workshop
+    setSelectedWorkshop(null);
+    setShowWorkshopModal(true);
   };
 
   const handleEditWorkshop = (workshop, isUpcoming = false) => {
-    setSelectedWorkshop(workshop); // Set the selected workshop for editing
-    setIsPopupOpen(true); // Open the popup
+    setSelectedWorkshop(workshop);
+    setShowWorkshopModal(true);
   };
 
   const handleDeleteWorkshop = (id, isUpcoming = false) => {
@@ -36,15 +36,13 @@ function Workshops() {
 
   const handleSaveWorkshop = (workshop) => {
     if (selectedWorkshop) {
-      // Update existing workshop
       setWorkshops(
         workshops.map((w) => (w.id === selectedWorkshop.id ? { ...selectedWorkshop, ...workshop } : w))
       );
     } else {
-      // Add new workshop
       setWorkshops([...workshops, { id: Date.now(), ...workshop }]);
     }
-    setIsPopupOpen(false); // Close the popup
+    setShowWorkshopModal(false);
   };
 
   return (
@@ -56,7 +54,6 @@ function Workshops() {
         </Button>
       </div>
 
-      {/* Current Workshops Table */}
       <Table>
         <TableHeader>
           <TableRow>
@@ -103,7 +100,6 @@ function Workshops() {
         </TableBody>
       </Table>
 
-      {/* Upcoming Workshops Table */}
       <h3 className="centered-title">Upcoming Workshops</h3>
       <Table>
         <TableHeader>
@@ -175,20 +171,68 @@ function Workshops() {
         </div>
       )}
 
-      {isPopupOpen && (
-        <WorkshopPopup
-          workshop={selectedWorkshop}
-          onSave={handleSaveWorkshop}
-          onClose={() => setIsPopupOpen(false)}
-        />
+      {showWorkshopModal && (
+        <div style={{
+          position: "fixed",
+          top: 0, left: 0, width: "100vw", height: "100vh",
+          background: "rgba(0,0,0,0.18)",
+          zIndex: 1000,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}>
+          <div style={{
+            background: "#fff",
+            borderRadius: 14,
+            boxShadow: "0 4px 32px rgba(0,0,0,0.13)",
+            width: 480,
+            maxWidth: "95vw",
+            padding: "32px 32px 24px 32px",
+            position: "relative"
+          }}>
+            <button
+              onClick={() => setShowWorkshopModal(false)}
+              style={{
+                position: "absolute",
+                right: 18,
+                top: 18,
+                background: "none",
+                border: "none",
+                fontSize: 22,
+                color: "#888",
+                cursor: "pointer"
+              }}
+              aria-label="Close"
+            >×</button>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+              <span role="img" aria-label="edit" style={{ fontSize: 22, color: "#43a047" }}>📝</span>
+              <span style={{ fontWeight: 700, fontSize: "1.35rem" }}>
+                {selectedWorkshop ? "Edit Workshop" : "Add Workshop"}
+              </span>
+            </div>
+            <div style={{ color: "#7b8a9a", marginBottom: 18 }}>
+              {selectedWorkshop
+                ? "Edit the details of this workshop."
+                : "Please fill in the details to add a new workshop."}
+            </div>
+            <WorkshopModalForm
+              initialData={selectedWorkshop}
+              onSave={data => {
+                handleSaveWorkshop(data);
+                setShowWorkshopModal(false);
+              }}
+              onCancel={() => setShowWorkshopModal(false)}
+            />
+          </div>
+        </div>
       )}
     </div>
   );
 }
 
-function WorkshopPopup({ workshop, onSave, onClose }) {
+function WorkshopModalForm({ initialData, onSave, onCancel }) {
   const [formData, setFormData] = useState(
-    workshop || {
+    initialData || {
       name: '',
       startDate: '',
       endDate: '',
@@ -211,79 +255,119 @@ function WorkshopPopup({ workshop, onSave, onClose }) {
   };
 
   return (
-    <div className="popup-overlay">
-      <div className="popup">
-        <h3>{workshop ? 'Edit Workshop' : 'Add Workshop'}</h3>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Workshop Name"
-            required
-          />
-          <input
-            type="date"
-            name="startDate"
-            value={formData.startDate}
-            onChange={handleChange}
-            placeholder="Start Date"
-            required
-          />
-          <input
-            type="date"
-            name="endDate"
-            value={formData.endDate}
-            onChange={handleChange}
-            placeholder="End Date"
-            required
-          />
-          <input
-            type="time"
-            name="startTime"
-            value={formData.startTime}
-            onChange={handleChange}
-            placeholder="Start Time"
-            required
-          />
-          <input
-            type="time"
-            name="endTime"
-            value={formData.endTime}
-            onChange={handleChange}
-            placeholder="End Time"
-            required
-          />
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            placeholder="Short Description"
-            required
-          />
-          <input
-            type="text"
-            name="speaker"
-            value={formData.speaker}
-            onChange={handleChange}
-            placeholder="Speaker Bio"
-            required
-          />
-          <textarea
-            name="agenda"
-            value={formData.agenda}
-            onChange={handleChange}
-            placeholder="Workshop Agenda"
-            required
-          />
-          <div className="popup-actions">
-            <Button type="submit">Save</Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </div>
-        </form>
+    <form onSubmit={handleSubmit}>
+      <label>Name</label>
+      <input
+        type="text"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        placeholder="Workshop Name"
+        required
+        style={{ width: "100%", marginBottom: 12 }}
+      />
+      <label>Start Date</label>
+      <input
+        type="date"
+        name="startDate"
+        value={formData.startDate}
+        onChange={handleChange}
+        placeholder="Start Date"
+        required
+        style={{ width: "100%", marginBottom: 12 }}
+      />
+      <label>End Date</label>
+      <input
+        type="date"
+        name="endDate"
+        value={formData.endDate}
+        onChange={handleChange}
+        placeholder="End Date"
+        required
+        style={{ width: "100%", marginBottom: 12 }}
+      />
+      <label>Start Time</label>
+      <input
+        type="time"
+        name="startTime"
+        value={formData.startTime}
+        onChange={handleChange}
+        placeholder="Start Time"
+        required
+        style={{ width: "100%", marginBottom: 12 }}
+      />
+      <label>End Time</label>
+      <input
+        type="time"
+        name="endTime"
+        value={formData.endTime}
+        onChange={handleChange}
+        placeholder="End Time"
+        required
+        style={{ width: "100%", marginBottom: 12 }}
+      />
+      <label>Description</label>
+      <textarea
+        name="description"
+        value={formData.description}
+        onChange={handleChange}
+        placeholder="Short Description"
+        required
+        style={{ width: "100%", marginBottom: 12 }}
+      />
+      <label>Speaker</label>
+      <input
+        type="text"
+        name="speaker"
+        value={formData.speaker}
+        onChange={handleChange}
+        placeholder="Speaker Bio"
+        required
+        style={{ width: "100%", marginBottom: 12 }}
+      />
+      <label>Agenda</label>
+      <textarea
+        name="agenda"
+        value={formData.agenda}
+        onChange={handleChange}
+        placeholder="Workshop Agenda"
+        required
+        style={{ width: "100%", marginBottom: 12 }}
+      />
+      <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 24, gap: 10 }}>
+        <button
+          type="submit"
+          style={{
+            background: "#43a047",
+            color: "#fff",
+            border: "none",
+            borderRadius: 8,
+            padding: "10px 24px",
+            fontWeight: 600,
+            fontSize: "1.08rem",
+            cursor: "pointer"
+          }}
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          onClick={onCancel}
+          style={{
+            background: "#e0e0e0",
+            color: "#333",
+            border: "none",
+            borderRadius: 8,
+            padding: "10px 24px",
+            fontWeight: 600,
+            fontSize: "1.08rem",
+            cursor: "pointer"
+          }}
+        >
+          Cancel
+        </button>
       </div>
-    </div>
+    </form>
   );
 }
 

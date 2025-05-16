@@ -3,7 +3,7 @@ import { Table, TableHeader, TableBody, TableRow, TableCell } from '../component
 import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
 import { EyeIcon } from '../components/ui/eyeicon';
-import { FilterIcon } from '../components/ui/filtericon'; // Import the FilterIcon component
+import { FilterIcon } from '../components/ui/filtericon';
 import { mockInternships } from '../data/mock-data';
 import '../styles/InternshipListings.css';
 
@@ -11,11 +11,12 @@ function InternshipListings() {
   const [internships, setInternships] = useState(
     mockInternships.map((internship) => ({
       ...internship,
-      applications: Math.floor(Math.random() * 100), // Add random number of applications
+      applications: Math.floor(Math.random() * 100),
     }))
   );
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedFilter, setSelectedFilter] = useState('All'); // State for the selected filter
+  const [selectedFilter, setSelectedFilter] = useState('All');
+  const [selectedInternship, setSelectedInternship] = useState(null); // For popup
 
   const filteredInternships = internships.filter((internship) => {
     const matchesSearch =
@@ -32,7 +33,11 @@ function InternshipListings() {
   });
 
   const handleViewDetails = (internship) => {
-    console.log(`Viewing internship: ${internship.title}`);
+    setSelectedInternship(internship);
+  };
+
+  const handleClosePopup = () => {
+    setSelectedInternship(null);
   };
 
   return (
@@ -73,7 +78,7 @@ function InternshipListings() {
               <TableCell>Location</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Posted Date</TableCell>
-              <TableCell>Applications</TableCell> {/* New column for applications */}
+              <TableCell>Applications</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHeader>
@@ -85,7 +90,7 @@ function InternshipListings() {
                   <TableCell>{internship.location || 'N/A'}</TableCell>
                   <TableCell>{internship.status || 'N/A'}</TableCell>
                   <TableCell>{internship.postedDate || 'N/A'}</TableCell>
-                  <TableCell>{internship.applications}</TableCell> {/* Display applications */}
+                  <TableCell>{internship.applications}</TableCell>
                   <TableCell>
                     <Button
                       className="icon-button"
@@ -104,6 +109,30 @@ function InternshipListings() {
           </TableBody>
         </Table>
       </div>
+
+      {/* Internship Details Popup */}
+      {selectedInternship && (
+        <div className="pop-overlay">
+          <div className="pop">
+            <h2>Internship Details</h2>
+            <p><strong>Title:</strong> {selectedInternship.title || 'N/A'}</p>
+            <p><strong>Company:</strong> {selectedInternship.company || 'N/A'}</p>
+            <p><strong>Location:</strong> {selectedInternship.location || 'N/A'}</p>
+            <p><strong>Status:</strong> {selectedInternship.status || 'N/A'}</p>
+            <p><strong>Posted Date:</strong> {selectedInternship.postedDate || 'N/A'}</p>
+            <p><strong>Applications:</strong> {selectedInternship.applications}</p>
+            <p><strong>Description:</strong> {selectedInternship.description || 'N/A'}</p>
+            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 24 }}>
+              <button
+                className="close-button"
+                onClick={handleClosePopup}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

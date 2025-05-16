@@ -28,9 +28,19 @@ function InternshipListings() {
       (internship.company &&
         internship.company.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    const matchesIndustry = !industryFilter || internship.industry === industryFilter;
-    const matchesDuration = !durationFilter || internship.duration === durationFilter;
-    const matchesPaid = !paidChecked || internship.paid === 'Paid';
+    const matchesIndustry =
+      !industryFilter ||
+      (internship.company &&
+        internship.company.toLowerCase() === industryFilter.toLowerCase());
+
+    const matchesDuration =
+      !durationFilter ||
+      (internship.Duration && internship.Duration.toLowerCase() === durationFilter.toLowerCase());
+
+    // Fix: Use Type for paid filter
+    const matchesPaid =
+      !paidChecked ||
+      (internship.Type && internship.Type.toLowerCase() === 'paid');
 
     return matchesSearch && matchesIndustry && matchesDuration && matchesPaid;
   });
@@ -78,13 +88,13 @@ function InternshipListings() {
         <div className="filter-controls" style={{ display: 'flex', gap: '1rem', margin: '1rem 0' }}>
           <select value={industryFilter} onChange={e => setIndustryFilter(e.target.value)}>
             <option value="">All Industries</option>
-            {[...new Set(internships.map(i => i.industry))].map(ind => (
+            {[...new Set(internships.map(i => i.company))].map(ind => (
               <option key={ind} value={ind}>{ind}</option>
             ))}
           </select>
           <select value={durationFilter} onChange={e => setDurationFilter(e.target.value)}>
             <option value="">All Durations</option>
-            {[...new Set(internships.map(i => i.duration))].map(dur => (
+            {[...new Set(internships.map(i => i.Duration))].map(dur => (
               <option key={dur} value={dur}>{dur}</option>
             ))}
           </select>
@@ -108,7 +118,7 @@ function InternshipListings() {
           <TableHeader>
             <TableRow>
               <TableCell>Select</TableCell>
-              <TableCell>Title</TableCell>
+              <TableCell>yousef</TableCell>
               <TableCell>Company</TableCell>
               <TableCell>Location</TableCell>
               <TableCell>Status</TableCell>
