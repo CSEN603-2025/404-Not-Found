@@ -189,7 +189,7 @@ export const mockReports = [
     student: 'Tamer Elgayar',
     studentId: '43-1006',
     major: 'Software Engineering',
-    company: 'Edu Solutions',
+    company: 'Edu Solution',
     Supervisor: 'Dr. Mosaad',
     StartDate: '2025-07-01',
     EndDate: '2025-012-31',
