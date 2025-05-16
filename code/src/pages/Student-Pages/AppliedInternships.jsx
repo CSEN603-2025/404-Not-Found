@@ -71,7 +71,9 @@ const availableInternships = [
     title: "Frontend Developer Intern",
     duration: "3 Months",
     industry: "Technology",
-    paid: "Paid"
+    paid: "Paid",
+    skills: "React, JavaScript, CSS, HTML",
+    description: "Work with the frontend team to build and maintain web applications using React and modern JavaScript."
   },
   {
     id: 2,
@@ -79,7 +81,9 @@ const availableInternships = [
     title: "Data Science Intern",
     duration: "6 Months",
     industry: "Analytics",
-    paid: "Paid"
+    paid: "Paid",
+    skills: "Python, Machine Learning, Data Analysis",
+    description: "Assist in analyzing large datasets and building predictive models for business insights."
   },
   {
     id: 3,
@@ -87,7 +91,9 @@ const availableInternships = [
     title: "Sustainability Analyst Intern",
     duration: "3 Months",
     industry: "Energy",
-    paid: "Unpaid"
+    paid: "Unpaid",
+    skills: "Research, Data Analysis, Communication",
+    description: "Support sustainability projects by researching and analyzing environmental data."
   },
   {
     id: 4,
@@ -95,7 +101,9 @@ const availableInternships = [
     title: "UX/UI Design Intern",
     duration: "6 Months",
     industry: "Design",
-    paid: "Paid"
+    paid: "Paid",
+    skills: "Figma, Adobe XD, User Research",
+    description: "Collaborate with the design team to create user-friendly interfaces and conduct user research."
   },
   {
     id: 5,
@@ -103,7 +111,9 @@ const availableInternships = [
     title: "Marketing Intern",
     duration: "3 Months",
     industry: "Marketing",
-    paid: "Unpaid"
+    paid: "Unpaid",
+    skills: "Social Media, Content Creation, Analytics",
+    description: "Assist in planning and executing marketing campaigns, and manage social media accounts."
   }
 ];
 
@@ -328,6 +338,9 @@ function AppliedInternships({ applicationsProp }) {
       (internshipStatus === 'complete' && intern.status === 'Internship Complete');
     return matchesSearch && matchesStatus;
   });
+
+  // 1. Add state for viewing internship details (after other useState hooks)
+  const [viewInternship, setViewInternship] = useState(null);
 
   return (
     <div style={{
@@ -634,7 +647,7 @@ function AppliedInternships({ applicationsProp }) {
         {filteredAvailable.map((intern) => (
           <label key={intern.id} style={{
             display: "grid",
-            gridTemplateColumns: "40px 2fr 2fr 1fr",
+            gridTemplateColumns: "40px 2fr 2fr 1fr 1fr",
             alignItems: "center",
             borderBottom: "1px solid #f1f1f1",
             padding: "14px 0",
@@ -656,6 +669,25 @@ function AppliedInternships({ applicationsProp }) {
             <div style={{ fontWeight: 600, color: "#222" }}>{intern.company}</div>
             <div style={{ color: "#222" }}>{intern.title}</div>
             <div style={{ color: "#222" }}>{intern.duration}</div>
+            <button
+              type="button"
+              style={{
+                background: "#43a047",
+                color: "#fff",
+                border: "none",
+                borderRadius: 8,
+                padding: "6px 16px",
+                fontWeight: 600,
+                fontSize: "0.98rem",
+                cursor: "pointer"
+              }}
+              onClick={e => {
+                e.preventDefault();
+                setViewInternship(intern);
+              }}
+            >
+              View Details
+            </button>
           </label>
         ))}
         <div style={{ color: "#7b8a9a", fontSize: "1.01rem", marginTop: 18 }}>
@@ -989,6 +1021,63 @@ function AppliedInternships({ applicationsProp }) {
         </div>
       </div>
       {/* End My Internships Table Section */}
+      {/* 3. Add a modal to show internship details (place after your other modals/popups): */}
+      {viewInternship && (
+        <div style={{
+          position: "fixed",
+          top: 0, left: 0, width: "100vw", height: "100vh",
+          background: "rgba(0,0,0,0.18)",
+          zIndex: 3000,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}>
+          <div style={{
+            background: "#fff",
+            borderRadius: 14,
+            boxShadow: "0 4px 32px rgba(0,0,0,0.13)",
+            width: 400,
+            maxWidth: "95vw",
+            padding: "32px 32px 24px 32px",
+            position: "relative"
+          }}>
+            <button
+              onClick={() => setViewInternship(null)}
+              style={{
+                position: "absolute",
+                right: 18,
+                top: 18,
+                background: "none",
+                border: "none",
+                fontSize: 22,
+                color: "#888",
+                cursor: "pointer"
+              }}
+              aria-label="Close"
+            >×</button>
+            <h3 style={{ marginTop: 0, color: "#16a34a" }}>Internship Details</h3>
+            <div style={{ marginBottom: 10 }}><b>Company:</b> {viewInternship.company}</div>
+            <div style={{ marginBottom: 10 }}><b>Job Title:</b> {viewInternship.title}</div>
+            <div style={{ marginBottom: 10 }}><b>Duration:</b> {viewInternship.duration}</div>
+            <div style={{ marginBottom: 10 }}><b>Paid/Unpaid:</b> {viewInternship.paid || (viewInternship.Type ? viewInternship.Type : "N/A")}</div>
+            {viewInternship.expectedSalary && (
+              <div style={{ marginBottom: 10 }}><b>Expected Salary:</b> {viewInternship.expectedSalary}</div>
+            )}
+            {/* Show Skills Required if present */}
+            {(viewInternship.Skills || viewInternship.skills) && (
+              <div style={{ marginBottom: 10 }}>
+                <b>Skills Required:</b> {viewInternship.Skills || viewInternship.skills}
+              </div>
+            )}
+            {/* Show Description if present */}
+            {viewInternship.description && (
+              <div style={{ marginBottom: 10 }}>
+                <b>Job Description:</b> {viewInternship.description}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

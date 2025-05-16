@@ -21,6 +21,7 @@ function Courses() {
       schedule: 'Monday, 09:00 - 10:30 @ Room A101',
       prerequisites: [],
       Major: 'AI',
+      semester: 1, // <-- Add this line
     },
     {
       id: 'CS201',
@@ -34,6 +35,7 @@ function Courses() {
       schedule: 'Tuesday, 10:00 - 11:30 @ Room B202\nThursday, 10:00 - 11:30 @ Room B202',
       prerequisites: ['CS101: Introduction to Programming'],
       Major: 'Computer Science',
+      semester: 2, // <-- Add this line
     },
     {
       id: 'CS202',
@@ -47,6 +49,7 @@ function Courses() {
       schedule: 'Tuesday, 10:00 - 11:30 @ Room B202\nThursday, 10:00 - 11:30 @ Room B202',
       prerequisites: ['CS101: Introduction to Programming'],
       Major: 'Computer Science',
+      semester: 3, // <-- Add this line
     },
     {
       id: 'MATH101',
@@ -60,6 +63,7 @@ function Courses() {
       schedule: 'Tuesday, 10:00 - 11:30 @ Room B202\nThursday, 10:00 - 11:30 @ Room B202',
       prerequisites: [],
       Major: 'Mathematics',
+      semester: 1, // <-- Add this line
     },
   ];
 
@@ -177,7 +181,7 @@ function Courses() {
                   {course.title}
                 </h3>
                 <p style={{ fontSize: '0.9rem', color: '#6c757d', marginBottom: '8px' }}>
-                  <strong>{course.id}</strong> • {course.credits} Credits
+                  <strong>{course.id}</strong> • {course.credits} Credits • Semester {course.semester}
                 </p>
                 <p style={{ fontSize: '0.9rem', color: '#4d6a7a', marginBottom: '8px' }}>
                   {course.description}
@@ -207,7 +211,7 @@ function Courses() {
             {selectedCourse.title}
           </h2>
           <p style={{ fontSize: '1rem', color: '#6c757d', marginBottom: '16px' }}>
-            <strong>{selectedCourse.id}</strong> • {selectedCourse.credits} Credits
+            <strong>{selectedCourse.id}</strong> • {selectedCourse.credits} Credits • Semester {selectedCourse.semester}
           </p>
           <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '8px' }}>📄 Description</h3>
           <p style={{ fontSize: '1rem', color: '#4d6a7a', marginBottom: '16px' }}>
