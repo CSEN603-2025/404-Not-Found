@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MyCompIntern from './MyCompIntern';
-import InternshipListings from './InternshipListings';
+import InternshipListingV2 from './InternshipListingV2';
 import ApplicaComp from './ApplicaComp';
 import DecisionTable from './DecisionTable';
 import InternshipStatusPage from './InternshipStatusPage';
@@ -227,7 +227,7 @@ function CompanyDash() {
         </h1>
         <div style={{ margin: "32px" }}>
           {sidebarTab === 'my-internships' && <MyCompIntern />}
-          {sidebarTab === 'internship-listings' && <InternshipListings />}
+          {sidebarTab === 'internship-listings' && <InternshipListingV2 />}
           {sidebarTab === 'applications-company' && <ApplicaComp />}
           {sidebarTab === 'decision-table' && <DecisionTable />}
           {sidebarTab === 'internship-status' && <InternshipStatusPage />}
