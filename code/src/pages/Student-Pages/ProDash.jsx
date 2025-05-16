@@ -4,7 +4,11 @@ import { BriefcaseIcon } from '../../components/ui/briefcaseicon';
 import { UsersIcon } from '../../components/ui/usersicon';
 import { FileTextIcon } from '../../components/ui/filetexticon';
 import BellIcon from '../../components/ui/BellIcon';
+import PhoneIcon from '../../components/ui/phoneicon';
+import MuteIcon from '../../components/ui/muteicon';
+import CameraIcon from '../../components/ui/cameraicon';
 import '../../styles/student.css';
+import proStudentImg from '../../assets/pro student.svg';
 
 import Profile from './Profile';
 import SuggestedCompanies from './SuggestedCompanies';
@@ -25,6 +29,18 @@ function Student() {
   const [codingQuizAnswer3, setCodingQuizAnswer3] = useState("");  const [showQuizResult, setShowQuizResult] = useState(false);
   const [quizScore, setQuizScore] = useState(null);
   const [showProfileSuccess, setShowProfileSuccess] = useState(false);
+  const [showProfileViews, setShowProfileViews] = useState(false);
+  const [profileViews, setProfileViews] = useState([
+    { company: "TechNova Inc.", date: "2025-05-10" },
+    { company: "GreenByte Solutions", date: "2025-05-12" },
+    { company: "InnovateX Labs", date: "2025-05-15" }
+  ]);
+  const [incomingCall, setIncomingCall] = useState(null); // { from: "Career Advisor" }
+  const [inCall, setInCall] = useState(false);
+  const [callMuted, setCallMuted] = useState(false);
+  const [videoEnabled, setVideoEnabled] = useState(true);
+  const [screenShared, setScreenShared] = useState(false);
+  const [otherLeft, setOtherLeft] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -34,6 +50,7 @@ function Student() {
       "The new internship cycle has started! Apply now.",
       "The next internship cycle will begin in 3 days. Prepare your applications.",
       "Your Report is now available for review.",
+      "Your Apointment has been Accepted",
     ];
 
     setNotifications(internshipCycleNotifications);
@@ -45,11 +62,34 @@ function Student() {
         "Your internship report status has been set to 'Approved'.",
       ]);
     }, 5000); // Simulate a delay of 5 seconds
+
+    // Simulate an incoming call after 7 seconds
+    const timer = setTimeout(() => {
+      setIncomingCall({ from: "Career Advisor" });
+    }, 7000);
+    return () => clearTimeout(timer);
   }, []);
 
   if (!isClient) return null;
 
   const iconStyle = { fontSize: 15, minWidth: 16, height: 16 };
+
+  const handleAcceptCall = () => {
+    setInCall(true);
+    setIncomingCall(null);
+    setOtherLeft(false);
+    // Simulate the other user leaving after 20 seconds (demo)
+    setTimeout(() => setOtherLeft(true), 20000);
+  };
+
+  const handleRejectCall = () => {
+    setIncomingCall(null);
+  };
+
+  const handleLeaveCall = () => {
+    setInCall(false);
+    setOtherLeft(false);
+  };
 
   return (
     <div
@@ -260,6 +300,23 @@ function Student() {
             onClick={() => setShowAssessments(true)}
           >
             Take Assessment
+          </button>
+          <button
+            type="button"
+            style={{
+              background: "#fff",
+              color: "#43a047",
+              border: "2px solid #43a047",
+              borderRadius: 6,
+              padding: "8px 18px",
+              fontWeight: 600,
+              fontSize: "1rem",
+              cursor: "pointer",
+              marginLeft: 8
+            }}
+            onClick={() => setShowProfileViews(true)}
+          >
+            Profile Views
           </button>
           <button
             className="notifications-button"
@@ -803,7 +860,295 @@ function Student() {
           </div>
         )}
 
-        <h1 className="student-title" style={{ marginLeft: 32, marginTop: 16 }}>Student Dashboard</h1>
+        {showProfileViews && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(0,0,0,0.18)",
+              zIndex: 1250,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <div
+              style={{
+                background: "#fff",
+                borderRadius: 16,
+                boxShadow: "0 4px 32px rgba(67,160,71,0.10)",
+                padding: "36px 40px 28px 40px",
+                minWidth: 320,
+                maxWidth: 420,
+                width: "90vw",
+                textAlign: "center",
+                border: "2px solid #43a047",
+                position: "relative"
+              }}
+            >
+              <button
+                onClick={() => setShowProfileViews(false)}
+                style={{
+                  position: "absolute",
+                  top: 16,
+                  right: 24,
+                  background: "transparent",
+                  border: "none",
+                  fontSize: 26,
+                  color: "#888",
+                  cursor: "pointer",
+                  fontWeight: 700,
+                  lineHeight: 1
+                }}
+                aria-label="Close"
+              >
+                ×
+              </button>
+              <div style={{ fontSize: "1.7rem", fontWeight: 700, color: "#43a047", marginBottom: 18 }}>
+                Companies That Viewed Your Profile
+              </div>
+              {profileViews.length === 0 ? (
+                <div style={{ color: "#888", fontSize: "1.1rem" }}>No companies have viewed your profile yet.</div>
+              ) : (
+                <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                  {profileViews.map((view, idx) => (
+                    <li key={idx} style={{
+                      background: "#e8f5e9",
+                      borderRadius: 8,
+                      marginBottom: 12,
+                      padding: "14px 18px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      fontSize: "1.08rem",
+                      color: "#222"
+                    }}>
+                      <span style={{ fontWeight: 600 }}>{view.company}</span>
+                      <span style={{ color: "#388e3c", fontSize: "0.98rem" }}>{view.date}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Incoming Call Notification */}
+        {incomingCall && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(0,0,0,0.18)",
+              zIndex: 2000,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <div
+              style={{
+                background: "#fff",
+                borderRadius: 16,
+                boxShadow: "0 4px 32px rgba(67,160,71,0.10)",
+                padding: "36px 40px 28px 40px",
+                minWidth: 320,
+                maxWidth: 420,
+                width: "90vw",
+                textAlign: "center",
+                border: "2px solid #43a047",
+                position: "relative"
+              }}
+            >
+              <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#43a047", marginBottom: 18 }}>
+                Incoming Call
+              </div>
+              <div style={{ marginBottom: 18 }}>
+                <PhoneIcon style={{ fontSize: 32, color: "#43a047", marginBottom: 8 }} />
+                <div style={{ fontWeight: 600 }}>{incomingCall.from} is calling you...</div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "center", gap: 18 }}>
+                <button
+                  style={{
+                    background: "#43a047",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "50%",
+                    padding: "14px 22px",
+                    fontWeight: 600,
+                    fontSize: "1.08rem",
+                    cursor: "pointer"
+                  }}
+                  onClick={handleAcceptCall}
+                >
+                  Accept
+                </button>
+                <button
+                  style={{
+                    background: "#c82333",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "50%",
+                    padding: "14px 22px",
+                    fontWeight: 600,
+                    fontSize: "1.08rem",
+                    cursor: "pointer"
+                  }}
+                  onClick={handleRejectCall}
+                >
+                  Reject
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* In-Call Popup */}
+        {inCall && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(0,0,0,0.18)",
+              zIndex: 2100,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <div
+              style={{
+                background: "#fff",
+                borderRadius: 16,
+                boxShadow: "0 4px 32px rgba(67,160,71,0.10)",
+                padding: "36px 40px 28px 40px",
+                minWidth: 420,
+                maxWidth: 540,
+                width: "90vw",
+                textAlign: "center",
+                border: "2px solid #43a047",
+                position: "relative"
+              }}
+            >
+              <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#43a047", marginBottom: 18 }}>
+                In Call with Career Advisor
+              </div>
+              <div
+                style={{
+                  background: "#f0f0f0",
+                  height: 180,
+                  margin: "1rem 0",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 8,
+                  border: "1px solid #ddd",
+                  fontSize: "1.2rem",
+                  color: "#555"
+                }}
+              >
+                {videoEnabled ? (
+                  <span>Video Stream (enabled)</span>
+                ) : (
+                  <span>Video Disabled</span>
+                )}
+              </div>
+              <div style={{ display: "flex", justifyContent: "center", gap: 18, marginBottom: 18 }}>
+                <button
+                  style={{
+                    background: callMuted ? "#ffc107" : "#43a047",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "50%",
+                    padding: "12px 18px",
+                    fontWeight: 600,
+                    fontSize: "1.08rem",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => setCallMuted((m) => !m)}
+                >
+                  <MuteIcon style={{ fontSize: 22, color: "#fff" }} />
+                  <div style={{ fontSize: 12 }}>{callMuted ? "Unmute" : "Mute"}</div>
+                </button>
+                <button
+                  style={{
+                    background: videoEnabled ? "#43a047" : "#888",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "50%",
+                    padding: "12px 18px",
+                    fontWeight: 600,
+                    fontSize: "1.08rem",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => setVideoEnabled((v) => !v)}
+                >
+                  <CameraIcon style={{ fontSize: 22, color: "#fff" }} />
+                  <div style={{ fontSize: 12 }}>{videoEnabled ? "Disable Video" : "Enable Video"}</div>
+                </button>
+                <button
+                  style={{
+                    background: screenShared ? "#007bff" : "#43a047",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "50%",
+                    padding: "12px 18px",
+                    fontWeight: 600,
+                    fontSize: "1.08rem",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => setScreenShared((s) => !s)}
+                >
+                  <span role="img" aria-label="Share Screen" style={{ fontSize: 22 }}>🖥️</span>
+                  <div style={{ fontSize: 12 }}>{screenShared ? "Stop Share" : "Share Screen"}</div>
+                </button>
+              </div>
+              <button
+                style={{
+                  background: "#c82333",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "50%",
+                  padding: "14px 22px",
+                  fontWeight: 600,
+                  fontSize: "1.08rem",
+                  cursor: "pointer"
+                }}
+                onClick={handleLeaveCall}
+              >
+                Leave Call
+              </button>
+              {otherLeft && (
+                <div style={{
+                  marginTop: 18,
+                  color: "#c82333",
+                  fontWeight: 600,
+                  fontSize: "1.1rem"
+                }}>
+                  The other caller has left the call.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        <h1 className="student-title" style={{ marginLeft: 32, marginTop: 16, display: "flex", alignItems: "center", gap: 16 }}>
+          <img
+            src={proStudentImg}
+            alt="Pro Student"
+            style={{ height: 150, marginRight: 8, verticalAlign: "middle" }}
+          />
+          Student Dashboard
+        </h1>
         <p className="student-description" style={{ marginLeft: 32 }}>
           Access your internship applications, notifications, and profile details.
         </p>

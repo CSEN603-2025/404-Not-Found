@@ -30,7 +30,7 @@ const handleSubmit = (e) => {
     navigate('/pro'); // Redirect to the student dashboard
   } 
   // Company Login
-  else if (username === 'company' && password === '12345') {
+  else if (username === 'company' && password === 'admin') {
     localStorage.setItem('userType', 'company');
     navigate('/company-dashboard'); // Redirect to the company dashboard
   } 
@@ -111,7 +111,7 @@ const handleSubmit = (e) => {
 
             {/* Register link below */}
             <p className="register-link">
-              Don’t have an account?{' '}
+              For company {' '}
               <span
                 className="underline-link"
                 onClick={() => navigate('/register-company')}
