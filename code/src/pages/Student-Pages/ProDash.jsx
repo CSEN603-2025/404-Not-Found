@@ -7,6 +7,7 @@ import BellIcon from '../../components/ui/BellIcon';
 import PhoneIcon from '../../components/ui/phoneicon';
 import MuteIcon from '../../components/ui/muteicon';
 import CameraIcon from '../../components/ui/cameraicon';
+import CalendarIcon from '../../components/ui/calendaricon';
 import '../../styles/student.css';
 import proStudentImg from '../../assets/pro student.svg';
 
@@ -16,6 +17,7 @@ import AppliedInternships from './AppliedInternships';
 import EvaluateCompanies from './EvaluateCompanies';
 import InternshipReports from './InternshipReports';
 import Courses from './Courses';
+import Appointment from './Appointment';
 
 function Student() {
   const [isClient, setIsClient] = useState(false);
@@ -235,6 +237,26 @@ function Student() {
               }}
             >
               <FileTextIcon style={iconStyle} /> Courses
+            </button>
+            <button
+              onClick={() => setSidebarTab('appointments')}
+              style={{
+                width: "90%",
+                margin: "0 auto 4px auto",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                background: sidebarTab === 'appointments' ? "#43a047" : "transparent",
+                color: sidebarTab === 'appointments' ? "#fff" : "#222",
+                border: "none",
+                borderRadius: 6,
+                padding: "7px 12px",
+                fontWeight: 500,
+                fontSize: "1rem",
+                cursor: "pointer"
+              }}
+            >
+              <CalendarIcon style={{ fontSize: 16 }} /> Appointments
             </button>
           </div>
         </div>
@@ -1159,6 +1181,7 @@ function Student() {
           {sidebarTab === 'evaluate-companies' && <EvaluateCompanies />}
           {sidebarTab === 'internship-reports' && <InternshipReports />}
           {sidebarTab === 'courses' && <Courses />}
+          {sidebarTab === 'appointments' && <Appointment />}
         </div>
       </div>
     </div>
