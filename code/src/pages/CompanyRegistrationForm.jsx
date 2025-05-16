@@ -233,17 +233,12 @@ export function CompanyRegistrationForm({ defaultValues }) {
                 )}
               />
               <div className="form-submit sticky bottom-0 bg-white pt-4">
-                <Button type="submit" className="w-full">
-                  Review Information{" "}
-                  <ArrowRight className="form-icon" />
-                </Button>
                 <Button
                   type="button"
-                  variant="outline"
-                  className="w-full mt-2"
-                  onClick={() => navigate("/Login")}
+                  className="w-full"
+                  onClick={() => navigate("/")}
                 >
-                  Back
+                  Review Information <ArrowRight className="form-icon" />
                 </Button>
               </div>
             </form>

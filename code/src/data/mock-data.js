@@ -434,7 +434,7 @@ export const mockInternships = [
 ];
 
 export const mockStudents = [
-  { id: 1, name: 'John Doe', major: 'Computer Science', gucId: '43-1001', email: 'john.doe@guc.edu', internshipStatus: 'Placed', cvUrl: 'https://example.com/john_cv.pdf' },
+  { id: 1, name: 'John Doe', major: 'Computer Science', gucId: '43-1001', email: 'john.doe@guc.edu', internshipStatus: 'Placed', cvUrl: 'file:///C:/Users/DELL/Downloads/Report%20(1).pdf' },
   { id: 2, name: 'Jane Smith', major: 'Electrical Engineering', gucId: '43-1002', email: 'jane.smith@guc.edu', internshipStatus: 'Interviewing', cvUrl: 'https://example.com/jane_cv.pdf' },
   { id: 3, name: 'Ahmed Ali', major: 'Mechanical Engineering', gucId: '43-1003', email: 'ahmed.ali@guc.edu', internshipStatus: 'Not Applied', cvUrl: null },
   { id: 4, name: 'Sara Mohamed', major: 'Computer Science', gucId: '43-1004', email: 'sara.mohamed@guc.edu', internshipStatus: 'Applied', cvUrl: 'https://example.com/sara_cv.pdf' },
