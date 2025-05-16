@@ -225,6 +225,176 @@ function CollegeActivities() {
   );
 }
 
+function DocumentUploadSection() {
+  const [certificates, setCertificates] = useState(() => {
+    const saved = localStorage.getItem('profile_certificates');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [cvs, setCvs] = useState(() => {
+    const saved = localStorage.getItem('profile_cvs');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const handleCertificateChange = (e) => {
+    const files = Array.from(e.target.files);
+    const newFiles = files.map(file => ({
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      uploadedAt: new Date().toLocaleString()
+    }));
+    const updatedFiles = [...certificates, ...newFiles];
+    setCertificates(updatedFiles);
+    localStorage.setItem('profile_certificates', JSON.stringify(updatedFiles));
+  };
+
+  const handleCvChange = (e) => {
+    const files = Array.from(e.target.files);
+    const newFiles = files.map(file => ({
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      uploadedAt: new Date().toLocaleString()
+    }));
+    const updatedFiles = [...cvs, ...newFiles];
+    setCvs(updatedFiles);
+    localStorage.setItem('profile_cvs', JSON.stringify(updatedFiles));
+  };
+
+  const handleRemoveCertificate = (index) => {
+    const updatedFiles = certificates.filter((_, i) => i !== index);
+    setCertificates(updatedFiles);
+    localStorage.setItem('profile_certificates', JSON.stringify(updatedFiles));
+  };
+
+  const handleRemoveCv = (index) => {
+    const updatedFiles = cvs.filter((_, i) => i !== index);
+    setCvs(updatedFiles);
+    localStorage.setItem('profile_cvs', JSON.stringify(updatedFiles));
+  };
+
+  return (
+    <div style={{
+      maxWidth: 1100,
+      margin: "32px auto",
+      background: "#fff",
+      borderRadius: 12,
+      boxShadow: "0 2px 18px rgba(56,211,159,0.10)",
+      padding: "36px 32px"
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
+        <span style={{ fontSize: 34, color: "#43a047" }}>📄</span>
+        <h2 style={{ fontWeight: 700, fontSize: "2rem", margin: 0 }}>Document Upload</h2>
+      </div>
+      <div style={{ color: "#4d6a7a", marginBottom: 28, fontSize: "1.13rem" }}>
+        Upload your certificates and CV separately below.
+      </div>
+      {/* Certificate Upload */}
+      <div style={{ marginBottom: 24 }}>
+        <label style={{ fontWeight: 600, marginBottom: 8, display: "block" }}>Certificates</label>
+        <input
+          type="file"
+          multiple
+          onChange={handleCertificateChange}
+          style={{
+            marginBottom: 12,
+            padding: "8px",
+            borderRadius: 8,
+            border: "1.5px solid #e0e0e0",
+            background: "#f6f7fa",
+            fontSize: "1.08rem"
+          }}
+        />
+        {certificates.length > 0 && (
+          <div style={{ marginTop: 8 }}>
+            <div style={{ fontWeight: 600, marginBottom: 8 }}>Uploaded Certificates:</div>
+            <ul style={{ paddingLeft: 18 }}>
+              {certificates.map((file, idx) => (
+                <li key={idx} style={{ marginBottom: 8, display: "flex", alignItems: "center", gap: 8 }}>
+                  <span role="img" aria-label="file">📎</span>
+                  <span>{file.name}</span>
+                  <span style={{ color: "#888", fontSize: "0.95rem" }}>
+                    ({(file.size / 1024).toFixed(1)} KB, {file.type})
+                  </span>
+                  <span style={{ color: "#bdbdbd", fontSize: "0.92rem" }}>
+                    Uploaded: {file.uploadedAt}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveCertificate(idx)}
+                    style={{
+                      marginLeft: 8,
+                      background: "none",
+                      border: "none",
+                      color: "#d32f2f",
+                      fontSize: "1.1rem",
+                      cursor: "pointer"
+                    }}
+                    aria-label="Remove"
+                  >
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      {/* CV Upload */}
+      <div>
+        <label style={{ fontWeight: 600, marginBottom: 8, display: "block" }}>CV</label>
+        <input
+          type="file"
+          multiple
+          onChange={handleCvChange}
+          style={{
+            marginBottom: 12,
+            padding: "8px",
+            borderRadius: 8,
+            border: "1.5px solid #e0e0e0",
+            background: "#f6f7fa",
+            fontSize: "1.08rem"
+          }}
+        />
+        {cvs.length > 0 && (
+          <div style={{ marginTop: 8 }}>
+            <div style={{ fontWeight: 600, marginBottom: 8 }}>Uploaded CVs:</div>
+            <ul style={{ paddingLeft: 18 }}>
+              {cvs.map((file, idx) => (
+                <li key={idx} style={{ marginBottom: 8, display: "flex", alignItems: "center", gap: 8 }}>
+                  <span role="img" aria-label="file">📎</span>
+                  <span>{file.name}</span>
+                  <span style={{ color: "#888", fontSize: "0.95rem" }}>
+                    ({(file.size / 1024).toFixed(1)} KB, {file.type})
+                  </span>
+                  <span style={{ color: "#bdbdbd", fontSize: "0.92rem" }}>
+                    Uploaded: {file.uploadedAt}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveCv(idx)}
+                    style={{
+                      marginLeft: 8,
+                      background: "none",
+                      border: "none",
+                      color: "#d32f2f",
+                      fontSize: "1.1rem",
+                      cursor: "pointer"
+                    }}
+                    aria-label="Remove"
+                  >
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function Profile() {
   const [isEditing, setIsEditing] = useState(false); // Default to "My Information" view
   const [profileData, setProfileData] = useState({
@@ -459,6 +629,7 @@ function Profile() {
           <JobInterests />
           <WorkExperience />
           <CollegeActivities />
+          <DocumentUploadSection />
 
           {/* Save Button */}
           <div style={{ textAlign: "center", marginTop: 32 }}>

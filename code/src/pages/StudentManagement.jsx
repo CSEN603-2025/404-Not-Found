@@ -6,10 +6,7 @@ import { Badge } from '../components/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
 import { EyeIcon } from '../components/ui/eyeicon';
 import { CalendarClockIcon } from '../components/ui/calendarclock'; // Import the calendar icon
-import { CheckIcon } from '../components/ui/checkicon'; // Import the Check icon
-import { XIcon } from '../components/ui/xicon'; // Import the X icon
-import PhoneIcon from '../components/ui/phoneicon'; // Import the phone icon
-import { mockStudents, mockAppointmentRequests } from '../data/mock-data'; // Import the mock appointment requests
+import { mockStudents } from '../data/mock-data'; // Import the mock data
 import StudentProfilePopup from '../components/ui/StudentProfilePopup'; // Import the new component
 import { FilterIcon } from '../components/ui/filtericon';
 import MuteIcon from '../components/ui/muteicon'; // Import the mute icon
@@ -42,9 +39,6 @@ function StudentManagement() {
   const [selectedStudentForAppointment, setSelectedStudentForAppointment] = useState(null); // Separate state for "Request Appointment"
   const [appointmentPopup, setAppointmentPopup] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [appointmentRequests, setAppointmentRequests] = useState(mockAppointmentRequests); // Initialize with dummy data
-  const [callPopup, setCallPopup] = useState(false); // State to toggle the call popup
-  const [selectedStudentForCall, setSelectedStudentForCall] = useState(null); // State for the student being called
 
   const internshipStatuses = [...new Set(students.map((s) => s.internshipStatus)), 'all'];
 
@@ -90,26 +84,6 @@ function StudentManagement() {
     );
 
     handleCloseAppointmentPopup(); // Close the popup and clear the state
-  };
-
-  const handleAcceptAppointment = (student) => {
-    alert(`Appointment accepted for ${student.name} on ${student.date}`);
-    setAppointmentRequests((prev) => prev.filter((s) => s.id !== student.id)); // Remove the student from the requests list
-  };
-
-  const handleRejectAppointment = (student) => {
-    alert(`Appointment rejected for ${student.name}`);
-    setAppointmentRequests((prev) => prev.filter((s) => s.id !== student.id)); // Remove the student from the requests list
-  };
-
-  const handleCallStudent = (student) => {
-    setSelectedStudentForCall(student); // Set the student being called
-    setCallPopup(true); // Show the call popup
-  };
-
-  const handleCloseCallPopup = () => {
-    setCallPopup(false); // Close the call popup
-    setSelectedStudentForCall(null); // Clear the selected student
   };
 
   // Generate random dates for the appointment selection
@@ -193,12 +167,6 @@ function StudentManagement() {
                           >
                             <CalendarClockIcon className="action-icon" />
                           </Button>
-                          <Button
-                            className="icon-button"
-                            onClick={() => handleCallStudent(student)}
-                          >
-                            <PhoneIcon className="action-icon" />
-                          </Button>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -246,89 +214,6 @@ function StudentManagement() {
           </div>
         </div>
       )}
-
-      {/* Call Popup */}
-      {callPopup && selectedStudentForCall && (
-        <div className="call-popup-overlay">
-          <div className="call-popup">
-            <h2>Calling {selectedStudentForCall.name}</h2>
-            <div className="call-screen"></div>
-            <div className="call-controls">
-              <div className="left-controls">
-                <Button className="call-control-button">
-                  <MuteIcon className="action-icon" />
-                </Button>
-                <Button className="call-control-button">
-                  <CameraIcon className="action-icon" />
-                </Button>
-              </div>
-              <div className="right-controls">
-                <Button className="call-control-button">
-                  Share Screen
-                </Button>
-              </div>
-            </div>
-            <div className="end-call-container">
-              <Button
-                className="call-control-button end-call-button"
-                onClick={handleCloseCallPopup}
-              >
-                <PhoneIcon className="action-icon" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Independent Appointment Requests Table */}
-      <Card className="appointment-requests-container">
-        <CardHeader>
-          <CardTitle>Appointment Requests</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Major</TableCell>
-                <TableCell>Requested Date</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {appointmentRequests.length > 0 ? (
-                appointmentRequests.map((student) => (
-                  <TableRow key={student.id}>
-                    <TableCell>{student.name}</TableCell>
-                    <TableCell>{student.major}</TableCell>
-                    <TableCell>{student.date}</TableCell>
-                    <TableCell>
-                      <div className="actions-container">
-                        <Button
-                          className="small-button accept-button"
-                          onClick={() => handleAcceptAppointment(student)}
-                        >
-                          <CheckIcon className="action-icon" />
-                        </Button>
-                        <Button
-                          className="small-button reject-button"
-                          onClick={() => handleRejectAppointment(student)}
-                        >
-                          <XIcon className="action-icon" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan="4">No appointment requests.</TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
     </div>
   );
 }

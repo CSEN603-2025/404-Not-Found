@@ -7,6 +7,7 @@ import InternshipCycleManagement from './InternshipCycleManagement';
 import Workshops from './Workshops';
 import Clarification from './Clarification';
 import Statistics from './Statistics';
+import Appointments from './Appointments';
 import { BuildingIcon } from '../components/ui/buildingicon';
 import { BriefcaseIcon } from '../components/ui/briefcaseicon';
 import { UsersIcon } from '../components/ui/usersicon';
@@ -29,24 +30,39 @@ function ScadOfficePage() {
   const [callPopup, setCallPopup] = useState(false);
   const [callerName, setCallerName] = useState(null);
   const [sidebarTab, setSidebarTab] = useState('company-applications');
+  const [incomingCall, setIncomingCall] = useState(null);
+  const [inCall, setInCall] = useState(false);
+  const [callMuted, setCallMuted] = useState(false);
+  const [videoEnabled, setVideoEnabled] = useState(false);
+  const [screenShared, setScreenShared] = useState(false);
+  const [otherLeft, setOtherLeft] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
     setNotifications([
       'John Doe has accepted your appointment request.',
       'Jane Smith has rejected your appointment request.',
-      'Ahmed is Calling You',
     ]);
+    setIncomingCall({ from: 'Ahmed' });
   }, []);
 
   const handleAcceptCall = (callerName) => {
     setCallerName(callerName);
-    setCallPopup(true);
-    setNotifications((prev) => prev.filter((notification) => notification !== 'Ahmed is Calling You'));
+    setCallPopup(false);
+    setIncomingCall(null);
+    setInCall(true);
   };
 
   const handleRejectCall = () => {
-    setNotifications((prev) => prev.filter((notification) => notification !== 'Ahmed is Calling You'));
+    setIncomingCall(null);
+  };
+
+  const handleLeaveCall = () => {
+    setInCall(false);
+    setCallMuted(false);
+    setVideoEnabled(false);
+    setScreenShared(false);
+    setOtherLeft(false);
   };
 
   const iconStyle = { fontSize: 15, minWidth: 16, height: 16 };
@@ -252,6 +268,26 @@ function ScadOfficePage() {
             >
               <ChartBarIcon style={{ ...iconStyle, color: "#000" }} /> Statistics
             </button>
+            <button
+              onClick={() => setSidebarTab('appointments')}
+              style={{
+                width: "90%",
+                margin: "0 auto 4px auto",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                background: sidebarTab === 'appointments' ? "#43a047" : "transparent",
+                color: sidebarTab === 'appointments' ? "#fff" : "#222",
+                border: "none",
+                borderRadius: 6,
+                padding: "7px 12px",
+                fontWeight: 500,
+                fontSize: "1rem",
+                cursor: "pointer"
+              }}
+            >
+              <span role="img" aria-label="appointments" style={{ fontSize: 18 }}>📅</span> Appointments
+            </button>
           </div>
         </div>
         <div style={{ flex: 1 }} />
@@ -280,31 +316,85 @@ function ScadOfficePage() {
                   <li>No notifications available.</li>
                 )}
               </ul>
-              {/* Incoming Call Section */}
-              {notifications.includes('Ahmed is Calling You') && (
-                <div className="incoming-call">
-                  <div className="incoming-call-header">
-                    <h4>Ahmed is Calling You</h4>
-                    <div className="call-buttons">
-                      <button
-                        className="answer-button"
-                        onClick={() => handleAcceptCall('Ahmed')}
-                      >
-                        <PhoneIcon className="action-icon" />
-                      </button>
-                      <button
-                        className="reject-button"
-                        onClick={handleRejectCall}
-                      >
-                        <PhoneIcon className="action-icon" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           )}
         </div>
+
+        {/* Incoming Call Notification */}
+        {incomingCall && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(0,0,0,0.18)",
+              zIndex: 2000,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <div
+              style={{
+                background: "#fff",
+                borderRadius: 16,
+                boxShadow: "0 4px 32px rgba(67,160,71,0.10)",
+                padding: "36px 40px 28px 40px",
+                minWidth: 320,
+                maxWidth: 420,
+                width: "90vw",
+                textAlign: "center",
+                border: "2px solid #43a047",
+                position: "relative"
+              }}
+            >
+              <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#43a047", marginBottom: 18 }}>
+                Incoming Call
+              </div>
+              <div style={{ marginBottom: 18 }}>
+                <PhoneIcon style={{ fontSize: 32, color: "#43a047", marginBottom: 8 }} />
+                <div style={{ fontWeight: 600 }}>
+                  {incomingCall.from ? `${incomingCall.from} is calling you...` : "Someone is calling you..."}
+                </div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "center", gap: 18 }}>
+                <button
+                  style={{
+                    background: "#43a047",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "50%",
+                    padding: "14px 22px",
+                    fontWeight: 600,
+                    fontSize: "1.08rem",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => handleAcceptCall(incomingCall.from)}
+                >
+                  Accept
+                </button>
+                <button
+                  style={{
+                    background: "#c82333",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "50%",
+                    padding: "14px 22px",
+                    fontWeight: 600,
+                    fontSize: "1.08rem",
+                    cursor: "pointer"
+                  }}
+                  onClick={handleRejectCall}
+                >
+                  Reject
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Call Popup */}
         {callPopup && callerName && (
           <div className="call-popup-overlay">
@@ -343,6 +433,138 @@ function ScadOfficePage() {
           </div>
         )}
 
+        {/* In-Call Popup */}
+        {inCall && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(0,0,0,0.18)",
+              zIndex: 2100,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <div
+              style={{
+                background: "#fff",
+                borderRadius: 16,
+                boxShadow: "0 4px 32px rgba(67,160,71,0.10)",
+                padding: "36px 40px 28px 40px",
+                minWidth: 420,
+                maxWidth: 540,
+                width: "90vw",
+                textAlign: "center",
+                border: "2px solid #43a047",
+                position: "relative"
+              }}
+            >
+              <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#43a047", marginBottom: 18 }}>
+                In Call with Career Advisor
+              </div>
+              <div
+                style={{
+                  background: "#f0f0f0",
+                  height: 180,
+                  margin: "1rem 0",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 8,
+                  border: "1px solid #ddd",
+                  fontSize: "1.2rem",
+                  color: "#555"
+                }}
+              >
+                {videoEnabled ? (
+                  <span>Video Stream (enabled)</span>
+                ) : (
+                  <span>Video Disabled</span>
+                )}
+              </div>
+              <div style={{ display: "flex", justifyContent: "center", gap: 18, marginBottom: 18 }}>
+                <button
+                  style={{
+                    background: callMuted ? "#ffc107" : "#43a047",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "50%",
+                    padding: "12px 18px",
+                    fontWeight: 600,
+                    fontSize: "1.08rem",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => setCallMuted((m) => !m)}
+                >
+                  <MuteIcon style={{ fontSize: 22, color: "#fff" }} />
+                  <div style={{ fontSize: 12 }}>{callMuted ? "Unmute" : "Mute"}</div>
+                </button>
+                <button
+                  style={{
+                    background: videoEnabled ? "#43a047" : "#888",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "50%",
+                    padding: "12px 18px",
+                    fontWeight: 600,
+                    fontSize: "1.08rem",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => setVideoEnabled((v) => !v)}
+                >
+                  <CameraIcon style={{ fontSize: 22, color: "#fff" }} />
+                  <div style={{ fontSize: 12 }}>{videoEnabled ? "Disable Video" : "Enable Video"}</div>
+                </button>
+                <button
+                  style={{
+                    background: screenShared ? "#007bff" : "#43a047",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "50%",
+                    padding: "12px 18px",
+                    fontWeight: 600,
+                    fontSize: "1.08rem",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => setScreenShared((s) => !s)}
+                >
+                  <span role="img" aria-label="Share Screen" style={{ fontSize: 22 }}>🖥️</span>
+                  <div style={{ fontSize: 12 }}>{screenShared ? "Stop Share" : "Share Screen"}</div>
+                </button>
+              </div>
+              <button
+                style={{
+                  background: "#c82333",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "50%",
+                  padding: "14px 22px",
+                  fontWeight: 600,
+                  fontSize: "1.08rem",
+                  cursor: "pointer"
+                }}
+                onClick={handleLeaveCall}
+              >
+                Leave Call
+              </button>
+              {otherLeft && (
+                <div style={{
+                  marginTop: 18,
+                  color: "#c82333",
+                  fontWeight: 600,
+                  fontSize: "1.1rem"
+                }}>
+                  The other caller has left the call.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Main Section Title */}
         <h1 className="scad-office-title" style={{ marginLeft: 32, marginTop: 16 }}>
           {(() => {
@@ -355,6 +577,7 @@ function ScadOfficePage() {
               case 'workshops': return 'Workshops';
               case 'clarification': return 'Clarification';
               case 'statistics': return 'Statistics';
+              case 'appointments': return 'Appointments';
               default: return '';
             }
           })()}
@@ -368,6 +591,7 @@ function ScadOfficePage() {
           {sidebarTab === 'workshops' && <Workshops />}
           {sidebarTab === 'clarification' && <Clarification />}
           {sidebarTab === 'statistics' && <Statistics />}
+          {sidebarTab === 'appointments' && <Appointments />}
         </div>
       </div>
     </div>
