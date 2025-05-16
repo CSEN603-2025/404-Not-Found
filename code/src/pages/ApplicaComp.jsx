@@ -21,7 +21,7 @@ function ApplicaComp() {
     console.log('Closing Profile Popup'); // Debugging
     setSelectedStudentForProfile(null); // Clear the selected student for the profile popup
   };
-
+  //okasha comment
   // Get unique majors for the dropdown
   const majors = ['all', ...new Set(mockStudents.map((student) => student.major))];
 
